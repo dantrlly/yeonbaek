@@ -1,0 +1,2471 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>🌿 연백나무 v2.3</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- PWA 설정을 위한 메타 태그 및 매니페스트 연동 -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#6bb376">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="백업나무">
+    <link rel="apple-touch-icon" href="icon-192.png">
+
+    <style>
+        /* 기존 스타일 동일하게 유지 */
+        body { 
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, 'Malgun Gothic', sans-serif; 
+            margin: 0; 
+            padding: 20px; 
+            background-color: #f4faf5; 
+            color: #2d3748;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .main-wrapper { 
+            display: flex; 
+            max-width: 1400px; 
+            margin: 0 auto; 
+            gap: 20px; 
+            align-items: flex-start; 
+            flex-wrap: wrap; 
+        }
+        
+        .container { 
+            flex: 1; 
+            min-width: 320px; 
+            background: white; 
+            padding: 30px; 
+            border-radius: 16px; 
+            box-shadow: 0 10px 25px -5px rgba(107,179,118,0.08), 0 4px 10px -3px rgba(107,179,118,0.04);
+            border: 1px solid rgba(189,224,196,0.4);
+            box-sizing: border-box;
+        }
+        
+        .sidebar-memo { 
+            flex: 1; 
+            min-width: 320px; 
+            background: white; 
+            padding: 30px; 
+            border-radius: 16px; 
+            box-shadow: 0 10px 25px -5px rgba(107,179,118,0.08), 0 4px 10px -3px rgba(107,179,118,0.04);
+            position: sticky; 
+            top: 20px; 
+            border: 1px solid rgba(189,224,196,0.4);
+            box-sizing: border-box;
+        }
+        
+        .header-top { display: flex; justify-content: center; align-items: center; position: relative; margin-bottom: 5px; }
+        h1 { text-align: center; color: #1a1a1a; margin: 0; font-size: 26px; font-weight: 800; letter-spacing: -0.5px; }
+        .subtitle { text-align: center; color: #718096; font-size: 13px; margin-bottom: 25px; margin-top: 5px; font-weight: 500; }
+        
+        .tabs { display: flex; justify-content: center; margin-bottom: 20px; border-bottom: 2px solid #e2ebd9; flex-wrap: wrap; gap: 4px; }
+        .tab-button { 
+            padding: 10px 18px; 
+            background: none; 
+            border: none; 
+            font-size: 14px; 
+            font-weight: 800; 
+            color: #a0aec0; 
+            cursor: pointer; 
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); 
+            bottom: -2px; 
+            position: relative; 
+            box-sizing: border-box; 
+        }
+        .tab-button:hover { color: #4a5568; }
+        .tab-button.active { color: #6bb376; border-bottom: 3px solid #6bb376; }
+        .tab-button.active.blue-tab-active { color: #6bb376; border-bottom: 3px solid #6bb376; }
+        .tab-button.active.coral-tab-active { color: #8c6f56; border-bottom: 3px solid #8c6f56; }
+        
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.35s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .input-group { display: flex; flex-direction: column; margin-bottom: 18px; }
+        
+        .label-wrapper { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+        label { font-weight: bold; color: #2d3748; font-size: 14px; }
+        .char-count { font-size: 11px; color: #6bb376; font-weight: bold; background: #f0fdf4; padding: 2px 8px; border-radius: 20px; border: 1px solid #bde0c4; }
+        
+        textarea { 
+            width: 100%; 
+            height: 180px; 
+            border: 1px solid #d1ebd6; 
+            border-radius: 8px; 
+            padding: 12px; 
+            box-sizing: border-box; 
+            resize: vertical; 
+            font-size: 13px; 
+            line-height: 1.5; 
+            font-family: 'Consolas', 'Fira Code', Monaco, monospace; 
+            background-color: #fafdfb;
+            transition: all 0.2s;
+        }
+        textarea:focus, input[type="text"]:focus {
+            outline: none;
+            border-color: #6bb376 !important;
+            background-color: #ffffff;
+            box-shadow: 0 0 0 3px rgba(107, 179, 118, 0.12);
+        }
+        input[type="text"] { 
+            width: 100%; 
+            padding: 10px 12px; 
+            border: 1px solid #d1ebd6; 
+            border-radius: 8px; 
+            box-sizing: border-box; 
+            font-size: 13px; 
+            background-color: #fafdfb;
+            transition: all 0.2s;
+        }
+        
+        .file-drop-zone { 
+            border: 2px dashed #bde0c4; 
+            background-color: #fafdfb; 
+            border-radius: 8px; 
+            padding: 20px; 
+            text-align: center; 
+            margin-bottom: 12px; 
+            cursor: pointer; 
+            transition: all 0.2s; 
+        }
+        .file-drop-zone:hover, .file-drop-zone.dragover { background-color: #effcf1; border-color: #6bb376; }
+        .file-drop-zone p { margin: 0; font-size: 13.5px; color: #4a8a54; font-weight: bold; }
+        .file-drop-zone span { font-size: 11px; color: #8bc295; display: inline-block; margin-top: 4px; }
+        .file-input { display: none; }
+
+        .btn-memo-import { 
+            background-color: #ffffff; 
+            border: 1px solid #bde0c4; 
+            color: #6bb376; 
+            padding: 4px 12px; 
+            border-radius: 20px; 
+            font-size: 12px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            gap: 4px; 
+            transition: all 0.2s; 
+        }
+        .btn-memo-import:hover { background-color: #effcf1; border-color: #6bb376; }
+
+        .mode-wrapper { 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            margin-bottom: 20px; 
+            background: #fafdfb; 
+            padding: 15px; 
+            border-radius: 8px; 
+            border: 1px dashed #bde0c4; 
+        }
+        .mode-info { display: flex; flex-direction: column; gap: 4px; }
+        .mode-title { font-weight: bold; font-size: 13.5px; color: #2d3748; }
+        
+        .switch-label { position: relative; display: inline-block; width: 110px; height: 34px; }
+        .switch-label input { opacity: 0; width: 0; height: 0; }
+        
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; transition: .3s; border-radius: 34px; display: flex; align-items: center; justify-content: space-between; }
+        .slider:before { position: absolute; content: ""; height: 26px; width: 51px; left: 4px; bottom: 4px; background-color: white; transition: .3s; border-radius: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); z-index: 2; }
+        .slider .text-basic, .slider .text-mid { width: 50%; text-align: center; font-size: 12.5px; font-weight: bold; z-index: 3; transition: .3s; user-select: none; }
+        
+        .pink-switch input:not(:checked) + .slider { background-color: #cbd5e0; }
+        .pink-switch input:not(:checked) + .slider .text-basic { color: #718096; }
+        .pink-switch input:not(:checked) + .slider .text-mid { color: white; }
+        .pink-switch input:checked + .slider { background-color: #6bb376; }
+        .pink-switch input:checked + .slider:before { transform: translateX(51px); }
+        .pink-switch input:checked + .slider .text-basic { color: white; }
+        .pink-switch input:checked + .slider .text-mid { color: #6bb376; }
+
+        .btn-cut { 
+            width: 100%; 
+            padding: 12px; 
+            background-color: #a5cfad; 
+            color: white; 
+            border: none; 
+            border-radius: 8px; 
+            font-size: 14.5px; 
+            cursor: pointer; 
+            font-weight: bold; 
+            transition: all 0.2s; 
+        }
+        .btn-cut:hover { background-color: #6bb376; transform: translateY(-1px); }
+        
+        .btn-group { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+        .btn-copy { 
+            flex: 1; 
+            min-width: 110px; 
+            padding: 12px; 
+            background-color: #6bb376; 
+            color: white; 
+            border: none; 
+            border-radius: 8px; 
+            font-size: 14px; 
+            cursor: pointer; 
+            font-weight: bold; 
+            transition: all 0.2s; 
+        }
+        .btn-copy:hover { background-color: #4a8a54; transform: translateY(-1px); }
+        .btn-download { 
+            flex: 1; 
+            min-width: 110px; 
+            padding: 12px; 
+            background-color: #6bb376; 
+            color: white; 
+            border: none; 
+            border-radius: 8px; 
+            font-size: 14px; 
+            cursor: pointer; 
+            font-weight: bold; 
+            transition: all 0.2s; 
+            box-shadow: 0 3px 10px rgba(107, 179, 118, 0.2);
+        }
+        .btn-download:hover { background-color: #4a8a54; transform: translateY(-1px); }
+        
+        .result-section { margin-top: 25px; border-top: 2px dashed #bde0c4; padding-top: 20px; display: none; }
+
+        .edit-toolbar { display: flex; gap: 4px; margin-left: 10px; margin-right: auto; align-items: center; flex-wrap: wrap; }
+        .btn-undo-tool { 
+            padding: 4px 10px; 
+            background: white; 
+            border: 1px solid #bde0c4; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            font-size: 12.5px; 
+            font-weight: bold; 
+            transition: all 0.2s; 
+            color: #4a5568; 
+        }
+        .btn-undo-tool:hover { background: #effcf1; border-color: #6bb376; color: #6bb376; }
+        .btn-check-tool { 
+            padding: 5px 12px; 
+            background: linear-gradient(135deg, #6bb376, #a5cfad); 
+            border: none; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            font-size: 12px; 
+            font-weight: bold; 
+            color: white; 
+            transition: all 0.2s; 
+            box-shadow: 0 2px 6px rgba(107, 179, 118, 0.2); 
+        }
+        .btn-check-tool:hover { background: linear-gradient(135deg, #4a8a54, #6bb376); transform: translateY(-1px); box-shadow: 0 4px 10px rgba(107, 179, 118, 0.3); }
+        .btn-copy-tool { 
+            padding: 5px 12px; 
+            background: white; 
+            border: 1px solid #bde0c4; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            font-size: 12px; 
+            font-weight: bold; 
+            color: #6bb376; 
+            transition: all 0.2s; 
+        }
+        .btn-copy-tool:hover { background: #effcf1; border-color: #6bb376; }
+
+        .memo-editor { 
+            width: 100%; 
+            height: 500px; 
+            border: 1px solid #bde0c4; 
+            border-radius: 8px; 
+            padding: 14px; 
+            box-sizing: border-box; 
+            font-size: 13px; 
+            line-height: 20px; 
+            font-family: 'Malgun Gothic', 'Courier New', sans-serif; 
+            overflow-y: auto; 
+            overflow-x: hidden; 
+            background: #fafdfb; 
+            resize: none; 
+            white-space: pre-wrap; 
+            word-break: break-all; 
+            transition: border 0.2s;
+        }
+        .memo-editor:focus { border: 1px solid #6bb376; outline: none; background: white; }
+
+        .html-viewer { width: 100%; height: 500px; border: 1px solid #bde0c4; border-radius: 8px; box-sizing: border-box; background: #fff; display: none; }
+        .html-viewer-placeholder { display: none; width: 100%; height: 500px; border: 1px solid #bde0c4; border-radius: 8px; background: #222; color: #a0aec0; font-size: 13px; align-items: center; justify-content: center; font-family: sans-serif; text-align: center; }
+
+        .blue-drop-zone { border: 2px dashed #bde0c4 !important; background-color: #fafdfb !important; }
+        .blue-drop-zone:hover, .blue-drop-zone.dragover { background-color: #effcf1 !important; border-color: #6bb376 !important; }
+        .blue-drop-zone p { color: #4a8a54 !important; }
+        .blue-drop-zone span { color: #8bc295 !important; }
+        .blue-switch input:not(:checked) + .slider { background-color: #cbd5e0; }
+        .blue-switch input:not(:checked) + .slider .text-basic { color: #718096; }
+        .blue-switch input:not(:checked) + .slider .text-mid { color: white; }
+        .blue-switch input:checked + .slider { background-color: #6bb376; }
+        .blue-switch input:checked + .slider:before { transform: translateX(51px); }
+        .blue-switch input:checked + .slider .text-basic { color: white; }
+        .blue-switch input:checked + .slider .text-mid { color: #6bb376; }
+        .blue-mode-wrapper { border-color: #bde0c4 !important; background: #fafdfb !important; flex-direction: column; align-items: flex-start; gap: 12px; }
+
+        .align-radio-group { display: flex; gap: 4px; background: #ffffff; padding: 4px; border-radius: 8px; border: 1px solid #d1ebd6; font-size: 11.5px; font-weight: bold; color: #4a8a54; }
+        .align-radio-label { display: flex; align-items: center; gap: 4px; cursor: pointer; padding: 4px 10px; border-radius: 6px; transition: background 0.15s; }
+        .align-radio-label:hover { background: #f2f9f3; }
+        .align-radio-label input[type="radio"] { accent-color: #6bb376; cursor: pointer; }
+
+        .preset-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 6px; }
+        .preset-card { border: 1.5px solid #e2ebd9; border-radius: 8px; padding: 6px; cursor: pointer; transition: all 0.2s; text-align: center; background: white; }
+        .preset-card:hover { border-color: #a5cfad; background: #fafdfb; }
+        .preset-card.active { border-color: #6bb376; background: #effcf1; box-shadow: 0 2px 6px rgba(107,179,118,0.15); }
+        .preset-title { font-size: 11px; font-weight: bold; color: #4a5568; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .preset-preview-dots { display: flex; justify-content: center; gap: 4px; }
+        .preset-dot { width: 11px; height: 11px; border-radius: 50%; display: inline-block; border: 1px solid rgba(0,0,0,0.05) ; }
+
+        .bg-theme-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 6px; }
+        .bg-theme-card { border: 1.5px solid #e2ebd9; border-radius: 8px; padding: 6px; cursor: pointer; transition: all 0.2s; text-align: center; position: relative; background: #ffffff; }
+        .bg-theme-card:hover { transform: translateY(-1px); border-color: #a5cfad; }
+        .bg-theme-card.active { border-color: #6bb376; box-shadow: 0 0 0 2.5px rgba(107,179,118,0.15); }
+        .bg-theme-circle { width: 18px; height: 18px; border-radius: 50%; margin: 0 auto 4px auto; border: 1px solid rgba(0,0,0,0.1); }
+        .bg-theme-title { font-size: 10px; font-weight: bold; color: #4a5568; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+        .char-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; margin-top: 10px; }
+        .char-item-blue { background-color: #fff; border: 1px solid #d5edd9; padding: 10px 12px; border-radius: 8px; box-shadow: 0 2px 6px rgba(107, 179, 118, 0.08); transition: all 0.2s; cursor: grab; }
+        .char-item-blue:hover { transform: translateY(-1px); border-color: #6bb376; box-shadow: 0 4px 10px rgba(107, 179, 118, 0.12); }
+        .char-item-blue:active { cursor: grabbing; opacity: 0.8; }
+        .char-item-blue.drag-hover { border: 2px dashed #6bb376; background-color: #effcf1; transform: scale(1.01); }
+        .char-header-blue { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; pointer-events: none; }
+        .char-name-box { display: flex; align-items: center; gap: 6px; overflow: hidden; pointer-events: auto; }
+        .char-name-blue { font-weight: bold; font-size: 13.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .char-count-blue { font-size: 10.5px; background: #effcf1; color: #6bb376; padding: 2px 7px; border-radius: 12px; font-weight: bold; white-space: nowrap; border: 1px solid rgba(189,224,196,0.5); }
+        .char-controls-blue { display: flex; gap: 8px; align-items: center; justify-content: space-between; }
+        .char-input-blue { flex: 1; min-width: 0; padding: 6px 10px; border: 1px solid #d5edd9; border-radius: 6px; box-sizing: border-box; font-size: 11.5px; transition: border 0.2s; background: #fafdfb; }
+        .char-input-blue:focus { border-color: #6bb376; outline: none; background: white; }
+        .narr-checkbox-label { font-size: 11.5px; color: #4a5568; cursor: pointer; display: flex; align-items: center; gap: 4px; font-weight: bold; white-space: nowrap; flex-shrink: 0; }
+        .narr-checkbox-label input[type="checkbox"] { accent-color: #6bb376; cursor: pointer; }
+
+        .image-management-bar { display: flex; justify-content: flex-end; gap: 6px; margin-top: 10px; margin-bottom: 15px; flex-wrap: wrap; }
+        .btn-img-save { padding: 6px 14px; background-color: #8bc295; color: white; border: none; border-radius: 20px; font-size: 12.5px; font-weight: bold; cursor: pointer; transition: all 0.2s; }
+        .btn-img-save:hover { background-color: #6bb376; transform: translateY(-1px); }
+        .btn-img-load { padding: 6px 14px; background-color: #ffffff; color: #6bb376; border: 1px solid #bde0c4; border-radius: 20px; font-size: 12.5px; font-weight: bold; cursor: pointer; transition: all 0.2s; }
+        .btn-img-load:hover { background-color: #effcf1; border-color: #6bb376; transform: translateY(-1px); }
+        
+        .pink-label { color: #ff758f !important; }
+        .pink-char-count { font-size: 11px; color: #ff758f; font-weight: bold; background: #fff0f2; padding: 2px 8px; border-radius: 20px; border: 1px solid #ffd0d6; }
+        .pink-textarea { border-color: #ffd0d6 !important; background-color: #fffbfb; }
+        .pink-textarea:focus { outline: none !important; border-color: #ff758f !important; box-shadow: 0 0 0 3px rgba(255, 117, 143, 0.12) !important; background: white; }
+        .pink-input { border-color: #ffd0d6 !important; background-color: #fffbfb; }
+        .pink-input:focus { outline: none !important; border-color: #ff758f !important; box-shadow: 0 0 0 3px rgba(255, 117, 143, 0.12) !important; background: white; }
+        .pink-drop-zone { border: 2px dashed #ffb3c1 !important; background-color: #fffafb !important; }
+        .pink-drop-zone:hover, .pink-drop-zone.dragover { background-color: #ffe3e8 !important; border-color: #ff758f !important; }
+        .pink-drop-zone p { color: #ff758f !important; }
+        .pink-drop-zone span { color: #ff9fb2 !important; }
+        .pink-btn-cut { background-color: #ffb3c1 !important; color: white !important; }
+        .pink-btn-cut:hover { background-color: #ff758f !important; transform: translateY(-1px); }
+        .pink-btn-download { background-color: #ffb3c1 !important; color: white !important; }
+        .pink-btn-download:hover { background-color: #ff758f !important; transform: translateY(-1px); }
+        .pink-btn-copy { background-color: #ff758f !important; color: white !important; }
+        .pink-btn-copy:hover { background-color: #e03a5b !important; transform: translateY(-1px); }
+        .pink-btn-viewer { background-color: #ff758f !important; color: white !important; border: none; border-radius: 8px; font-size: 14px; font-weight: bold; cursor: pointer; flex: 1; min-width: 110px; padding: 12px; transition: all 0.2s; }
+        .pink-btn-viewer:hover { background-color: #e03a5b !important; transform: translateY(-1px); }
+        .pink-result-section { border-top-color: #ffa6b4 !important; }
+        .pink-btn-memo-import { border-color: #ffccd3 !important; color: #ff758f !important; }
+        .pink-btn-memo-import:hover { background-color: #fff0f2 !important; border-color: #ff758f !important; }
+
+        .img-manager-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; }
+        .img-manager-card { background: #fff; border: 1px solid #ffccd3; border-radius: 8px; padding: 12px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 2px 6px rgba(255,182,193,0.1); transition: all 0.2s; }
+        .img-manager-card:hover { border-color: #ff758f; }
+        .img-manager-header { display: flex; justify-content: space-between; align-items: center; font-weight: bold; color: #2d3748; font-size: 13.5px; }
+        .btn-img-del { background: #ff758f; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 11px; padding: 4px 8px; font-weight: bold; transition: all 0.15s; }
+        .btn-img-del:hover { background: #e03a5b; }
+        .img-manager-content { display: flex; align-items: center; gap: 8px; }
+        .img-preview { width: 42px; height: 42px; border-radius: 6px; background-color: #f5f5f5; background-size: cover; background-position: center top; flex-shrink: 0; border: 1px solid #ffe3e8; }
+        .img-url-input { flex: 1; font-size: 11px; padding: 6px; border: 1px solid #ffe3e8; border-radius: 4px; color: #4a5568; background: #fffafb; }
+
+        .coral-drop-zone { border: 2px dashed #e6dad0 !important; background-color: #faf6f0 !important; }
+        .coral-drop-zone:hover, .coral-drop-zone.dragover { background-color: #f2eae2 !important; border-color: #bfa38a !important; }
+        .coral-drop-zone p { color: #8c6f56 !important; }
+        .coral-drop-zone span { color: #bfa38a !important; }
+        
+        .coral-label { color: #8c6f56 !important; }
+        .coral-btn { background-color: #bfa38a !important; color: white !important; box-shadow: 0 2px 6px rgba(191, 163, 138, 0.15); }
+        .coral-btn:hover { background-color: #8c6f56 !important; transform: translateY(-1px); }
+
+        .toast { position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%) translateY(20px); background-color: rgba(45, 55, 72, 0.95); color: #ffffff; padding: 10px 24px; border-radius: 30px; font-size: 13px; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.15); z-index: 10000; opacity: 0; visibility: hidden; transition: opacity 0.25s, transform 0.25s, visibility 0.25s; pointer-events: none; }
+        .toast.show { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
+
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.45); z-index: 20000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(2px); }
+        .modal-content { background: white; border-radius: 12px; width: 90%; max-width: 650px; max-height: 80vh; display: flex; flex-direction: column; box-shadow: 0 15px 35px rgba(0,0,0,0.2); animation: fadeInModal 0.25s cubic-bezier(0.16, 1, 0.3, 1); }
+        @keyframes fadeInModal { from { opacity: 0; transform: scale(0.96) translateY(5px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+        .modal-header { padding: 15px 20px; border-bottom: 1px solid #bde0c4; display: flex; justify-content: space-between; align-items: center; }
+        .modal-header h3 { margin: 0; color: #6bb376; font-size: 16px; font-weight: bold; }
+        .modal-close-btn { background: none; border: none; font-size: 18px; cursor: pointer; color: #a0aec0; transition: color 0.15s; }
+        .modal-close-btn:hover { color: #4a5568; }
+        .modal-body { padding: 20px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; gap: 10px; }
+        
+        .match-item { border: 1px solid #bde0c4; border-radius: 8px; background: #fafdfb; padding: 12px; display: flex; flex-direction: column; gap: 8px; transition: all 0.2s; }
+        .match-item:hover { border-color: #6bb376; background: #f0fdf4; }
+        .match-context { font-size: 13px; line-height: 1.5; color: #4a5568; word-break: break-all; }
+        .match-context .prev-line, .match-context .next-line { color: #a0aec0; font-size: 12px; }
+        .match-context .current-line { font-weight: bold; color: #4a8a54; background: #d1ebd6; padding: 2px 5px; border-radius: 4px; }
+        .btn-select-match { align-self: flex-end; padding: 6px 14px; background: #6bb376; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 12.5px; transition: all 0.2s; }
+        .btn-select-match:hover { background: #4a8a54; transform: translateY(-1px); }
+
+        .modal-content.green-theme .modal-header h3 { color: #6bb376; }
+        .modal-content.green-theme .modal-header { border-bottom-color: #bde0c4; }
+        .modal-content.green-theme .match-item { border-color: #d1ebd6; background: #fafdfb; }
+        .modal-content.green-theme .match-item:hover { border-color: #6bb376; background: #f0fdf4; }
+        .modal-content.green-theme .match-context .current-line { color: #4a8a54; background: #bde0c4; }
+        .modal-content.green-theme .btn-select-match { background: #6bb376; }
+        .modal-content.green-theme .btn-select-match:hover { background: #4a8a54; }
+        
+        .modal-content.coral-theme .modal-header h3 { color: #8c6f56; }
+        .modal-content.coral-theme .modal-header { border-bottom-color: #e6dad0; }
+        .modal-content.coral-theme .match-item { border-color: #e6dad0; background: #faf6f0; }
+        .modal-content.coral-theme .match-item:hover { border-color: #bfa38a; background: #f2eae2; }
+        .modal-content.coral-theme .match-context .current-line { color: #5c4033; background: #e6dad0; }
+        .modal-content.coral-theme .btn-select-match { background: #bfa38a; }
+        .modal-content.coral-theme .btn-select-match:hover { background: #8c6f56; }
+
+        .modal-content.pink-modal-theme .modal-header h3 { color: #ff758f; }
+        .modal-content.pink-modal-theme .modal-header { border-bottom-color: #ffd0d6; }
+        .modal-content.pink-modal-theme .match-item { border-color: #ffd0d6; background: #fffafb; }
+        .modal-content.pink-modal-theme .match-item:hover { border-color: #ff758f; background: #fff0f2; }
+        .modal-content.pink-modal-theme .match-context .current-line { color: #ff4d6d; background: #ffe3e8; }
+        .modal-content.pink-modal-theme .btn-select-match { background: #ff758f; }
+        .modal-content.pink-modal-theme .btn-select-match:hover { background: #ff4d6d; }
+
+        @media (max-width: 900px) {
+            .sidebar-memo { position: relative; top: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-wrapper">
+    <!-- 왼쪽 조작 패널 영역 -->
+    <div class="container">
+        <div class="header-top">
+            <h1>🌿 코코포리아 백업나무</h1>
+        </div>
+        <div class="subtitle">기능이 쫌 많아졌지만 그래도 본질은 로그 가지치기~~</div>
+        
+        <div class="tabs" id="tabButtons"></div>
+        <div id="tabContents"></div>
+    </div>
+
+    <!-- 오른쪽 실시간 메모 및 뷰어 윈도우 -->
+    <div class="sidebar-memo">
+        <div class="mode-wrapper pink-switch" style="margin-bottom: 15px; padding: 10px 15px; display: flex; align-items: center; flex-wrap: wrap; gap: 10px;">
+            <div class="mode-info" style="flex: 0 0 auto;">
+                <div class="mode-title" id="sidebarModeTitle" style="font-size: 15px; font-weight: bold; color: #4a5568;">📝 편집</div>
+            </div>
+            
+            <div class="edit-toolbar">
+                <button class="btn-undo-tool" onclick="customUndo()" title="되돌리기">⤺</button>
+                <button class="btn-undo-tool" onclick="customRedo()" title="다시실행">⤻</button>
+                <button class="btn-check-tool" onclick="highlightFirstKoreanLine()" title="첫 문장 확인">✓ 첫 문장 확인</button>
+                <button class="btn-copy-tool" onclick="copyMemoAll()" title="메모장 전체 복사">📋 전체 복사</button>
+            </div>
+            
+            <div style="margin-left: auto;">
+                <label class="switch-label">
+                    <input type="checkbox" id="sidebarModeToggle" onchange="toggleSidebarMode()">
+                    <span class="slider">
+                        <span class="text-basic">편집</span>
+                        <span class="text-mid">뷰어</span>
+                    </span>
+                </label>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <textarea id="freeMemo" class="memo-editor" placeholder="자른 결과물을 붙여넣어 합치거나 자유롭게 수정하세요.&#10;뷰어 모드로 전환 시 이 내용이 그대로 렌더링됩니다."></textarea>
+            <iframe id="htmlViewer" class="html-viewer" data-last-code=""></iframe>
+            <div id="htmlPlaceholder" class="html-viewer-placeholder">편집창이 비어있습니다!<br>편집 모드로 돌아가 코드를 작성해 주세요.</div>
+        </div>
+    </div>
+</div>
+
+<!-- 중복 구문 분기 선택용 모달 윈도우 -->
+<div id="cutModal" class="modal-overlay" onclick="if(event.target === this) closeCutModal();">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 id="modalTitle">✂️ 위치 선택</h3>
+            <button class="modal-close-btn" onclick="closeCutModal()">✕</button>
+        </div>
+        <div id="modalDesc" style="padding: 10px 20px 0 20px; font-size:12px; color:#666; line-height: 1.4;">
+            선택한 대사의 <strong>바로 다음 대사부터</strong> 잘려 나가 바구니나 결과창에 담기게 됩니다. 앞뒤 문맥(⬆️ 직전 / ⬇️ 직후)을 보고 골라주세요.
+        </div>
+        <div class="modal-body" id="modalMatchList"></div>
+    </div>
+</div>
+
+<!-- 🚨 UI 끊김 없는 모던 커스텀 확인/경고 팝업 모달 -->
+<div id="customDialogModal" class="modal-overlay" style="display:none; align-items:center; justify-content:center; z-index: 30000;" onclick="if(event.target === this) closeCustomDialog(false);">
+    <div class="modal-content" style="max-width: 420px; padding: 22px;">
+        <div class="modal-header" style="border-bottom: none; padding: 0 0 10px 0;">
+            <h3 id="dialogTitle" style="color: #6bb376; font-size: 16px; margin: 0; font-weight: 800;">알림</h3>
+        </div>
+        <div id="dialogMessage" style="font-size: 13px; color: #4a5568; line-height: 1.5; margin-bottom: 20px; white-space: pre-wrap; font-weight: 500;"></div>
+        <div style="display: flex; justify-content: flex-end; gap: 8px;">
+            <button id="dialogCancelBtn" class="btn-undo-tool" style="padding: 6px 14px;" onclick="closeCustomDialog(false)">취소</button>
+            <button id="dialogConfirmBtn" class="btn-check-tool" style="padding: 6px 18px;" onclick="closeCustomDialog(true)">확인</button>
+        </div>
+    </div>
+</div>
+
+<!-- 🎨 사용자 지정 테마 설정 모달 -->
+<div id="customThemeModal" class="modal-overlay" style="display:none; align-items:center; justify-content:center; z-index: 21000;" onclick="if(event.target === this) closeCustomThemeModal();">
+    <div class="modal-content green-theme" style="max-width: 420px; padding: 22px;">
+        <div class="modal-header" style="border-bottom: none; padding: 0 0 10px 0;">
+            <h3 style="color: #6bb376; font-size: 16px; margin: 0; font-weight: 800; display: flex; align-items: center; gap: 6px;">🎨 커스텀 테마 설정</h3>
+            <button class="modal-close-btn" onclick="closeCustomThemeModal()">✕</button>
+        </div>
+        <div class="modal-body" style="padding: 10px 0; display: flex; flex-direction: column; gap: 14px; overflow: visible;">
+            <div class="input-group" style="margin-bottom: 0;">
+                <label style="font-size: 13px; font-weight: bold; margin-bottom: 4px; display: block;">외경 배경색</label>
+                <div style="display: flex; gap: 8px; align-items: center;">
+                    <input type="color" id="customBodyBg" value="#f2f4f6" oninput="onCustomBgChange(this.value)" style="border: none; width: 40px; height: 34px; cursor: pointer; padding: 0; background: none; flex-shrink: 0;">
+                    <input type="text" id="customBodyBgText" value="#f2f4f6" oninput="onCustomBgTextChange(this.value)" style="flex: 1; padding: 6px 10px; font-size: 13px; border: 1px solid #bde0c4; border-radius: 8px;">
+                </div>
+            </div>
+
+            <div class="input-group" style="margin-bottom: 0;">
+                <label style="font-size: 13px; font-weight: bold; margin-bottom: 4px; display: block;">박스 내부 배경색</label>
+                <div style="display: flex; gap: 8px; align-items: center;">
+                    <input type="color" id="customContainerBg" value="#ffffff" oninput="onCustomContainerBgChange(this.value)" style="border: none; width: 40px; height: 34px; cursor: pointer; padding: 0; background: none; flex-shrink: 0;">
+                    <input type="text" id="customContainerBgText" value="#ffffff" oninput="onCustomContainerBgTextChange(this.value)" style="flex: 1; padding: 6px 10px; font-size: 13px; border: 1px solid #bde0c4; border-radius: 8px;">
+                </div>
+            </div>
+            
+            <div style="display: flex; gap: 10px;">
+                <div class="input-group" style="flex: 1; margin-bottom: 0;">
+                    <label style="font-size: 13px; font-weight: bold; margin-bottom: 4px; display: block;">테두리색</label>
+                    <div style="display: flex; gap: 6px; align-items: center;">
+                        <input type="color" id="customBorder" value="#cbd0d6" style="border: none; width: 34px; height: 34px; cursor: pointer; padding: 0; background: none; flex-shrink: 0;">
+                        <input type="text" id="customBorderText" value="#cbd0d6" style="width: 100%; padding: 6px 8px; font-size: 12px; border: 1px solid #bde0c4; border-radius: 8px;">
+                    </div>
+                </div>
+                <div class="input-group" style="flex: 1; margin-bottom: 0;">
+                    <label style="font-size: 13px; font-weight: bold; margin-bottom: 4px; display: block;">시스템 글자색</label>
+                    <div style="display: flex; gap: 6px; align-items: center;">
+                        <input type="color" id="customTextMuted" value="#6b7684" style="border: none; width: 34px; height: 34px; cursor: pointer; padding: 0; background: none; flex-shrink: 0;">
+                        <input type="text" id="customTextMutedText" value="#6b7684" style="width: 100%; padding: 6px 8px; font-size: 12px; border: 1px solid #bde0c4; border-radius: 8px;">
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-group" style="margin-bottom: 0; flex-direction: row; align-items: center; justify-content: space-between;">
+                <label style="font-size: 13px; font-weight: bold; margin-bottom: 0;">가름선 표시</label>
+                <input type="checkbox" id="customShowBorder" checked style="accent-color: #6bb376; width: 18px; height: 18px; cursor: pointer;">
+            </div>
+            
+            <div style="font-size: 11px; color: #888; line-height: 1.4; background: #fafdfb; padding: 10px; border-radius: 8px; border: 1px dashed #bde0c4;">
+                💡 배경색을 변경하면 테두리색과 시스템 글자색이 그에 어울리게 <strong>자동 추천</strong>됩니다! 추천된 색상을 직접 수정할 수도 있습니다.
+            </div>
+        </div>
+        <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 15px;">
+            <button class="btn-undo-tool" style="padding: 6px 14px;" onclick="closeCustomThemeModal()">취소</button>
+            <button class="btn-check-tool" style="padding: 6px 18px;" onclick="applyCustomTheme()">적용</button>
+        </div>
+    </div>
+</div>
+
+<!-- 👥 캐릭터 및 강조 단어 색상 변경 통합 팝업 레이어 -->
+<div id="charColorPopover" style="display: none; position: absolute; z-index: 25000; background: white; border: 1px solid #bde0c4; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.12); padding: 12px; width: 235px; box-sizing: border-box;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+        <span id="popoverTitle" style="font-size: 11.5px; font-weight: bold; color: #4a5568;">🎨 캐릭터 색상 변경</span>
+        <button onclick="closeCharColorPicker()" style="background:none; border:none; cursor:pointer; font-size:12px; color:#a0aec0; padding: 0 2px;">✕</button>
+    </div>
+    
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+        <div style="display: flex; align-items: center; gap: 6px;">
+            <input type="color" id="popoverColorInput" oninput="onPopoverColorInput(this.value)" style="border: none; width: 32px; height: 32px; cursor: pointer; padding: 0; background: none;">
+            <input type="text" id="popoverColorText" oninput="onPopoverColorText(this.value)" style="flex: 1; padding: 4px 8px; font-size: 11px; border: 1px solid #bde0c4; border-radius: 6px; box-sizing: border-box;">
+        </div>
+        
+        <div>
+            <div id="popoverPresetLabel" style="font-size: 10px; font-weight: bold; color: #718096; margin-bottom: 4px;">추천 색상</div>
+            <div id="popoverPresets" style="display: flex; flex-wrap: wrap; gap: 6px;"></div>
+        </div>
+    </div>
+</div>
+
+<!-- 미니멀 토스트 알림 컴포넌트 -->
+<div id="toast" class="toast"></div>
+
+<!-- 원본 HTML 내 기존 모든 <script> 구현체 동일하게 존치 -->
+<script>
+// ==========================================
+// 🚀 스마트 자동 실시간 토스트 알림 시스템
+// ==========================================
+let toastTimeout;
+function showToast(message) {
+    const toast = document.getElementById('toast');
+    if (!toast) return;
+    toast.textContent = message;
+    toast.classList.add('show');
+    clearTimeout(toastTimeout);
+    
+    toastTimeout = setTimeout(() => {
+        toast.classList.remove('show');
+    }, 1800);
+}
+
+// ==========================================
+// 🚨 브라우저의 alert/confirm을 대체하는 파스텔 대화상자
+// ==========================================
+let dialogCallback = null;
+function showCustomAlert(title, message) {
+    document.getElementById('dialogTitle').innerText = title;
+    document.getElementById('dialogMessage').innerText = message;
+    document.getElementById('dialogCancelBtn').style.display = 'none';
+    document.getElementById('dialogConfirmBtn').innerText = '확인';
+    document.getElementById('customDialogModal').style.display = 'flex';
+    dialogCallback = null;
+}
+function showCustomConfirm(title, message, callback) {
+    document.getElementById('dialogTitle').innerText = title;
+    document.getElementById('dialogMessage').innerText = message;
+    document.getElementById('dialogCancelBtn').style.display = 'block';
+    document.getElementById('dialogConfirmBtn').innerText = '실행';
+    document.getElementById('customDialogModal').style.display = 'flex';
+    dialogCallback = callback;
+}
+function closeCustomDialog(result) {
+    document.getElementById('customDialogModal').style.display = 'none';
+    if (result && dialogCallback) {
+        dialogCallback();
+    }
+    dialogCallback = null;
+}
+
+// ==========================================
+// 🚀 히스토리 관리 및 초기화 세팅
+// ==========================================
+const TAB_NAMES = ["", "잎", "나무", "가지", "가지", "열매"]; 
+let memoHistory = [""];
+let historyIndex = 0;
+const MAX_HISTORY = 10;
+let pendingCutContext = null;
+
+let isLiveSyncActive = false;
+
+const HL_PRESETS = {
+    preset1: { name: '블루/레드', blueCol: '#4dabf7', blueBg: 'rgba(77, 171, 247, 0.12)', redCol: '#ff6b6b', redBg: 'rgba(255, 107, 107, 0.12)' },
+    preset2: { name: '민트 피치', blueCol: '#20c997', blueBg: 'rgba(32, 201, 151, 0.12)', redCol: '#f783ac', redBg: 'rgba(247, 131, 172, 0.12)' },
+    preset3: { name: '골드 차콜', blueCol: '#f59f00', blueBg: 'rgba(245, 159, 0, 0.12)', redCol: '#495057', redBg: 'rgba(73, 80, 87, 0.12)' },
+    preset4: { name: '포레스트 코랄', blueCol: '#2b8a3e', blueBg: 'rgba(43, 138, 62, 0.12)', redCol: '#e8590c', redBg: 'rgba(232, 89, 12, 0.12)' },
+    preset5: { name: '오션 로즈', blueCol: '#0c8599', blueBg: 'rgba(12, 133, 153, 0.12)', redCol: '#d6336c', redBg: 'rgba(214, 51, 108, 0.12)' },
+    preset6: { name: '골드 퍼플', blueCol: '#fcc419', blueBg: 'rgba(252, 196, 25, 0.12)', redCol: '#ae3ec9', redBg: 'rgba(174, 62, 201, 0.12)' }
+};
+let currentHlPreset = 'preset1';
+
+const BG_THEMES = {
+    dark: { name: '다크모드', bodyBg: '#111214', containerBg: '#1e1f22', textColor: '#dbdee1', textMuted: '#949ba4', border: '#2a2b2e', isDark: true, showBorder: true },
+    light: { name: '라이트 그레이', bodyBg: '#f2f4f6', containerBg: '#ffffff', textColor: '#333d4b', textMuted: '#6b7684', border: '#e5e8eb', isDark: false, showBorder: true },
+    pink: { name: '딸기우유', bodyBg: '#FFFAFB', containerBg: '#ffffff', textColor: '#4f3338', textMuted: '#9a7a80', border: '#FFE5E9', isDark: false, showBorder: true },
+    orange: { name: '살구 샤베트', bodyBg: '#fff7ed', containerBg: '#ffffff', textColor: '#4a3728', textMuted: '#947e6b', border: '#ffe8cc', isDark: false, showBorder: true },
+    yellow: { name: '바나나 크림', bodyBg: '#fefce8', containerBg: '#ffffff', textColor: '#453c1c', textMuted: '#8c805c', border: '#fef3c7', isDark: false, showBorder: true },
+    green: { name: '애플민트', bodyBg: '#f0fdf4', containerBg: '#ffffff', textColor: '#223829', textMuted: '#68826f', border: '#dcfce7', isDark: false, showBorder: true },
+    blue: { name: '소다 스카이', bodyBg: '#f0f9ff', containerBg: '#ffffff', textColor: '#21334a', textMuted: '#647c94', border: '#e0f2fe', isDark: false, showBorder: true },
+    purple: { name: '라벤더', bodyBg: '#faf5ff', containerBg: '#ffffff', textColor: '#3b2b4d', textMuted: '#837199', border: '#f3e8ff', isDark: false, showBorder: true },
+    mint: { name: '페퍼민트', bodyBg: '#f0fdfa', containerBg: '#ffffff', textColor: '#1e3833', textMuted: '#5d827b', border: '#ccfbf1', isDark: false, showBorder: true },
+    peach: { name: '피치', bodyBg: '#fff5f5', containerBg: '#ffffff', textColor: '#4f2f2b', textMuted: '#967470', border: '#ffe4e6', isDark: false, showBorder: true },
+    lilac: { name: '라일락', bodyBg: '#fdf4ff', containerBg: '#ffffff', textColor: '#43264d', textMuted: '#8b6b94', border: '#fae8ff', isDark: false, showBorder: true },
+    sage: { name: '세이지', bodyBg: '#f4f6f0', containerBg: '#ffffff', textColor: '#2e3a24', textMuted: '#6b7a5e', border: '#e6ebd8', isDark: false, showBorder: true },
+    ocean: { name: '딥 오션', bodyBg: '#e0f2fe', containerBg: '#ffffff', textColor: '#0f2d4a', textMuted: '#507294', border: '#bae6fd', isDark: false, showBorder: true },
+    rose: { name: '장미 정원', bodyBg: '#ffe4e6', containerBg: '#ffffff', textColor: '#5c1d24', textMuted: '#9c5c64', border: '#fecdd3', isDark: false, showBorder: true },
+    grape: { name: '포도송이', bodyBg: '#f3e8ff', containerBg: '#ffffff', textColor: '#3b1d5c', textMuted: '#7c5c9c', border: '#e9d5ff', isDark: false, showBorder: true },
+    milktea: { name: '로얄 밀크티', bodyBg: '#f5ebe0', containerBg: '#ffffff', textColor: '#3d2b1f', textMuted: '#7a6251', border: '#eddcd2', isDark: false, showBorder: true }
+};
+let currentBgTheme = 'dark';
+
+let isColorReplaceEnabled = true; 
+let customRowIdCounter = 0;
+
+function saveHistory() {
+    const currentVal = document.getElementById("freeMemo").value;
+    if (memoHistory[historyIndex] !== currentVal) {
+        memoHistory = memoHistory.slice(0, historyIndex + 1);
+        memoHistory.push(currentVal);
+        if (memoHistory.length > MAX_HISTORY) {
+            memoHistory.shift();
+        } else {
+            historyIndex++;
+        }
+    }
+}
+
+function customUndo() {
+    if (historyIndex > 0) { historyIndex--; document.getElementById("freeMemo").value = memoHistory[historyIndex]; }
+}
+function customRedo() {
+    if (historyIndex < memoHistory.length - 1) { historyIndex++; document.getElementById("freeMemo").value = memoHistory[historyIndex]; }
+}
+
+function copyMemoAll() {
+    const memoArea = document.getElementById("freeMemo");
+    if (!memoArea.value.trim()) { showToast("❌ 복사할 내용이 없습니다!"); return; }
+    memoArea.select();
+    navigator.clipboard.writeText(memoArea.value)
+        .then(() => showToast("🥳 복사했어~"))
+        .catch(() => showToast("❌ 복사에 실패했습니다."));
+}
+
+function importFromMemo(id) {
+    const memoContent = document.getElementById("freeMemo").value.trim();
+    if (!memoContent) { showToast("⚠️ 우측 편집창이 비어있습니다!"); return; }
+    document.getElementById(`logInput${id}`).value = memoContent;
+    updateCharCount(id);
+    showToast(`🧺 코드를 [작업창 ${TAB_NAMES[id]}]로 가져왔습니다!`);
+}
+
+function importToTarget(targetId) {
+    const memoContent = document.getElementById("freeMemo").value.trim();
+    if (!memoContent) { showToast("⚠️ 우측 편집창이 완전히 비어있습니다!"); return; }
+    document.getElementById(targetId).value = memoContent;
+    showToast(`🧺 메모장 코드를 해당 영역으로 가져왔습니다!`);
+}
+
+function sendToViewer(id) {
+    const resultText = document.getElementById(`logOutput${id}`).value;
+    if (!resultText) {
+        showToast("⚠️ 먼저 싹둑싹둑/끼워넣기를 실행해 결과물을 만들어주세요!");
+        return;
+    }
+    
+    const freeMemo = document.getElementById('freeMemo');
+    freeMemo.value = resultText;
+    saveHistory();
+
+    const sidebarToggle = document.getElementById("sidebarModeToggle");
+    if (!sidebarToggle.checked) {
+        sidebarToggle.checked = true;
+        toggleSidebarMode();
+    } else {
+        const htmlViewer = document.getElementById("htmlViewer");
+        htmlViewer.srcdoc = resultText;
+        htmlViewer.dataset.lastCode = resultText;
+    }
+    showToast("🎉 결과물을 뷰어로 전송했습니다!");
+}
+
+function hexToRgba(hex, alpha) {
+    let r = parseInt(hex.slice(1, 3), 16),
+        g = parseInt(hex.slice(3, 5), 16),
+        b = parseInt(hex.slice(5, 7), 16);
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+}
+
+let liveSyncTimeout;
+function triggerLiveSync(delay = 100) {
+    if (isLiveSyncActive) {
+        clearTimeout(liveSyncTimeout);
+        liveSyncTimeout = setTimeout(() => {
+            generateView(true);
+        }, delay);
+    }
+}
+
+function selectHlPreset(presetKey) {
+    const activeCard = document.getElementById(`presetCard_${presetKey}`);
+    
+    if (currentHlPreset === presetKey && isColorReplaceEnabled) {
+        isColorReplaceEnabled = false;
+        currentHlPreset = null;
+        document.querySelectorAll('.preset-card').forEach(card => card.classList.remove('active'));
+        showToast("🎨 단어 강조 기능이 해제되었습니다.");
+    } else {
+        isColorReplaceEnabled = true;
+        currentHlPreset = presetKey;
+        document.querySelectorAll('.preset-card').forEach(card => card.classList.remove('active'));
+        if (activeCard) activeCard.classList.add('active');
+        showToast(`🎨 '${HL_PRESETS[presetKey].name}'(으)로 변경되었습니다!`);
+    }
+    triggerLiveSync(50);
+}
+
+function selectBgTheme(themeKey) {
+    currentBgTheme = themeKey;
+    document.querySelectorAll('.bg-theme-card').forEach(card => {
+        card.classList.remove('active');
+    });
+    const activeCard = document.getElementById(`bgThemeCard_${themeKey}`);
+    if (activeCard) activeCard.classList.add('active');
+    showToast(`🌸 테마가 '${BG_THEMES[themeKey].name}'(으)로 변경되었습니다!`);
+    triggerLiveSync(50);
+}
+
+function addNewCustomWordRow(word = "", textCol = "#4A8A54", bgColHex = "") {
+    const container = document.getElementById('customWordContainer');
+    const rowId = `custom_row_${customRowIdCounter++}`;
+    
+    if (!bgColHex) {
+        bgColHex = getLighterBgRecommendation(textCol);
+    }
+    
+    const rowDiv = document.createElement('div');
+    rowDiv.id = rowId;
+    rowDiv.style.display = 'flex';
+    rowDiv.style.alignItems = 'center';
+    rowDiv.style.gap = '8px';
+    rowDiv.className = 'custom-word-row';
+    
+    rowDiv.dataset.textCol = textCol;
+    rowDiv.dataset.bgCol = bgColHex;
+    
+    rowDiv.innerHTML = `
+        <input type="text" placeholder="강조 단어" value="${word}" class="word-text-input" oninput="triggerLiveSync(100)" style="flex: 1; padding: 6px 10px; font-size: 11px; border: 1px solid #bde0c4; border-radius: 6px;">
+        <div style="display: flex; align-items: center; gap: 4px;">
+            <span style="font-size: 10px; color: #777;">글자:</span>
+            <div class="char-color-picker-trigger" id="swatch_text_${rowId}" onclick="openColorPicker(event, 'wordText', '${rowId}')" style="width: 14px; height: 14px; border-radius: 50%; background-color: ${textCol}; border: 1px solid rgba(0,0,0,0.15); cursor: pointer;" title="글자 색상"></div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 4px;">
+            <span style="font-size: 10px; color: #777;">배경:</span>
+            <div class="char-color-picker-trigger" id="swatch_bg_${rowId}" onclick="openColorPicker(event, 'wordBg', '${rowId}')" style="width: 14px; height: 14px; border-radius: 50%; background-color: ${bgColHex}; border: 1px solid rgba(0,0,0,0.15); cursor: pointer;" title="배경 색상"></div>
+        </div>
+        <button type="button" onclick="deleteCustomWordRow('${rowId}')" style="background: none; border: none; color: #ff758f; cursor: pointer; font-weight: bold; font-size: 14px; padding: 0 4px; outline: none;">✕</button>
+    `;
+    container.appendChild(rowDiv);
+    triggerLiveSync(10);
+}
+
+function deleteCustomWordRow(rowId) {
+    const row = document.getElementById(rowId);
+    if (row) {
+        row.remove();
+        triggerLiveSync(10);
+    }
+}
+</script>
+
+<script>
+// ==========================================
+// 🚀 탭 레이아웃 동적 렌더링 및 UI 바인딩
+// ==========================================
+document.addEventListener("DOMContentLoaded", () => {
+    const tabBtns = document.getElementById('tabButtons');
+    const tabConts = document.getElementById('tabContents');
+    let buttonsHTML = '';
+    let contentsHTML = '';
+
+    for(let i=1; i<=5; i++) {
+        if(i === 1) {
+            buttonsHTML += `<button class="tab-button active blue-tab-active" id="btnTab1" onclick="openTab(event, 'tab1')">${TAB_NAMES[i]}</button>`;
+            contentsHTML += `
+            <div id="tab1" class="tab-content active">
+                <div class="input-group">
+                    <div class="label-wrapper"><label style="color: #6bb376;">📂 파일 불러오기</label></div>
+                    <div class="file-drop-zone blue-drop-zone" id="editorDropZone" onclick="document.getElementById('editorFileInput').click()">
+                        <p>✨ HTML 로그 파일을 떨어뜨리거나 클릭해서 업로드!</p>
+                        <span>(아래에서 이미지 링크도 넣어보자~)</span>
+                    </div>
+                    <input type="file" id="editorFileInput" accept=".html, .txt" style="display: none;">
+                    <div id="editorFileNameDisplay" style="margin-top: 5px; font-size: 13px; color: #6bb376; font-weight:bold; text-align: right;"></div>
+                </div>
+                <div id="settingsArea" style="display: none; margin-top: 20px;">
+                    <details style="margin-bottom: 18px; background: #ffffff; border: 1px solid #bde0c4; border-radius: 10px; overflow: hidden; box-shadow: 0 3px 10px rgba(107, 179, 118, 0.04);">
+                        <summary style="cursor: pointer; font-weight: bold; color: #4a8a54; font-size: 13.5px; padding: 12px 16px; background: #fafdfb; display: flex; justify-content: space-between; align-items: center; user-select: none;">
+                            <span style="display: flex; align-items: center; gap: 8px;">오너먼트!</span>
+                            <span class="summary-arrow" style="font-size: 11px; color: #6bb376;">▼</span>
+                        </summary>
+                        <div style="padding: 16px; display: flex; flex-direction: column; gap: 14px;">
+                            <div style="display: flex; flex-direction: column; gap: 8px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span style="font-weight: bold; font-size: 13px; color: #333;">👥 시스템 및 서술자 정렬</span>
+                                </div>
+                                <div class="align-radio-group" style="width: 100%; display: flex; justify-content: space-around; padding: 4px; box-sizing: border-box;">
+                                    <label class="align-radio-label" style="flex: 1; justify-content: center;" onchange="triggerLiveSync()">
+                                        <input type="radio" name="sysAlignMode" value="center"> 중앙
+                                    </label>
+                                    <label class="align-radio-label" style="flex: 1; justify-content: center;" onchange="triggerLiveSync()">
+                                        <input type="radio" name="sysAlignMode" value="left-space" checked> 공백
+                                    </label>
+                                    <label class="align-radio-label" style="flex: 1; justify-content: center;" onchange="triggerLiveSync()">
+                                        <input type="radio" name="sysAlignMode" value="left-nospace"> 기본
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div style="display: flex; flex-direction: column; gap: 8px; border-top: 1px dashed #e2ebd9; padding-top: 12px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div style="font-weight: bold; font-size: 13px; color: #333;">🌸 파스텔 테마</div>
+                                    <button type="button" class="btn-memo-import" onclick="openCustomThemeModal()" style="font-size: 11.5px; padding: 4px 12px; margin: 0; border-radius: 20px;">🎨 커스텀</button>
+                                </div>
+                                <div style="font-size: 11px; color: #718096;">원하는 색상이 없다면 커스텀 버튼으로 색상 커스텀이 가능합니다.</div>
+                                <div class="bg-theme-grid">
+                                    <div class="bg-theme-card active" id="bgThemeCard_dark" onclick="selectBgTheme('dark')">
+                                        <div class="bg-theme-circle" style="background: #111214; border: 1px solid #2a2b2e;"></div>
+                                        <div class="bg-theme-title">다크모드</div>
+                                    </div>
+                                    <div class="bg-theme-card" id="bgThemeCard_light" onclick="selectBgTheme('light')">
+                                        <div class="bg-theme-circle" style="background: #f2f4f6; border: 1px solid #e5e8eb;"></div>
+                                        <div class="bg-theme-title">화이트</div>
+                                    </div>
+                                    <div class="bg-theme-card" id="bgThemeCard_pink" onclick="selectBgTheme('pink')">
+                                        <div class="bg-theme-circle" style="background: #FFFAFB; border: 1px solid #FFE5E9;"></div>
+                                        <div class="bg-theme-title">딸기우유</div>
+                                    </div>
+                                    <div class="bg-theme-card" id="bgThemeCard_orange" onclick="selectBgTheme('orange')">
+                                        <div class="bg-theme-circle" style="background: #fff7ed; border: 1px solid #ffe8cc;"></div>
+                                        <div class="bg-theme-title">살구 샤베트</div>
+                                    </div>
+                                    <div class="bg-theme-card" id="bgThemeCard_yellow" onclick="selectBgTheme('yellow')">
+                                        <div class="bg-theme-circle" style="background: #fefce8; border: 1px solid #fef3c7;"></div>
+                                        <div class="bg-theme-title">바나나 크림</div>
+                                    </div>
+                                    <div class="bg-theme-card" id="bgThemeCard_green" onclick="selectBgTheme('green')">
+                                        <div class="bg-theme-circle" style="background: #f0fdf4; border: 1px solid #dcfce7;"></div>
+                                        <div class="bg-theme-title">애플민트</div>
+                                    </div>
+                                    <div class="bg-theme-card" id="bgThemeCard_blue" onclick="selectBgTheme('blue')">
+                                        <div class="bg-theme-circle" style="background: #f0f9ff; border: 1px solid #e0f2fe;"></div>
+                                        <div class="bg-theme-title">소다 스카이</div>
+                                    </div>
+                                    <div class="bg-theme-card" id="bgThemeCard_purple" onclick="selectBgTheme('purple')">
+                                        <div class="bg-theme-circle" style="background: #faf5ff; border: 1px solid #f3e8ff;"></div>
+                                        <div class="bg-theme-title">라벤더</div>
+                                    </div>
+                                    <div class="bg-theme-card" id="bgThemeCard_mint" onclick="selectBgTheme('mint')">
+                                        <div class="bg-theme-circle" style="background: #f0fdfa; border: 1px solid #ccfbf1;"></div>
+                                        <div class="bg-theme-title">페퍼민트</div>
+                                    </div>
+                                    <div class="bg-theme-card" id="bgThemeCard_peach" onclick="selectBgTheme('peach')">
+                                        <div class="bg-theme-circle" style="background: #fff5f5; border: 1px solid #ffe4e6;"></div>
+                                        <div class="bg-theme-title">피치</div>
+                                    </div>
+                                    <div class="bg-theme-card" id="bgThemeCard_lilac" onclick="selectBgTheme('lilac')">
+                                        <div class="bg-theme-circle" style="background: #fdf4ff; border: 1px solid #fae8ff;"></div>
+                                        <div class="bg-theme-title">라일락</div>
+                                    </div>
+                                    <div class="bg-theme-card" id="bgThemeCard_sage" onclick="selectBgTheme('sage')">
+                                        <div class="bg-theme-circle" style="background: #f4f6f0; border: 1px solid #e6ebd8;"></div>
+                                        <div class="bg-theme-title">세이지</div>
+                                    </div>
+                                    <div class="bg-theme-card" id="bgThemeCard_ocean" onclick="selectBgTheme('ocean')">
+                                        <div class="bg-theme-circle" style="background: #e0f2fe; border: 1px solid #bae6fd;"></div>
+                                        <div class="bg-theme-title">딥 오션</div>
+                                    </div>
+                                    <div class="bg-theme-card" id="bgThemeCard_rose" onclick="selectBgTheme('rose')">
+                                        <div class="bg-theme-circle" style="background: #ffe4e6; border: 1px solid #fecdd3;"></div>
+                                        <div class="bg-theme-title">장미정원</div>
+                                    </div>
+                                    <div class="bg-theme-card" id="bgThemeCard_grape" onclick="selectBgTheme('grape')">
+                                        <div class="bg-theme-circle" style="background: #f3e8ff; border: 1px solid #e9d5ff;"></div>
+                                        <div class="bg-theme-title">포도송이</div>
+                                    </div>
+                                    <div class="bg-theme-card" id="bgThemeCard_milktea" onclick="selectBgTheme('milktea')">
+                                        <div class="bg-theme-circle" style="background: #f5ebe0; border: 1px solid #eddcd2;"></div>
+                                        <div class="bg-theme-title">로얄 밀크티</div>
+                                    </div>
+                                    <div class="bg-theme-card" id="bgThemeCard_custom" onclick="selectBgTheme('custom')" style="display: none;">
+                                        <div class="bg-theme-circle" id="customThemeCircle" style="background: #ffffff; border: 1px solid #cbd0d6;"></div>
+                                        <div class="bg-theme-title">사용자 지정</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div style="display: flex; flex-direction: column; gap: 8px; border-top: 1px dashed #e2ebd9; padding-top: 12px;">
+                                <div class="mode-info">
+                                    <span style="font-weight: bold; font-size: 13px; color: #333;">🎨 지정 단어 강조</span>
+                                    <div style="font-size: 11px; color: #888; margin-top: 2px;">버튼을 다시 누르면 강조가 해제됩니다. 선택 단어의 수정이 가능합니다!</div>
+                                </div>
+
+                                <div style="margin-top: 4px;">
+                                    <div style="font-size: 11.5px; font-weight: bold; color: #4a8a54; margin-bottom: 4px;">기본 단어 컬러 테마</div>
+                                    <div class="preset-grid">
+                                        <div class="preset-card active" id="presetCard_preset1" onclick="selectHlPreset('preset1')">
+                                            <div class="preset-title" title="블루 레드">블루 레드</div>
+                                            <div class="preset-preview-dots">
+                                                <span class="preset-dot" style="background: #4dabf7;"></span>
+                                                <span class="preset-dot" style="background: #ff6b6b;"></span>
+                                            </div>
+                                        </div>
+                                        <div class="preset-card" id="presetCard" id="presetCard_preset2" onclick="selectHlPreset('preset2')">
+                                            <div class="preset-title" title="민트 피치">민트 피치</div>
+                                            <div class="preset-preview-dots">
+                                                <span class="preset-dot" style="background: #20c997;"></span>
+                                                <span class="preset-dot" style="background: #f783ac;"></span>
+                                            </div>
+                                        </div>
+                                        <div class="preset-card" id="presetCard_preset3" onclick="selectHlPreset('preset3')">
+                                            <div class="preset-title" title="골드 차콜">골드 차콜</div>
+                                            <div class="preset-preview-dots">
+                                                <span class="preset-dot" style="background: #f59f00;"></span>
+                                                <span class="preset-dot" style="background: #495057;"></span>
+                                            </div>
+                                        </div>
+                                        <div class="preset-card" id="presetCard_preset4" onclick="selectHlPreset('preset4')">
+                                            <div class="preset-title" title="포레스트 코랄">포레스트 코랄</div>
+                                            <div class="preset-preview-dots">
+                                                <span class="preset-dot" style="background: #2b8a3e;"></span>
+                                                <span class="preset-dot" style="background: #e8590c;"></span>
+                                            </div>
+                                        </div>
+                                        <div class="preset-card" id="presetCard_preset5" onclick="selectHlPreset('preset5')">
+                                            <div class="preset-title" title="오션 로즈">오션 로즈</div>
+                                            <div class="preset-preview-dots">
+                                                <span class="preset-dot" style="background: #0c8599;"></span>
+                                                <span class="preset-dot" style="background: #d6336c;"></span>
+                                            </div>
+                                        </div>
+                                        <div class="preset-card" id="presetCard_preset6" onclick="selectHlPreset('preset6')">
+                                            <div class="preset-title" title="골드 퍼플">골드 퍼플</div>
+                                            <div class="preset-preview-dots">
+                                                <span class="preset-dot" style="background: #fcc419;"></span>
+                                                <span class="preset-dot" style="background: #ae3ec9;"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="customWordInputs" style="display: flex; flex-direction: column; gap: 8px; margin-top: 6px;">
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <span style="font-size: 11px; font-weight: bold; color: #555; width: 80px; flex-shrink: 0;">1선택 단어:</span>
+                                        <input type="text" id="blueWordsInput" placeholder="ex) 보통 성공, 어려운 성공, 대단한 성공, 대성공 (쉼표 구분)" oninput="triggerLiveSync()" style="flex: 1; padding: 6px 10px; font-size: 12px; border: 1px solid #bde0c4; border-radius: 6px;" value="보통 성공, 어려운 성공, 대단한 성공, 대성공">
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <span style="font-size: 11px; font-weight: bold; color: #555; width: 80px; flex-shrink: 0;">2선택 단어:</span>
+                                        <input type="text" id="redWordsInput" placeholder="ex) 실패, 대실패 (쉼표 구분)" oninput="triggerLiveSync()" style="flex: 1; padding: 6px 10px; font-size: 12px; border: 1px solid #bde0c4; border-radius: 6px;" value="실패, 대실패">
+                                    </div>
+                                </div>
+
+                                <div style="display: flex; flex-direction: column; gap: 4px; border-top: 1px dashed #e2ebd9; padding-top: 10px;">
+                                    <div style="display: flex; justify-content: flex-end; align-items: center;">
+                                        <button type="button" class="btn-memo-import" onclick="addNewCustomWordRow()" style="padding: 4px 14px; font-size: 12px; border-radius: 20px;">➕ 단어 추가</button>
+                                    </div>
+                                    <div id="customWordContainer" style="display: flex; flex-direction: column; gap: 8px; margin-top: 6px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+                    
+                    <div class="input-group">
+                        <div class="label-wrapper">
+                            <label style="color: #6bb376;">👥 캐릭터 설정</label>
+                        </div>
+                        <div id="mainCharacters"></div>
+                        <details style="margin-top: 15px; background: #fafdfb; border: 1px dashed #bde0c4; padding: 12px; border-radius: 8px;">
+                            <summary style="cursor: pointer; font-weight: bold; color: #6bb376; font-size: 13.5px;">모브 캐릭터 (채팅 35회 이하)</summary>
+                            <div id="mobCharacters" style="margin-top: 10px;"></div>
+                        </details>
+                        <div class="image-management-bar">
+                            <button class="btn-img-load" style="color: #fa5252; border-color: #ffc9c9; background-color: #fff5f5;" onmouseover="this.style.backgroundColor='#ffe3e3'; this.style.borderColor='#ff8787';" onmouseout="this.style.backgroundColor='#fff5f5'; this.style.borderColor='#ffc9c9';" onclick="injectFromClipboard()">🍅</button>
+                            <button class="btn-img-load" onclick="loadSavedImages()">📂 저장된 이미지 불러오기</button>
+                            <button class="btn-img-save" onclick="saveImagesToStorage()">💾 현재 이미지 주소 저장</button>
+                        </div>
+                    </div>
+                    <div class="btn-group" style="margin-top: 20px;">
+                        <button class="btn-download" style="flex: 1; margin-top: 0; width: auto; background-color: #6bb376; color: white; border: none; border-radius: 6px; font-size: 15px; cursor: pointer; font-weight: bold; padding: 12px; transition: all 0.2s; box-shadow: 0 3px 10px rgba(107, 179, 118, 0.2);" onmouseover="this.style.backgroundColor='#4a8a54'" onmouseout="this.style.backgroundColor='#6bb376'" onclick="downloadView()">🪵 파일 저장</button>
+                        <button class="btn-extract-blue" style="flex: 1; margin-top: 0; width: auto; background-color: #6bb376; color: white; border: none; border-radius: 6px; font-size: 15px; cursor: pointer; font-weight: bold; padding: 12px; transition: all 0.2s; border: none; box-shadow: 0 3px 10px rgba(107, 179, 118, 0.2);" onmouseover="this.style.backgroundColor='#4a8a54'" onmouseout="this.style.backgroundColor='#6bb376'" onclick="generateView(false)">🌿 물 주기</button>
+                    </div>
+                </div>
+            </div>`;
+        } else if (i === 5) {
+            buttonsHTML += `<button class="tab-button" onclick="openTab(event, 'tab5')">${TAB_NAMES[i]}</button>`;
+            contentsHTML += `
+            <div id="tab5" class="tab-content">
+                <div class="input-group">
+                    <div class="label-wrapper">
+                        <label class="pink-label">🍅 열매 모으기</label>
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <div style="font-size:13px; color:#555; line-height: 1.4;">브라우저에 저장된 캐릭터 이미지 데이터 목록입니다.</div>
+                    </div>
+                    <div id="imageManagerContainer" style="min-height: 200px; background: #fffafb; padding: 15px; border-radius: 8px; border: 1px dashed #ffa6b4;"></div>
+                    <button class="btn-cut pink-btn-cut" style="margin-top: 20px; background-color: #ff4d6d !important;" onmouseover="this.style.backgroundColor='#e03a5b'" onmouseout="this.style.backgroundColor='#ff4d6d'" onclick="clearAllImages()">⚠️ 전체 초기화</button>
+                    <div style="font-size: 9px; color: #ffccd3; text-align: right; margin-top: 15px; user-select: none;">Icon made by <a href="https://www.flaticon.com/authors/mayor-icons" target="_blank" style="color: inherit; text-decoration: none;">Mayor Icons</a> from <a href="https://www.flaticon.com/" target="_blank" style="color: inherit; text-decoration: none;">Flaticon</a></div>
+                </div>
+            </div>`;
+        } else if (i === 2) {
+            buttonsHTML += `<button class="tab-button" onclick="openTab(event, 'tab2')">${TAB_NAMES[i]}</button>`;
+            contentsHTML += `
+            <div id="tab2" class="tab-content">
+                <div class="input-group">
+                    <div class="label-wrapper">
+                        <label class="coral-label">📂 1. 뿌리 로그</label>
+                        <button class="btn-memo-import" style="color: #bfa38a; border-color: #e6dad0;" onclick="importToTarget('logInputMain2')">🪄 메모장 가져오기</button>
+                    </div>
+                    <div class="file-drop-zone coral-drop-zone" id="dropZoneMain2" onclick="document.getElementById('fileInputMain2').click()">
+                        <p>✨ 메인 HTML 로그 파일을 떨어뜨리거나 클릭해서 업로드!</p>
+                        <span>(아래 텍스트 박스에 직접 붙여넣거나 우측 버튼을 이용하세요)</span>
+                    </div>
+                    <input type="file" id="fileInputMain2" class="file-input" accept=".html,.txt" onchange="handleFileSelectTarget(event, 'logInputMain2', 2)">
+                    <textarea id="logInputMain2" style="height: 120px;" placeholder="메인이 될 로그 코드를 넣어주세요."></textarea>
+                </div>
+                
+                <div class="input-group">
+                    <div class="label-wrapper">
+                        <label class="coral-label">📂 2. 나무 로그</label>
+                        <button class="btn-memo-import" style="color: #bfa38a; border-color: #e6dad0;" onclick="importToTarget('logInputSub2')">🪄 메모장 가져오기</button>
+                    </div>
+                    <div class="file-drop-zone coral-drop-zone" id="dropZoneSub2" onclick="document.getElementById('fileInputSub2').click()">
+                        <p>✨ 삽입할 HTML 로그 파일을 떨어뜨리거나 클릭해서 업로드!</p>
+                        <span>(이 로그는 자동으로 위아래 가지를 떼고 알맹이만 합쳐집니다)</span>
+                    </div>
+                    <input type="file" id="fileInputSub2" class="file-input" accept=".html,.txt" onchange="handleFileSelectTarget(event, 'logInputSub2', 2)">
+                    <textarea id="logInputSub2" style="height: 120px;" placeholder="서브 로그 코드를 넣어주세요."></textarea>
+                </div>
+
+                <div class="input-group">
+                    <div class="label-wrapper"><label class="coral-label">🖤 3. 삽입 위치</label></div>
+                    <input type="text" id="keywordInput2" placeholder="뿌리 로그의 특정 대사 바로 다음에 삽입됩니다. ex) 토이💙">
+                </div>
+
+                <button class="btn-cut coral-btn" onclick="processSplice(2)">🪴 나무 옮겨심기</button>
+                
+                <div id="resultSection2" class="result-section" style="border-top-color: #e6dad0;">
+                    <div class="input-group">
+                        <div class="label-wrapper">
+                            <label class="coral-label">✨ 심기 완료!</label>
+                            <span id="outputCount2" class="char-count" style="color: #8c6f56; background: #faf6f0; border-color: #e6dad0;">0자</span>
+                        </div>
+                        <textarea id="logOutput2" readonly></textarea>
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn-download" style="background-color: #bfa38a;" onmouseover="this.style.backgroundColor='#8c6f56'" onmouseout="this.style.backgroundColor='#bfa38a'" onclick="downloadResult(2)">🪵 파일 다운로드</button>
+                        <button class="btn-copy" style="background-color: #a68a72;" onmouseover="this.style.backgroundColor='#705945'" onmouseout="this.style.backgroundColor='#a68a72'" onclick="copyToClipboard(2)">🔗 복사하기</button>
+                        <button class="pink-btn-viewer" onclick="sendToViewer(2)">💗 뷰어로 보기</button>
+                    </div>
+                </div>
+            </div>`;
+        } else {
+            buttonsHTML += `<button class="tab-button" onclick="openTab(event, 'tab${i}')">${TAB_NAMES[i]}</button>`;
+            contentsHTML += `
+            <div id="tab${i}" class="tab-content">
+                <div class="input-group">
+                    <div class="label-wrapper">
+                        <label class="pink-label">📂 파일 불러오기</label>
+                        <button class="btn-memo-import pink-btn-memo-import" onclick="importFromMemo(${i})">🪄 메모장 가져오기</button>
+                    </div>
+                    <div class="file-drop-zone pink-drop-zone" id="dropZone${i}" onclick="document.getElementById('fileInput${i}').click()">
+                        <p>✨ HTML 로그 파일을 떨어뜨리거나 클릭해서 업로드!</p>
+                        <span>(아래 텍스트 박스에 직접 붙여넣거나 우측 버튼을 이용하세요)</span>
+                    </div>
+                    <input type="file" id="fileInput${i}" class="file-input" accept=".html,.txt" onchange="handleFileSelect(event, ${i})">
+                </div>
+                <div class="input-group">
+                    <div class="label-wrapper">
+                        <label class="pink-label">🌱 로그 입력</label>
+                        <span id="inputCount${i}" class="pink-char-count">0자</span>
+                    </div>
+                    <textarea id="logInput${i}" class="pink-textarea" placeholder="${TAB_NAMES[i]} 창: 코드를 전부 복사해 붙여넣거나 위의 파일 영역을 이용하세요." oninput="debouncedCount(${i})"></textarea>
+                </div>
+                <div class="input-group">
+                    <div class="label-wrapper"><label class="pink-label">♟️ 기준 문장</label></div>
+                    <input type="text" id="keywordInput${i}" class="pink-input" placeholder="일부 단어만 적어도 굴러갑니다. ex) 체스 or 체스 사랑해ㅠ">
+                </div>
+                
+                <div style="display: flex; align-items: center; justify-content: space-between; background: #fffafb; padding: 10px 15px; border-radius: 8px; border: 1px dashed #ffb3c1; margin-bottom: 18px;">
+                    <span class="pink-label" style="font-size: 13px; font-weight: bold;">가지치기 방향</span>
+                    <label class="switch-label pink-switch" style="width: 110px; height: 34px;">
+                        <input type="checkbox" id="cutModeToggle${i}" checked>
+                        <span class="slider" style="border-radius: 34px;">
+                            <span class="text-basic">하단</span>
+                            <span class="text-mid">상단</span>
+                        </span>
+                    </label>
+                </div>
+
+                <button class="btn-cut pink-btn-cut" onclick="processLog(${i})">✂️ 싹둑싹둑</button>
+                <div id="resultSection${i}" class="result-section pink-result-section">
+                    <div class="input-group">
+                        <div class="label-wrapper">
+                            <label style="color: #ff758f;">✨ 짜잔!</label>
+                            <span id="outputCount${i}" class="pink-char-count">0자</span>
+                        </div>
+                        <textarea id="logOutput${i}" class="pink-textarea" readonly></textarea>
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn-download pink-btn-download" onclick="downloadResult(${i})">🪵 파일 다운로드</button>
+                        <button class="btn-copy pink-btn-copy" onclick="copyToClipboard(${i})">🔗 복사하기</button>
+                        <button class="pink-btn-viewer" onclick="sendToViewer(${i})">💗 뷰어로 보기</button>
+                    </div>
+                </div>
+            </div>`;
+        }
+    }
+    
+    tabBtns.innerHTML = buttonsHTML;
+    tabConts.innerHTML = contentsHTML;
+    memoHistory[0] = document.getElementById("freeMemo").value;
+
+    document.getElementById('editorFileInput').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        currentFileName = file.name;
+        document.getElementById('editorFileNameDisplay').innerText = `✅ ${file.name} 분석 완료!`;
+        const reader = new FileReader();
+        reader.onload = function(e) { analyzeLog(e.target.result); };
+        reader.readAsText(file);
+    });
+
+    const editorDropZone = document.getElementById('editorDropZone');
+    if (editorDropZone) {
+        editorDropZone.addEventListener('dragover', (e) => { e.preventDefault(); editorDropZone.classList.add('dragover'); });
+        editorDropZone.addEventListener('dragleave', () => { editorDropZone.classList.remove('dragover'); });
+        editorDropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            editorDropZone.classList.remove('dragover');
+            if (e.dataTransfer.files.length > 0) {
+                const file = e.dataTransfer.files[0];
+                currentFileName = file.name;
+                document.getElementById('editorFileNameDisplay').innerText = `✅ ${file.name} 분석 완료`;
+                const reader = new FileReader();
+                reader.onload = function(e) { analyzeLog(e.target.result); };
+                reader.readAsText(file);
+            }
+        });
+    }
+
+    for (let i = 2; i <= 4; i++) {
+        if(i === 2) {
+            const dropMain = document.getElementById(`dropZoneMain2`);
+            const dropSub = document.getElementById(`dropZoneSub2`);
+            if(dropMain) {
+                dropMain.addEventListener('dragover', e => { e.preventDefault(); dropMain.classList.add('dragover'); });
+                dropMain.addEventListener('dragleave', () => dropMain.classList.remove('dragover'));
+                dropMain.addEventListener('drop', e => { e.preventDefault(); dropMain.classList.remove('dragover'); if(e.dataTransfer.files.length) readFileIntoTarget(e.dataTransfer.files[0], 'logInputMain2', 2); });
+            }
+            if(dropSub) {
+                dropSub.addEventListener('dragover', e => { e.preventDefault(); dropSub.classList.add('dragover'); });
+                dropSub.addEventListener('dragleave', () => dropSub.classList.remove('dragover'));
+                dropSub.addEventListener('drop', e => { e.preventDefault(); dropSub.classList.remove('dragover'); if(e.dataTransfer.files.length) readFileIntoTarget(e.dataTransfer.files[0], 'logInputSub2', 2); });
+            }
+        } else {
+            const dropZone = document.getElementById(`dropZone${i}`);
+            if(dropZone) {
+                dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
+                dropZone.addEventListener('dragleave', () => { dropZone.classList.remove('dragover'); });
+                dropZone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    dropZone.classList.remove('dragover');
+                    if (e.dataTransfer.files.length > 0) readFileIntoTextarea(e.dataTransfer.files[0], i);
+                });
+            }
+        }
+    }
+});
+</script>
+
+<script>
+let parsedLogs = [];
+let characters = {};
+let charIdCounter = 0;
+
+function analyzeLog(rawHtml) {
+    parsedLogs = []; 
+    characters = {}; 
+    charIdCounter = 0;
+
+    const pRegex = /<p([^>]*)>([\s\S]*?)<\/p>/gi;
+    let match;
+
+    while ((match = pRegex.exec(rawHtml)) !== null) {
+        let pAttrs = match[1];
+        let innerHtml = match[2];
+
+        let color = '#ffffff';
+        let colorMatch = pAttrs.match(/color:\s*([^;>"]+)/i) || innerHtml.match(/color:\s*([^;>"]+)/i);
+        if (colorMatch) color = colorMatch[1].trim();
+
+        let processedHtml = innerHtml.replace(/<br\s*\/?>/gi, '\n');
+        let rawText = processedHtml.replace(/<[^>]*>?/gm, '').replace(/&nbsp;/g, ' ').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&').trim();
+
+        if (/^\[.*?\]\s*[^:]*\s*:\s*$/.test(rawText)) {
+            continue;
+        }
+
+        let textMatch = rawText.match(/\[.*?\]\s*(.*?)\s*:\s*([\s\S]+)/);
+        if (textMatch) {
+            let name = textMatch[1].trim();
+            let text = textMatch[2].trim();
+            if (name === "") {
+                parsedLogs.push({ isSystem: true, text: text, color: color });
+            } else {
+                parsedLogs.push({ isSystem: false, name: name, text: text, color: color });
+                if (!characters[name]) {
+                    characters[name] = { id: 'char_' + charIdCounter++, count: 0, color: color };
+                }
+                characters[name].count++;
+            }
+        } else {
+            parsedLogs.push({ isSystem: true, text: rawText, color: color });
+        }
+    }
+    renderSettings();
+}
+
+let draggedCharName = null;
+
+function handleDragStart(event, name) { draggedCharName = name; event.dataTransfer.effectAllowed = 'move'; }
+function handleDragOver(event) { event.preventDefault(); event.currentTarget.classList.add('drag-hover'); }
+function handleDragLeave(event) { event.currentTarget.classList.remove('drag-hover'); }
+function handleDrop(event, targetName) {
+    event.preventDefault();
+    event.currentTarget.classList.remove('drag-hover');
+    if (!draggedCharName || draggedCharName === targetName) return;
+
+    const targetChar = characters[targetName];
+    const draggedChar = characters[draggedCharName];
+    if(targetChar && draggedChar) {
+        const targetInput = document.getElementById(`img_${targetChar.id}`);
+        const draggedInput = document.getElementById(`img_${draggedChar.id}`);
+        if(targetInput && draggedInput) {
+            draggedInput.value = targetInput.value;
+            showToast(`🥑 [${draggedCharName}]의 이미지 링크가 [${targetName}]와 똑같이 설정되었습니다!`);
+            saveImagesToStorage(true);
+        }
+    }
+    draggedCharName = null;
+}
+
+function renderSettings() {
+    const mainContainer = document.getElementById('mainCharacters');
+    const mobContainer = document.getElementById('mobCharacters');
+    let mainHtml = '<div class="char-grid">';
+    let mobHtml = '<div class="char-grid">';
+    const sortedNames = Object.keys(characters).sort((a, b) => characters[b].count - characters[a].count);
+    
+    sortedNames.forEach(name => {
+        const char = characters[name];
+        const escapedName = name.replace(/'/g, "\\'");
+        const isSystemChar = name.toLowerCase() === 'system';
+        const checkedAttr = isSystemChar ? 'checked' : '';
+
+        const charHTML = `
+            <div class="char-item-blue" draggable="true" ondragstart="handleDragStart(event, '${escapedName}')" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, '${escapedName}')">
+                <div class="char-header-blue">
+                    <div class="char-name-box">
+                        <div class="char-color-picker-trigger" id="swatch_${char.id}" onclick="openColorPicker(event, 'char', '${char.id}', '${escapedName}')" style="width: 14px; height: 14px; border-radius: 50%; background-color: ${char.color}; border: 1px solid rgba(0,0,0,0.15); cursor: pointer;" title="색상 설정"></div>
+                        <span class="char-name-blue" id="name_label_${char.id}" style="color: ${char.color};" title="${name}">${name}</span>
+                    </div>
+                    <span class="char-count-blue">${char.count}회</span>
+                </div>
+                <div class="char-controls-blue">
+                    <input type="text" class="char-input-blue" id="img_${char.id}" data-name="${name}" placeholder="이미지 URL 링크" oninput="triggerLiveSync()">
+                    <label class="narr-checkbox-label"><input type="checkbox" id="narr_${char.id}" ${checkedAttr} onchange="triggerLiveSync()"> 서술자</label>
+                </div>
+            </div>`;
+        if (char.count > 35) mainHtml += charHTML;
+        else mobHtml += charHTML;
+    });
+    
+    mainHtml += '</div>'; mobHtml += '</div>';
+    mainContainer.innerHTML = mainHtml; mobContainer.innerHTML = mobHtml;
+    document.getElementById('settingsArea').style.display = 'block';
+    loadSavedImages(true);
+}
+
+function saveImagesToStorage(isSilent = false) {
+    const inputs = document.querySelectorAll('.char-input-blue');
+    const rawData = localStorage.getItem('cocoforia_char_images');
+    let imgData = {};
+    if (rawData) { try { imgData = JSON.parse(rawData); } catch(e) {} }
+
+    inputs.forEach(input => {
+        const name = input.getAttribute('data-name');
+        const val = input.value.trim();
+        if(name) { if(val) imgData[name] = val; else delete imgData[name]; }
+    });
+    
+    try {
+        localStorage.setItem('cocoforia_char_images', JSON.stringify(imgData));
+        if (!isSilent) {
+            showToast("🪵 저장되었습니다!");
+        }
+    } catch (e) {
+        if (e.name === 'QuotaExceededError' || e.name === 'NS_ERROR_DOM_QUOTA_REACHED') {
+            showCustomAlert("🚨 저장 공간이 부족합니다!", "이미지 URL 주소 대신 이미지 자체(Base64)를 변환해 넣었거나 용량을 초과했습니다.\n데이터를 정리해주세요.");
+            showToast("❌ 용량 초과로 저장에 실패했습니다.");
+        } else {
+            showToast("❌ 이미지 저장 중 오류가 발생했습니다.");
+        }
+    }
+}
+
+function loadSavedImages(silent = false) {
+    const rawData = localStorage.getItem('cocoforia_char_images');
+    if(!rawData) { if(!silent) showToast("⚠️ 불러올 인장 데이터가 존재하지 않습니다."); return; }
+    
+    try {
+        const imgData = JSON.parse(rawData);
+        const inputs = document.querySelectorAll('.char-input-blue');
+        let matchCount = 0;
+        inputs.forEach(input => {
+            const name = input.getAttribute('data-name');
+            if(name && imgData[name]) { input.value = imgData[name]; matchCount++; }
+            else if (name) { input.value = ""; }
+        });
+        if(!silent && matchCount > 0) showToast(`📂 캐릭터 ${matchCount}명의 이미지를 성공적으로 가져왔습니다!`);
+    } catch(e) { console.error(e); }
+}
+
+function renderImageManager() {
+    const container = document.getElementById('imageManagerContainer');
+    if (!container) return;
+    const rawData = localStorage.getItem('cocoforia_char_images');
+    if(!rawData) { container.innerHTML = '<p style="text-align:center; color:#999; font-weight:bold; margin: 40px 0;">저장된 캐릭터가 없습니다😣</p>'; return; }
+    
+    try {
+        const imgData = JSON.parse(rawData);
+        const keys = Object.keys(imgData);
+        if(keys.length === 0) { container.innerHTML = '<p style="text-align:center; color:#999; font-weight:bold; margin: 40px 0;">저장된 캐릭터가 없습니다😣</p>'; return; }
+        
+        let html = '<div class="img-manager-grid">';
+        keys.forEach(name => {
+            const encodedName = encodeURIComponent(name);
+            html += `
+            <div class="img-manager-card">
+                <div class="img-manager-header">
+                    <span>${name}</span>
+                    <button class="btn-img-del" onclick="deleteSingleImage('${encodedName}')">삭제</button>
+                </div>
+                <div class="img-manager-content">
+                    <div class="img-preview" style="background-image: url('${imgData[name]}');"></div>
+                    <input type="text" class="img-url-input" readonly value="${imgData[name]}" onclick="this.select();">
+                </div>
+            </div>`;
+        });
+        html += '</div>';
+        container.innerHTML = html; 
+    } catch(e) { container.innerHTML = '<p style="color:red; text-align:center;">데이터를 불러오는 중 오류가 발생했습니다.</p>'; }
+}
+
+function deleteSingleImage(encodedName) {
+    const name = decodeURIComponent(encodedName);
+    showCustomConfirm("이미지 삭제", `'${name}'의 데이터를 삭제하시겠습니까?`, () => {
+        const rawData = localStorage.getItem('cocoforia_char_images');
+        if(rawData) {
+            let imgData = JSON.parse(rawData); delete imgData[name];
+            try {
+                localStorage.setItem('cocoforia_char_images', JSON.stringify(imgData));
+                renderImageManager();
+                showToast("🗑️ 삭제 완료!");
+                triggerLiveSync();
+            } catch(e) {
+                showToast("❌ 삭제 후 저장 중 오류가 발생했습니다.");
+            }
+        }
+    });
+}
+
+function clearAllImages() {
+    showCustomConfirm("🚨 전체 초기화 경고", "저장된 모든 캐릭터를 삭제하시겠습니까?\n이 작업은 되돌릴 수 없으며 복구할 수 없습니다.", () => {
+        localStorage.removeItem('cocoforia_char_images');
+        renderImageManager();
+        showToast("🗑️ 전체 인장 데이터가 초기화 되었습니다.");
+        triggerLiveSync();
+    });
+}
+
+let currentFileName = "연백나무.txt";
+</script>
+
+<script>
+// ==========================================
+// 🚀 뷰어 출력 치환 엔진
+// ==========================================
+function generateView(silent = false) {
+    let resultHTML = [];
+    let currentTurnHTML = []; 
+    let lastType = null; 
+    let lastCharName = null;
+    
+    const alignMode = document.querySelector('input[name="sysAlignMode"]:checked').value;
+    const enableColorReplace = isColorReplaceEnabled;
+    
+    const hl = HL_PRESETS[currentHlPreset] || HL_PRESETS['preset1'];
+    const bgTheme = BG_THEMES[currentBgTheme] || BG_THEMES['dark'];
+    
+    const escapeRegExp = (str) => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+    const showBorderLine = bgTheme.showBorder !== false;
+
+    parsedLogs.forEach(log => {
+        const char = log.isSystem ? null : characters[log.name];
+        const isNarrator = log.isSystem || (char && document.getElementById(`narr_${char.id}`).checked);
+
+        let processedText = log.text;
+        if (enableColorReplace) {
+            const blueWords = document.getElementById('blueWordsInput').value.split(',').map(w => w.trim()).filter(w => w);
+            const redWords = document.getElementById('redWordsInput').value.split(',').map(w => w.trim()).filter(w => w);
+
+            if (blueWords.length > 0) {
+                const blueRegex = new RegExp(`(${blueWords.map(escapeRegExp).join('|')})`, 'g');
+                processedText = processedText.replace(blueRegex, `<span style="color: ${hl.blueCol}; font-weight: bold; background-color: ${hl.blueBg}; padding: 1px 4px; border-radius: 4px;">$1</span>`);
+            }
+
+            if (redWords.length > 0) {
+                const redRegex = new RegExp(`(${redWords.map(escapeRegExp).join('|')})`, 'g');
+                processedText = processedText.replace(redRegex, `<span style="color: ${hl.redCol}; font-weight: bold; background-color: ${hl.redBg}; padding: 1px 4px; border-radius: 4px;">$1</span>`);
+            }
+
+            const customRows = document.querySelectorAll('.custom-word-row');
+            customRows.forEach(row => {
+                const wordInput = row.querySelector('.word-text-input');
+                const word = wordInput ? wordInput.value.trim() : "";
+                if (word) {
+                    const textCol = row.dataset.textCol || "#4A8A54";
+                    const bgColHex = row.dataset.bgCol || "#6BB376";
+                    
+                    const escapedWord = escapeRegExp(word);
+                    const regex = new RegExp(`(${escapedWord})`, 'g');
+                    processedText = processedText.replace(regex, `<span style="color: ${textCol}; font-weight: bold; background-color: ${bgColHex}; padding: 1px 4px; border-radius: 4px;">$1</span>`);
+                }
+            });
+        }
+
+        if (isNarrator) {
+            let alignClass = 'sys-center';
+            if (alignMode === 'left-space') alignClass = 'sys-left-space';
+            else if (alignMode === 'left-nospace') alignClass = 'sys-left-nospace';
+
+            if (lastType === 'SYS') {
+                currentTurnHTML.push(`<div class="chat-system ${alignClass}">${processedText}</div>\n`);
+            } else {
+                if (currentTurnHTML.length > 0) resultHTML.push(`<div class="chat-turn">\n${currentTurnHTML.join('')}</div>\n`);
+                currentTurnHTML = [`<div class="chat-system ${alignClass}">${processedText}</div>\n`];
+                lastType = 'SYS'; lastCharName = null;
+            }
+        } else {
+            const imgUrl = document.getElementById(`img_${char.id}`).value;
+            const avatarStyle = imgUrl ? `background-image: url('${imgUrl}');` : '';
+            if (lastType === 'CHAR' && lastCharName === log.name) {
+                currentTurnHTML.push(`    <div class="chat-row consecutive">\n        <div class="chat-avatar-space"></div>\n        <div class="chat-content">\n            <div class="chat-text">${processedText}</div>\n        </div>\n    </div>\n`);
+            } else {
+                if (currentTurnHTML.length > 0) resultHTML.push(`<div class="chat-turn">\n${currentTurnHTML.join('')}</div>\n`);
+                currentTurnHTML = [`    <div class="chat-row">\n        <div class="chat-avatar" style="${avatarStyle}"></div>\n        <div class="chat-content">\n            <div class="chat-header-info">\n                <span class="chat-name-display" style="color: ${char.color};">${log.name}</span>\n            </div>\n            <div class="chat-text">${processedText}</div>\n        </div>\n    </div>\n`];
+                lastType = 'CHAR'; lastCharName = log.name;
+            }
+        }
+    });
+    
+    if (currentTurnHTML.length > 0) resultHTML.push(`<div class="chat-turn">\n${currentTurnHTML.join('')}</div>\n`);
+
+    const borderStyleText = showBorderLine ? `border-bottom: 1px solid ${bgTheme.border};` : '';
+
+    const fullHTML = `<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { background-color: ${bgTheme.bodyBg}; color: ${bgTheme.textColor}; font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif; padding: 20px; margin: 0; }
+        .viewer-bg { background-color: ${bgTheme.containerBg}; padding: 20px 24px; border-radius: 8px; max-width: 850px; margin: 0 auto; border: 1.5px solid ${bgTheme.border}; }
+        .chat-turn { ${borderStyleText} padding-top: 10px; padding-bottom: 12px; }
+        .chat-turn:last-child { border-bottom: none; }
+        .chat-row { display: flex; align-items: flex-start; }
+        .chat-row.consecutive { margin-top: 5px; }
+        .chat-avatar { width: 42px; height: 42px; background-color: ${bgTheme.isDark ? '#2b2d31' : '#f2f4f6'}; border-radius: 5px; margin-right: 12px; background-size: cover; background-position: center top; flex-shrink: 0; border: 1px solid ${bgTheme.border}; }
+        .chat-avatar-space { width: 42px; margin-right: 12px; flex-shrink: 0; }
+        .chat-content { flex-grow: 1; display: flex; flex-direction: column; }
+        .chat-header-info { margin: 0; padding: 0; margin-bottom: 4px; line-height: 1.2; }
+        .chat-name-display { font-weight: 800; font-size: 15px; letter-spacing: -0.4px; }
+        .chat-text { margin: 0; padding: 0; font-size: 14px; line-height: 1.45; color: ${bgTheme.textColor}; word-break: break-all; white-space: pre-wrap; }
+        .chat-system { color: ${bgTheme.textMuted}; font-size: 14px; line-height: 1.45; white-space: pre-wrap; }
+        .chat-system.sys-center { text-align: center; margin: 10px 0; }
+        .chat-system.sys-left-space { text-align: left; margin-left: 54px; margin-top: 4px; }
+        .chat-system.sys-left-nospace { text-align: left; margin-left: 0px; margin-top: 4px; }
+    </style>
+</head>
+<body>
+    <div class="viewer-bg">
+${resultHTML.join('')}    </div>
+</body>
+</html>`;
+    
+    const freeMemo = document.getElementById('freeMemo');
+    freeMemo.value = fullHTML;
+    saveHistory();
+
+    const sidebarToggle = document.getElementById("sidebarModeToggle");
+    if (!sidebarToggle.checked) {
+        sidebarToggle.checked = true;
+        toggleSidebarMode();
+    } else {
+        const htmlViewer = document.getElementById("htmlViewer");
+        htmlViewer.srcdoc = fullHTML;
+        htmlViewer.dataset.lastCode = fullHTML;
+    }
+    
+    isLiveSyncActive = true;
+    
+    if (!silent) {
+        showToast("🌿 완료! 뷰어로 전송되었습니다.");
+    }
+}
+
+function downloadView() {
+    const text = document.getElementById('freeMemo').value;
+    if (!text || !text.includes('<!DOCTYPE html>')) { showToast("⚠️ 먼저 '물 주기'를 실행하여 결과물을 생성해 주세요!"); return; }
+    
+    let downloadName = "잎_코코포리아_변환로그.html";
+    if (currentFileName) {
+        const lastDotIndex = currentFileName.lastIndexOf('.');
+        const baseName = lastDotIndex !== -1 ? currentFileName.substring(0, lastDotIndex) : currentFileName;
+        downloadName = `잎_${baseName}.html`;
+    }
+
+    const blob = new Blob([text], { type: 'text/html;charset=utf-8' });
+    const anchor = document.createElement('a');
+    anchor.download = downloadName;
+    anchor.href = window.URL.createObjectURL(blob);
+    anchor.click();
+    window.URL.revokeObjectURL(anchor.href);
+}
+</script>
+
+<script>
+// ==========================================
+// 🚀 파일 입출력 및 유틸리티 함수
+// ==========================================
+const typingTimers = {};
+function debouncedCount(id) {
+    clearTimeout(typingTimers[id]);
+    typingTimers[id] = setTimeout(() => { updateCharCount(id); }, 500);
+}
+function updateCharCount(id) {
+    const text = document.getElementById(`logInput${id}`).value;
+    const countLabel = document.getElementById(`inputCount${id}`);
+    if (countLabel) {
+        countLabel.innerText = text.length.toLocaleString() + '자';
+    }
+}
+function handleFileSelect(event, id) { const file = event.target.files[0]; if (file) readFileIntoTextarea(file, id); }
+function readFileIntoTextarea(file, id) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        document.getElementById(`logInput${id}`).value = e.target.result;
+        updateCharCount(id);
+        showToast(`📂 [작업창 ${TAB_NAMES[id]}]에 파일 로드 완료!`);
+    };
+    reader.readAsText(file, 'UTF-8');
+}
+function handleFileSelectTarget(event, targetId, id) { const file = event.target.files[0]; if(file) readFileIntoTarget(file, targetId, id); }
+function readFileIntoTarget(file, targetId, id) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        document.getElementById(targetId).value = e.target.result;
+        showToast(`📂 파일 로드 완료!`);
+    };
+    reader.readAsText(file, 'UTF-8');
+}
+
+function openTab(evt, tabId) {
+    const tabContents = document.getElementsByClassName("tab-content");
+    for (let i = 0; i < tabContents.length; i++) tabContents[i].classList.remove("active");
+    const tabButtons = document.getElementsByClassName("tab-button");
+    for (let i = 0; i < tabButtons.length; i++) {
+        tabButtons[i].classList.remove("active");
+        tabButtons[i].classList.remove("blue-tab-active");
+        tabButtons[i].classList.remove("coral-tab-active");
+    }
+    document.getElementById(tabId).classList.add("active");
+    evt.currentTarget.classList.add("active");
+    
+    if (tabId === 'tab1') evt.currentTarget.classList.add("blue-tab-active");
+    if (tabId === 'tab2') evt.currentTarget.classList.add("coral-tab-active");
+    if (tabId === 'tab5') renderImageManager();
+}
+
+function cleanText(snippet, playerTag) {
+    let txt = snippet.replace(/<[^>]*>?/gm, ' ');
+    txt = txt.replace(/&nbsp;/g, ' ').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
+    return txt.trim().replace(/\s+/g, ' ');
+}
+
+function processLog(id) {
+    const rawHTML = document.getElementById(`logInput${id}`).value.trim();
+    const keyword = document.getElementById(`keywordInput${id}`).value.trim();
+    if (!rawHTML || !keyword) { showToast("⚠️ 로그 내용과 기준 단어를 입력해 주세요!"); return; }
+
+    const isNewStyle = rawHTML.includes('<div class="chat-turn') || rawHTML.includes('class="viewer-bg"');
+    let headerDelimiter = isNewStyle ? '<div class="viewer-bg">' : '<p class="ccl_tabtitle">메인</p>';
+    let playerTag = isNewStyle ? '<div class="chat-turn' : '<div class="ccl_player';
+    let footerRegex = isNewStyle ? /(<\/div>\s*<\/body>\s*<\/html>\s*)$/i : /(<\/div>\s*<\/div>\s*<\/div>\s*<\/body>\s*<\/html>\s*)$/i;
+    let defaultFooter = isNewStyle ? "</div>\n</body>\n</html>" : "</div>\n</div>\n</div>\n</body>\n</html>";
+
+    let A_header = ""; let restPart = rawHTML;
+    if (rawHTML.includes(headerDelimiter)) {
+        const delimIdx = rawHTML.indexOf(headerDelimiter);
+        A_header = rawHTML.substring(0, delimIdx + headerDelimiter.length);
+        restPart = rawHTML.substring(delimIdx + headerDelimiter.length);
+    } else {
+        const firstPlayerIdx = rawHTML.indexOf(playerTag);
+        if (firstPlayerIdx !== -1) {
+            A_header = rawHTML.substring(0, firstPlayerIdx);
+            restPart = rawHTML.substring(firstPlayerIdx);
+        }
+    }
+
+    let B_body = restPart; let C_footer = defaultFooter;
+    const footerMatch = restPart.match(footerRegex);
+    if (footerMatch) {
+        C_footer = footerMatch[1];
+        B_body = restPart.substring(0, restPart.length - C_footer.length);
+    }
+
+    if (!B_body.includes(playerTag)) { showToast("⚠️ 로그 형태를 분석할 수 없는 파일입니다."); return; }
+
+    const dialogues = B_body.split(playerTag);
+    const remainingSpace = dialogues[0];
+    const dialoguesList = dialogues.slice(1);
+    let matches = [];
+    
+    for (let i = 0; i < dialoguesList.length; i++) {
+        if (dialoguesList[i].includes(keyword)) { matches.push(i); }
+    }
+
+    if (matches.length === 0) { showToast(`🔍 단어('${keyword}')를 찾지 못했습니다.`); return; }
+
+    pendingCutContext = { action: 'cut', id: id, dialoguesList: dialoguesList, A_header: A_header, remainingSpace: remainingSpace, playerTag: playerTag, C_footer: C_footer };
+    if (matches.length === 1) executeCut(matches[0]);
+    else openCutModal(matches, keyword);
+}
+
+function processSplice(id) {
+    const mainHTML = document.getElementById(`logInputMain${id}`).value.trim();
+    const subHTML = document.getElementById(`logInputSub${id}`).value.trim();
+    const keyword = document.getElementById(`keywordInput${id}`).value.trim();
+
+    if (!mainHTML || !subHTML || !keyword) { showToast("⚠️ 뿌리 로그, 나무 로그, 삽입 위치를 모두 입력해 주세요."); return; }
+
+    const isNewStyleSub = subHTML.includes('<div class="chat-turn') || subHTML.includes('class="viewer-bg"');
+    let playerTagSub = isNewStyleSub ? '<div class="chat-turn' : '<div class="ccl_player';
+    
+    let B_dialoguesList = [];
+    if (subHTML.includes(playerTagSub)) {
+        let subDialogues = subHTML.split(playerTagSub);
+        B_dialoguesList = subDialogues.slice(1);
+    }
+    if(B_dialoguesList.length === 0) { showToast("⚠️ 뿌리 로그에서 대사를 찾을 수 없습니다."); return; }
+    let insertStr = playerTagSub + B_dialoguesList.join(playerTagSub);
+
+    const isNewStyleMain = mainHTML.includes('<div class="chat-turn') || mainHTML.includes('class="viewer-bg"');
+    let headerDelimiter = isNewStyleMain ? '<div class="viewer-bg">' : '<p class="ccl_tabtitle">메인</p>';
+    let playerTagMain = isNewStyleMain ? '<div class="chat-turn' : '<div class="ccl_player';
+    let footerRegex = isNewStyleMain ? /(<\/div>\s*<\/body>\s*<\/html>\s*)$/i : /(<\/div>\s*<\/div>\s*<\/div>\s*<\/body>\s*<\/html>\s*)$/i;
+
+    let A_header = ""; let restPartMain = mainHTML;
+    if (mainHTML.includes(headerDelimiter)) {
+        const delimIdx = mainHTML.indexOf(headerDelimiter);
+        A_header = mainHTML.substring(0, delimIdx + headerDelimiter.length);
+        restPartMain = mainHTML.substring(delimIdx + headerDelimiter.length);
+    } else {
+        const firstPlayerIdx = mainHTML.indexOf(playerTagMain);
+        if (firstPlayerIdx !== -1) { A_header = mainHTML.substring(0, firstPlayerIdx); restPartMain = mainHTML.substring(firstPlayerIdx); }
+    }
+
+    let C_footer = isNewStyleMain ? "</div>\n</body>\n</html>" : "</div>\n</div>\n</div>\n</body>\n</html>";
+    const footerMatch = restPartMain.match(footerRegex);
+    if (footerMatch) {
+        C_footer = footerMatch[1];
+        restPartMain = restPartMain.substring(0, restPartMain.length - C_footer.length);
+    }
+
+    if (!restPartMain.includes(playerTagMain)) { showToast("⚠️ 뿌리 로그 형태를 분석할 수 없습니다."); return; }
+
+    const dialoguesMain = restPartMain.split(playerTagMain);
+    const remainingSpaceMain = dialoguesMain[0];
+    const dialoguesListMain = dialoguesMain.slice(1);
+
+    let matches = [];
+    for (let i = 0; i < dialoguesListMain.length; i++) {
+        if (dialoguesListMain[i].includes(keyword)) { matches.push(i); }
+    }
+
+    if (matches.length === 0) { showToast(`🔍 뿌리 로그에서 단어('${keyword}')를 찾지 못했습니다.`); return; }
+
+    pendingCutContext = { action: 'splice', id: id, dialoguesList: dialoguesListMain, A_header: A_header, remainingSpace: remainingSpaceMain, playerTag: playerTagMain, C_footer: C_footer, insertStr: insertStr };
+    if (matches.length === 1) executeSplice(matches[0]);
+    else openCutModal(matches, keyword);
+}
+
+function openCutModal(matches, keyword) {
+    const ctx = pendingCutContext;
+    const modal = document.getElementById('cutModal');
+    const modalContent = modal.querySelector('.modal-content');
+    const listContainer = document.getElementById('modalMatchList');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalDesc = document.getElementById('modalDesc');
+    
+    modalContent.classList.remove('green-theme', 'coral-theme', 'pink-modal-theme');
+    if (ctx.id === 1) modalContent.classList.add('green-theme');
+    else if (ctx.id === 2) modalContent.classList.add('coral-theme');
+    else modalContent.classList.add('pink-modal-theme');
+    
+    const isKeepBottom = document.getElementById(`cutModeToggle${ctx.id}`) ? document.getElementById(`cutModeToggle${ctx.id}`).checked : true;
+    
+    if (ctx.action === 'splice') {
+        modalTitle.innerText = "🪴 위치 선택";
+        modalDesc.innerHTML = "선택한 대사를 <strong>포함해</strong> 잘려 나가게 됩니다. 앞뒤 문맥(⬆️ 직전 / ⬇️ 직후)을 보고 골라주세요.";
+    } else {
+        modalTitle.innerText = "✂️ 위치 선택";
+        if (isKeepBottom) {
+            modalDesc.innerHTML = "선택한 대사를 <strong>포함해</strong> 잘려 나가게 됩니다. 앞뒤 문맥(⬆️ 직전 / ⬇️ 직후)을 보고 골라주세요.";
+        } else {
+            modalDesc.innerHTML = "선택한 대사<strong>까지</strong>의 로그가 결과창에 담기게 됩니다. 앞뒤 문맥(⬆️ 직전 / ⬇️ 직후)을 보고 골라주세요.";
+        }
+    }
+    
+    let listHtml = '';
+    matches.forEach((dialogueIdx, matchOrder) => {
+        let prevTxt = dialogueIdx > 0 ? cleanText(ctx.dialoguesList[dialogueIdx - 1], ctx.playerTag) : "";
+        let currTxt = cleanText(ctx.dialoguesList[dialogueIdx], ctx.playerTag);
+        let nextTxt = dialogueIdx < ctx.dialoguesList.length - 1 ? cleanText(ctx.dialoguesList[dialogueIdx + 1], ctx.playerTag) : "";
+        
+        if(prevTxt.length > 55) prevTxt = "..." + prevTxt.slice(-55);
+        if(nextTxt.length > 55) nextTxt = nextTxt.slice(0, 55) + "...";
+    
+        let poolKeyword = keyword; 
+        let srcKeyword = keyword.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+        let highlightedCurr = currTxt.replace(new RegExp(srcKeyword, 'g'), `<span class="current-line">${keyword}</span>`);
+        
+        let borderColor = '#ff758f';
+        if(ctx.id === 1) borderColor = '#6bb376'; else if (ctx.id === 2) borderColor = '#bfa38a';
+
+        let btnText;
+        if (ctx.action === 'splice') {
+            btnText = "🌳 여기에 심기";
+        } else {
+            btnText = isKeepBottom ? "✂️ 여기부터 자르기" : "✂️ 여기까지 남기기";
+        }
+        let btnAction = ctx.action === 'splice' ? `executeSplice(${dialogueIdx})` : `executeCut(${dialogueIdx})`;
+        
+        listHtml += `
+            <div class="match-item">
+                <div style="font-size:12px; font-weight:bold; color:#718096;"> 중복 위치 #${matchOrder + 1}</div>
+                <div class="match-context">
+                    ${prevTxt ? `<div class="prev-line">⬆️ <sub>[이전]</sub> ${prevTxt}</div>` : ''}
+                    <div style="margin: 6px 0; padding-left: 8px; border-left: 3px solid ${borderColor}; background: rgba(0,0,0,0.02); padding-top:4px; padding-bottom:4px;">
+                        💬 ${highlightedCurr}
+                    </div>
+                    ${nextTxt ? `<div class="next-line">⬇️ <sub>[다음]</sub> ${nextTxt}</div>` : ''}
+                </div>
+                <button class="btn-select-match" onclick="${btnAction}">${btnText}</button>
+            </div>`;
+    });
+    listContainer.innerHTML = listHtml;
+    modal.style.display = 'flex';
+}
+
+function closeCutModal() { document.getElementById('cutModal').style.display = 'none'; }
+
+function executeCut(targetIndex) {
+    const ctx = pendingCutContext;
+    if(!ctx) return;
+    
+    const isKeepBottom = document.getElementById(`cutModeToggle${ctx.id}`) ? document.getElementById(`cutModeToggle${ctx.id}`).checked : true;
+    
+    let editedDialogues;
+    if (isKeepBottom) {
+        editedDialogues = ctx.dialoguesList.slice(targetIndex + 1);
+    } else {
+        editedDialogues = ctx.dialoguesList.slice(0, targetIndex + 1);
+    }
+    
+    if(editedDialogues.length === 0) { 
+        showToast(isKeepBottom ? "⚠️ 해당 키워드 뒤에 남은 대사가 없습니다!" : "⚠️ 해당 키워드 앞에 남은 대사가 없습니다!"); 
+        closeCutModal(); 
+        return; 
+    }
+
+    let B_content = ctx.remainingSpace + ctx.playerTag + editedDialogues.join(ctx.playerTag);
+    let finalResult = ctx.A_header + B_content + ctx.C_footer;
+    
+    document.getElementById(`logOutput${ctx.id}`).value = finalResult;
+    document.getElementById(`outputCount${ctx.id}`).innerText = finalResult.length.toLocaleString() + '자';
+    document.getElementById(`resultSection${ctx.id}`).style.display = "block";
+    document.getElementById(`resultSection${ctx.id}`).scrollIntoView({ behavior: 'smooth' });
+    
+    showToast("✂️ 가지치기 완료! 결과를 확인하세요.");
+    closeCutModal();
+}
+
+function executeSplice(targetIndex) {
+    const ctx = pendingCutContext;
+    if(!ctx) return;
+
+    const beforeDialogues = ctx.dialoguesList.slice(0, targetIndex + 1);
+    const afterDialogues = ctx.dialoguesList.slice(targetIndex + 1);
+
+    let beforeStr = ctx.remainingSpace + ctx.playerTag + beforeDialogues.join(ctx.playerTag);
+    let afterStr = afterDialogues.length > 0 ? (ctx.playerTag + afterDialogues.join(ctx.playerTag)) : "";
+    let finalResult = ctx.A_header + beforeStr + ctx.insertStr + afterStr + ctx.C_footer;
+
+    document.getElementById(`logOutput${ctx.id}`).value = finalResult;
+    document.getElementById(`outputCount${ctx.id}`).innerText = finalResult.length.toLocaleString() + '자';
+    document.getElementById(`resultSection${ctx.id}`).style.display = "block";
+    document.getElementById(`resultSection${ctx.id}`).scrollIntoView({ behavior: 'smooth' });
+
+    showToast("🪴 심기 완료! 결과를 확인하세요.");
+    closeCutModal();
+}
+
+function copyToClipboard(id) {
+    const copyText = document.getElementById(`logOutput${id}`);
+    copyText.select();
+    navigator.clipboard.writeText(copyText.value)
+        .then(() => showToast("💦 클립보드 복사 완료!"))
+        .catch(() => showToast("❌ 복사 실패!"));
+}
+
+function downloadResult(id) {
+    const text = document.getElementById(`logOutput${id}`).value;
+    let filePrefix = (id === 2) ? "나무" : "가지";
+    let baseName = "작업로그";
+    if (currentFileName) {
+        const lastDotIndex = currentFileName.lastIndexOf('.');
+        baseName = lastDotIndex !== -1 ? currentFileName.substring(0, lastDotIndex) : currentFileName;
+    }
+    let downloadName = `${filePrefix}_${baseName}.html`;
+
+    const blob = new Blob([text], { type: 'text/html;charset=utf-8' });
+    const anchor = document.createElement('a');
+    anchor.download = downloadName;
+    anchor.href = window.URL.createObjectURL(blob);
+    anchor.click();
+    window.URL.revokeObjectURL(anchor.href);
+}
+
+function toggleSidebarMode() {
+    const isHtmlMode = document.getElementById("sidebarModeToggle").checked;
+    const modeTitle = document.getElementById("sidebarModeTitle");
+    const freeMemo = document.getElementById("freeMemo");
+    const htmlViewer = document.getElementById("htmlViewer");
+    const htmlPlaceholder = document.getElementById("htmlPlaceholder");
+    
+    if (isHtmlMode) {
+        modeTitle.innerText = "✨ 로그 확인!";
+        modeTitle.style.color = "#4a8a54";
+        freeMemo.style.display = "none";       
+        const currentCode = freeMemo.value.trim();
+        if (currentCode) {
+            htmlViewer.style.display = "block";
+            htmlPlaceholder.style.display = "none";
+            if (htmlViewer.dataset.lastCode !== currentCode) {
+                htmlViewer.srcdoc = currentCode;
+                htmlViewer.dataset.lastCode = currentCode; 
+            }
+        } else {
+            htmlViewer.style.display = "none";
+            htmlPlaceholder.style.display = "flex";
+        }
+    } else {
+        modeTitle.innerText = "📝 편집";
+        modeTitle.style.color = "#4a5568";
+        freeMemo.style.display = "block";      
+        htmlViewer.style.display = "none";     
+        htmlPlaceholder.style.display = "none";
+    }
+}
+
+function scrollToSelection(textarea) {
+    const start = textarea.selectionStart;
+    const text = textarea.value;
+    const currentLine = (text.substring(0, start).match(/\n/g) || []).length;
+    const totalLines = (text.match(/\n/g) || []).length || 1;
+    textarea.scrollTop = (textarea.scrollHeight * (currentLine / totalLines)) - (textarea.clientHeight / 3);
+}
+
+function highlightFirstKoreanLine() {
+    if (document.getElementById("sidebarModeToggle").checked) return;
+    const memoArea = document.getElementById("freeMemo");
+    const plainText = memoArea.value;
+    const lines = plainText.split('\n');
+    let targetText = "";
+    for (let i = 0; i < lines.length; i++) {
+        let trimmed = lines[i].trim();
+        if (trimmed && !trimmed.includes("메인") && /[ㄱ-ㅎㅏ-ㅣ가-힣]/.test(trimmed)) {
+            targetText = (i + 1 < lines.length && lines[i + 1].trim()) ? lines[i] + "\n" + lines[i + 1] : lines[i];
+            break;
+        }
+    }
+    const startIdx = plainText.indexOf(targetText);
+    if (startIdx !== -1) {
+        memoArea.focus(); 
+        memoArea.setSelectionRange(startIdx, startIdx + targetText.length);
+        scrollToSelection(memoArea);
+        showToast("🔍 첫 대사 시작 지점을 찾았습니다.");
+    } else {
+        showToast("❌ 한글 문장을 찾지 못했습니다.");
+    }
+}
+
+let memoInputTimer;
+document.getElementById("freeMemo").addEventListener("input", function() {
+    clearTimeout(memoInputTimer);
+    memoInputTimer = setTimeout(() => { saveHistory(); }, 1500);
+});
+</script>
+
+<script>
+// ==========================================
+// 🎨 커스텀 테마 핵심 로직 & 수치 계산 엔진
+// ==========================================
+function hexToRgb(hex) {
+    hex = hex.replace(/^#/, '');
+    if (hex.length === 3) {
+        hex = hex[0]+hex[0] + hex[1]+hex[1] + hex[2]+hex[2];
+    }
+    let num = parseInt(hex, 16);
+    return {
+        r: (num >> 16) & 255,
+        g: (num >> 8) & 255,
+        b: num & 255
+    };
+}
+
+function hexToHsl(hex) {
+    let rgb = hexToRgb(hex);
+    let r = rgb.r / 255, g = rgb.g / 255, b = rgb.b / 255;
+    let max = Math.max(r, g, b), min = Math.min(r, g, b);
+    let h, s, l = (max + min) / 2;
+
+    if (max === min) {
+        h = s = 0; 
+    } else {
+        let d = max - min;
+        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+        switch (max) {
+            case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+            case g: h = (b - r) / d + 2; break;
+            case b: h = (r - g) / d + 4; break;
+        }
+        h /= 6;
+    }
+    return { h: Math.round(h * 360), s: Math.round(s * 100), l: Math.round(l * 100) };
+}
+
+function hslToHex(h, s, l) {
+    s /= 100; l /= 100;
+    let c = (1 - Math.abs(2 * l - 1)) * s;
+    let x = c * (1 - Math.abs((h / 60) % 2 - 1));
+    let m = l - c / 2;
+    let r = 0, g = 0, b = 0;
+
+    if (0 <= h && h < 60) { r = c; g = x; b = 0; }
+    else if (60 <= h && h < 120) { r = x; g = c; b = 0; }
+    else if (120 <= h && h < 180) { r = 0; g = c; b = x; }
+    else if (180 <= h && h < 240) { r = 0; g = x; b = c; }
+    else if (240 <= h && h < 300) { r = x; g = 0; b = c; }
+    else if (300 <= h && h < 360) { r = c; g = 0; b = x; }
+
+    r = Math.round((r + m) * 255);
+    g = Math.round((g + m) * 255);
+    b = Math.round((b + m) * 255);
+    
+    const toHex = x => {
+        const hex = x.toString(16);
+        return hex.length === 1 ? '0' + hex : hex;
+    };
+    return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+}
+
+function rgbToHex(r, g, b) {
+    return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+}
+
+function adjustColorLuminance(hex, factor) {
+    let rgb = hexToRgb(hex);
+    let r = Math.round(Math.min(255, Math.max(0, rgb.r + factor)));
+    let g = Math.round(Math.min(255, Math.max(0, rgb.g + factor)));
+    let b = Math.round(Math.min(255, Math.max(0, rgb.b + factor)));
+    return rgbToHex(r, g, b);
+}
+
+function getRecommendedColors(bgHex) {
+    let rgb = hexToRgb(bgHex);
+    let Y = 0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b;
+    let isDark = Y <= 128;
+
+    let borderHex, mutedHex, textColor;
+    if (isDark) {
+        borderHex = adjustColorLuminance(bgHex, 25); 
+        mutedHex = adjustColorLuminance(bgHex, 80); 
+        textColor = "#dbdee1";
+    } else {
+        borderHex = adjustColorLuminance(bgHex, -30); 
+        mutedHex = adjustColorLuminance(bgHex, -70); 
+        textColor = "#333d4b";
+    }
+    return { border: borderHex, textMuted: mutedHex, textColor: textColor, isDark: isDark };
+}
+
+function openCustomThemeModal() {
+    document.getElementById('customThemeModal').style.display = 'flex';
+    let theme = BG_THEMES['custom'] || BG_THEMES[currentBgTheme];
+    if (theme) {
+        document.getElementById('customBodyBg').value = theme.bodyBg;
+        document.getElementById('customBodyBgText').value = theme.bodyBg;
+        document.getElementById('customContainerBg').value = theme.containerBg;
+        document.getElementById('customContainerBgText').value = theme.containerBg;
+        document.getElementById('customBorder').value = theme.border;
+        document.getElementById('customBorderText').value = theme.border;
+        document.getElementById('customTextMuted').value = theme.textMuted;
+        document.getElementById('customTextMutedText').value = theme.textMuted;
+        document.getElementById('customShowBorder').checked = theme.showBorder !== false;
+    }
+}
+
+function closeCustomThemeModal() {
+    document.getElementById('customThemeModal').style.display = 'none';
+}
+
+function onCustomBgChange(val) {
+    if (!val.startsWith('#')) val = '#' + val;
+    document.getElementById('customBodyBgText').value = val;
+    let recs = getRecommendedColors(val);
+    document.getElementById('customBorder').value = recs.border;
+    document.getElementById('customBorderText').value = recs.border;
+    document.getElementById('customTextMuted').value = recs.textMuted;
+    document.getElementById('customTextMutedText').value = recs.textMuted;
+    
+    let recommendedContainerBg = recs.isDark ? '#1e1f22' : '#ffffff';
+    document.getElementById('customContainerBg').value = recommendedContainerBg;
+    document.getElementById('customContainerBgText').value = recommendedContainerBg;
+}
+
+function onCustomBgTextChange(val) {
+    if (val.match(/^#[0-9a-fA-F]{6}$/)) {
+        document.getElementById('customBodyBg').value = val;
+        onCustomBgChange(val);
+    }
+}
+
+document.addEventListener('input', function(e) {
+    if (e.target.id === 'customBorder') {
+        document.getElementById('customBorderText').value = e.target.value;
+    } else if (e.target.id === 'customBorderText') {
+        if (e.target.value.match(/^#[0-9a-fA-F]{6}$/)) {
+            document.getElementById('customBorder').value = e.target.value;
+        }
+    } else if (e.target.id === 'customTextMuted') {
+        document.getElementById('customTextMutedText').value = e.target.value;
+    } else if (e.target.id === 'customTextMutedText') {
+        if (e.target.value.match(/^#[0-9a-fA-F]{6}$/)) {
+            document.getElementById('customTextMuted').value = e.target.value;
+        }
+    }
+});
+
+function applyCustomTheme() {
+    let bg = document.getElementById('customBodyBg').value;
+    let containerBg = document.getElementById('customContainerBg').value;
+    let border = document.getElementById('customBorder').value;
+    let muted = document.getElementById('customTextMuted').value;
+    let showBorder = document.getElementById('customShowBorder').checked;
+    let recs = getRecommendedColors(bg);
+    
+    BG_THEMES['custom'] = {
+        name: '사용자 지정',
+        bodyBg: bg,
+        containerBg: containerBg,
+        textColor: recs.textColor,
+        textMuted: muted,
+        border: border,
+        isDark: recs.isDark,
+        showBorder: showBorder
+    };
+    
+    let customCard = document.getElementById('bgThemeCard_custom');
+    if (customCard) {
+        customCard.style.display = 'block';
+        let circle = document.getElementById('customThemeCircle');
+        if (circle) {
+            circle.style.backgroundColor = bg;
+            circle.style.borderColor = border;
+        }
+    }
+    
+    closeCustomThemeModal();
+    selectBgTheme('custom');
+}
+
+// ==========================================
+// 👥 캐릭터 및 강조 단어 색상 팝오버 컬러 피커 핵심 엔진
+// ==========================================
+let pickerMode = null;      
+let activeTargetId = null;  
+let activeCharName = null;  
+
+function openColorPicker(event, mode, targetId, charName = null) {
+    event.stopPropagation();
+    pickerMode = mode;
+    activeTargetId = targetId;
+    activeCharName = charName;
+    
+    const popover = document.getElementById('charColorPopover');
+    
+    let triggerId = `swatch_${targetId}`;
+    if (mode === 'wordText') triggerId = `swatch_text_${targetId}`;
+    if (mode === 'wordBg') triggerId = `swatch_bg_${targetId}`;
+    
+    const trigger = document.getElementById(triggerId);
+    if (!popover || !trigger) return;
+    
+    const rect = trigger.getBoundingClientRect();
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+    
+    popover.style.display = 'block';
+    
+    let topPos = rect.bottom + scrollTop + 6;
+    let leftPos = rect.left + scrollLeft;
+    
+    if (leftPos + 235 > window.innerWidth) {
+        leftPos = window.innerWidth - 245;
+    }
+    
+    popover.style.top = `${topPos}px`;
+    popover.style.left = `${leftPos}px`;
+    
+    const popoverTitle = document.getElementById('popoverTitle');
+    let currentColor = '#181a1c';
+    
+    if (mode === 'char') {
+        popoverTitle.innerText = "🎨 캐릭터 색상 변경";
+        currentColor = characters[charName].color || '#181a1c';
+    } else if (mode === 'wordText') {
+        popoverTitle.innerText = "🎨 글자 색상 선택";
+        const row = document.getElementById(targetId);
+        currentColor = row ? row.dataset.textCol : '#4A8A54';
+    } else if (mode === 'wordBg') {
+        popoverTitle.innerText = "🎨 배경 색상 선택";
+        const row = document.getElementById(targetId);
+        currentColor = row ? row.dataset.bgCol : '#6BB376';
+    }
+    
+    document.getElementById('popoverColorInput').value = currentColor;
+    document.getElementById('popoverColorText').value = currentColor;
+    
+    generatePopoverPresets(currentColor);
+}
+
+function closeCharColorPicker() {
+    const popover = document.getElementById('charColorPopover');
+    if (popover) popover.style.display = 'none';
+    pickerMode = null;
+    activeTargetId = null;
+    activeCharName = null;
+}
+
+document.addEventListener('click', function(e) {
+    const popover = document.getElementById('charColorPopover');
+    if (popover && popover.style.display === 'block') {
+        if (!popover.contains(e.target) && !e.target.classList.contains('char-color-picker-trigger')) {
+            closeCharColorPicker();
+        }
+    }
+});
+
+function generatePopoverPresets(hex) {
+    const container = document.getElementById('popoverPresets');
+    const presetLabel = document.getElementById('popoverPresetLabel');
+    if (!container) return;
+    
+    let presets = [];
+    
+    if (pickerMode === 'char') {
+        presetLabel.innerText = "추천 조합 색상";
+        presets = ['#181a1c', '#ffffff', '#868e96'];
+        try {
+            let hsl = hexToHsl(hex);
+            
+            let softL = Math.min(hsl.l + 16, 88);
+            let softS = Math.max(hsl.s - 8, 12);
+            let softHex = hslToHex(hsl.h, softS, softL);
+            
+            let deepL = Math.max(hsl.l - 16, 12);
+            let deepS = Math.min(hsl.s + 8, 96);
+            let deepHex = hslToHex(hsl.h, deepS, deepL);
+            
+            let analogousLeftHex = hslToHex((hsl.h - 30 + 360) % 360, hsl.s, hsl.l);
+            let analogousRightHex = hslToHex((hsl.h + 30) % 360, hsl.s, hsl.l);
+            
+            let complementaryHex = hslToHex((hsl.h + 180) % 360, Math.max(hsl.s - 10, 20), Math.min(hsl.l + 8, 80));
+            
+            const calculatedColors = [softHex, deepHex, analogousLeftHex, analogousRightHex, complementaryHex];
+            calculatedColors.forEach(color => {
+                if (!presets.includes(color)) presets.push(color);
+            });
+        } catch(e) {
+            presets = ['#ff758f', '#4dabf7', '#20c997', '#f59f00', '#ae3ec9'];
+        }
+    } 
+    else if (pickerMode === 'wordText') {
+        presetLabel.innerText = "배경 테마 최적화 글자색 (보색 포함)";
+        const currentTheme = BG_THEMES[currentBgTheme] || BG_THEMES['dark'];
+        const isDarkTheme = currentTheme.isDark;
+        
+        try {
+            let bgHsl = hexToHsl(currentTheme.bodyBg);
+            let compHue = (bgHsl.h + 180) % 360;
+            let compTextL = isDarkTheme ? 78 : 32; 
+            let compTextS = isDarkTheme ? 85 : 80;
+            let compTextHex = hslToHex(compHue, compTextS, compTextL);
+            presets.push(compTextHex);
+        } catch(e) {}
+
+        if (isDarkTheme) {
+            presets.push('#4dabf7', '#ff6b6b', '#20c997', '#fcc419', '#ae3ec9', '#ff8787', '#63e6be', '#e5dbff');
+        } else {
+            presets.push('#1971c2', '#e03131', '#099268', '#f59f00', '#9c36b5', '#c2255c', '#37b24d', '#f76707');
+        }
+    } 
+    else if (pickerMode === 'wordBg') {
+        presetLabel.innerText = "선택된 글자색 전용 배경 (보색포함)";
+        const row = document.getElementById(activeTargetId);
+        const textCol = row ? row.dataset.textCol : '#4a8a54';
+        
+        try {
+            let hsl = hexToHsl(textCol);
+            const currentTheme = BG_THEMES[currentBgTheme] || BG_THEMES['dark'];
+            const isDarkTheme = currentTheme.isDark;
+
+            let softBgL = isDarkTheme ? 18 : 94; 
+            let softBgS = isDarkTheme ? 45 : 90; 
+            let toneOnToneBg = hslToHex(hsl.h, softBgS, softBgL);
+            
+            let compHue = (hsl.h + 180) % 360;
+            let compBgL = isDarkTheme ? 18 : 94;
+            let compBgS = isDarkTheme ? 45 : 90;
+            let complementaryBg = hslToHex(compHue, compBgS, compBgL);
+            
+            presets.push(toneOnToneBg, complementaryBg);
+            if (isDarkTheme) {
+                presets.push('#1a1b1e', '#212529', '#111214');
+            } else {
+                presets.push('#f8f9fa', '#f1f3f5', '#e9ecef', '#ffffff');
+            }
+        } catch(e) {
+            presets = ['#f8f9fa', '#e8f4fd', '#fde8eb', '#e6fcf5', '#fff9db'];
+        }
+    }
+    
+    let html = '';
+    presets.forEach(color => {
+        html += `<div onclick="selectPopoverPreset('${color}')" style="width: 18px; height: 18px; border-radius: 50%; background-color: ${color}; border: 1px solid rgba(0,0,0,0.15); cursor: pointer; transition: transform 0.15s;" onmouseover="this.style.transform='scale(1.15)'" onmouseout="this.style.transform='scale(1)'" title="${color}"></div>`;
+    });
+    container.innerHTML = html;
+}
+
+function selectPopoverPreset(color) {
+    document.getElementById('popoverColorInput').value = color;
+    document.getElementById('popoverColorText').value = color;
+    applyColorToActiveTarget(color);
+}
+
+function onPopoverColorInput(color) {
+    document.getElementById('popoverColorText').value = color;
+    applyColorToActiveTarget(color);
+}
+
+function onPopoverColorText(color) {
+    if (color.match(/^#[0-9a-fA-F]{6}$/)) {
+        document.getElementById('popoverColorInput').value = color;
+        applyColorToActiveTarget(color);
+    }
+}
+
+function getLighterBgRecommendation(textHex) {
+    try {
+        let hsl = hexToHsl(textHex);
+        const currentTheme = BG_THEMES[currentBgTheme] || BG_THEMES['dark'];
+        const isDarkTheme = currentTheme.isDark;
+        
+        if (isDarkTheme) {
+            let bgL = 18;
+            let bgS = Math.max(35, Math.min(65, Math.round(hsl.s * 0.6)));
+            return hslToHex(hsl.h, bgS, bgL);
+        } else {
+            let bgL = Math.max(92, Math.min(98, Math.round(86.5 + (hsl.l * 0.145))));
+            let bgS = Math.max(60, Math.min(100, Math.round(hsl.s * 0.88)));
+            return hslToHex(hsl.h, bgS, bgL);
+        }
+    } catch(e) {
+        return BG_THEMES[currentBgTheme].isDark ? '#1a1b1e' : '#f8f9fa';
+    }
+}
+
+function applyColorToActiveTarget(color) {
+    if (pickerMode === 'char') {
+        if (!activeCharName || !activeTargetId) return;
+        characters[activeCharName].color = color;
+        
+        const swatch = document.getElementById(`swatch_${activeTargetId}`);
+        if (swatch) swatch.style.backgroundColor = color;
+        
+        const label = document.getElementById(`name_label_${activeTargetId}`);
+        if (label) label.style.color = color;
+        
+        saveImagesToStorage(true);
+        triggerLiveSync(200);
+    } 
+    else if (pickerMode === 'wordText') {
+        const row = document.getElementById(activeTargetId);
+        if (!row) return;
+        
+        row.dataset.textCol = color;
+        const textSwatch = document.getElementById(`swatch_text_${activeTargetId}`);
+        if (textSwatch) textSwatch.style.backgroundColor = color;
+        
+        let recBgColor = getLighterBgRecommendation(color);
+        row.dataset.bgCol = recBgColor;
+        const bgSwatch = document.getElementById(`swatch_bg_${activeTargetId}`);
+        if (bgSwatch) bgSwatch.style.backgroundColor = recBgColor;
+        
+        triggerLiveSync(200);
+    } 
+    else if (pickerMode === 'wordBg') {
+        const row = document.getElementById(activeTargetId);
+        if (!row) return;
+        
+        row.dataset.bgCol = color;
+        const bgSwatch = document.getElementById(`swatch_bg_${activeTargetId}`);
+        if (bgSwatch) bgSwatch.style.backgroundColor = color;
+        
+        triggerLiveSync(200);
+    }
+}
+
+function injectFromClipboard() {
+    navigator.clipboard.readText().then(text => {
+        if (!text || !text.trim()) {
+            showToast("🍅");
+            return;
+        }
+
+        let parsedData;
+        try {
+            parsedData = JSON.parse(text);
+        } catch (e) {
+            showToast("🍅");
+            return;
+        }
+
+        const inputs = document.querySelectorAll('.char-input-blue');
+        if (inputs.length === 0) {
+            showToast("🍅");
+            return;
+        }
+
+        let matched = 0;
+        inputs.forEach(input => {
+            const charName = input.getAttribute('data-name');
+            if (charName && parsedData[charName]) {
+                input.value = parsedData[charName].trim();
+                matched++;
+            }
+        });
+
+        if (matched > 0) {
+            saveImagesToStorage(true);
+            triggerLiveSync(100);
+            showToast(`🍅 ${matched}명 쏙 심기 완료!`);
+        } else {
+            showToast("🍅");
+        }
+    }).catch(err => {
+        console.error(err);
+        showToast("🍅");
+    });
+}
+</script>
+</body>
+</html>
