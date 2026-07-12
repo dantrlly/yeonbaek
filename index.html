@@ -735,8 +735,9 @@
             <h3 style="color: #6bb376; font-size: 16px; margin: 0; font-weight: 800; display: flex; align-items: center; gap: 6px;">🥑 세팅 보관소</h3>
             <button class="modal-close-btn" onclick="closeOrnamentSlotModal()">✕</button>
         </div>
-        <div style="font-size: 12px; color: #718096; margin-bottom: 10px; line-height: 1.4;">
-            꾸며둔 정렬 형태, 테마 색상, 강조 단어를 각 슬롯에 백업해 두고 교체하며 불러올 수 있습니다.
+        <div style="font-size: 12px; color: #718096; margin-bottom: 12px; line-height: 1.5;">
+            꾸며둔 정렬 형태, 테마 색상, 강조 단어를 슬롯에 백업해 두고 불러올 수 있습니다.<br>
+            <strong>💡 슬롯 항목을 더블클릭하면 슬롯 이름을 바로 변경할 수 있습니다!</strong>
         </div>
         <div class="slot-list" id="slotListContainer"></div>
         <div style="display: flex; justify-content: flex-end; margin-top: 15px;">
@@ -1280,7 +1281,7 @@ function loadProgramSettings() {
 }
 
 // ==========================================
-// 🔄 오너먼트 설정 일괄 초기화 기능 구현 (확인창 생략)
+// 🔄 오너먼트 설정 일괄 초기화 기능 구현
 // ==========================================
 function resetOrnamentSettings() {
     localStorage.removeItem('cocoforia_custom_theme');
@@ -2271,7 +2272,7 @@ let currentFileName = "연백나무.txt";
 
 <script>
 // ==========================================
-// 🚀 뷰어 출력 치환 엔진 (💡 Tistory 업로드 호환: 쓸데없는 자바스크립트 코드 100% 제거)
+// 🚀 뷰어 출력 치환 엔진 (Tistory 업로드 호환: 쓸데없는 자바스크립트 코드 100% 제거)
 // ==========================================
 function generateView(silent = false) {
     let resultHTML = [];
@@ -3702,14 +3703,14 @@ function renderSlots() {
         }
 
         html += `
-            <div class="slot-item">
+            <div class="slot-item" ondblclick="startEditSlotName(${index})" style="cursor: pointer;" title="더블클릭해서 이름 수정">
                 <div class="slot-info">
                     <div class="slot-title-wrapper">
                         ${nameSection}
                     </div>
                     <span class="slot-date">${formattedDate}</span>
                 </div>
-                <div class="slot-actions">
+                <div class="slot-actions" ondblclick="event.stopPropagation()">
                     <button class="btn-slot btn-slot-save" onclick="saveToSlot(${index})">${hasData ? '덮어쓰기' : '저장'}</button>
                     <button class="btn-slot btn-slot-load ${hasData ? '' : 'disabled'}" onclick="${hasData ? `loadFromSlot(${index})` : ''}">${hasData ? '불러오기' : '대기'}</button>
                     ${hasData ? `<button class="btn-slot-del" onclick="deleteSlot(${index})" title="슬롯 비우기">✕</button>` : '<div style="width: 22px;"></div>'}
@@ -3748,6 +3749,7 @@ function saveToSlot(index) {
     const slots = getSavedSlots();
     const currentState = getOrnamentCurrentState();
     
+    const isFirstSave = slots[index].data === null;
     const now = new Date();
     const formattedDate = `${now.getFullYear()}.${String(now.getMonth() + 1).padStart(2, '0')}.${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
     
@@ -3755,8 +3757,15 @@ function saveToSlot(index) {
     slots[index].date = formattedDate;
     
     saveSlots(slots);
-    renderSlots();
-    showToast(`💾 [${slots[index].name}]에 설정을 안전하게 저장했습니다!`);
+    
+    if (isFirstSave) {
+        showToast(`💾 첫 저장이 완료되었습니다! 이름을 변경해보세요.`);
+        // 최초 저장 시 즉시 슬롯 이름 수정란 활성화
+        startEditSlotName(index);
+    } else {
+        renderSlots();
+        showToast(`💾 [${slots[index].name}]에 설정을 안전하게 저장했습니다!`);
+    }
 }
 
 function loadFromSlot(index) {
