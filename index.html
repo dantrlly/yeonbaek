@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- PWA 설정을 위한 메타 태그 및 매니페스트 연동 -->
+    <link class="pwa-icon" rel="apple-touch-icon" href="icon-192.png">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#6bb376">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="백업나무">
-    <link class="pwa-icon" rel="apple-touch-icon" href="icon-192.png">
 
     <style>
         /* 🎨 기본 바탕 및 전체 테마를 싱그럽고 눈이 편안한 연녹색 톤으로 적용 */
@@ -335,6 +335,7 @@
         .bg-theme-card:hover { transform: translateY(-1px); border-color: #a5cfad; }
         .bg-theme-card.active { border-color: #6bb376; box-shadow: 0 0 0 2.5px rgba(107,179,118,0.15); }
         .bg-theme-circle { width: 18px; height: 18px; border-radius: 50%; margin: 0 auto 4px auto; border: 1px solid rgba(0,0,0,0.1); }
+        .bg-theme-card.active .bg-theme-circle { border-color: #6bb376; }
         .bg-theme-title { font-size: 10px; font-weight: bold; color: #4a5568; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
         /* 👥 캐릭터 설정 카드 컴포넌트 미니멀 디자인 고도화 */
@@ -405,7 +406,7 @@
         .btn-img-load { padding: 6px 14px; background-color: #ffffff; color: #6bb376; border: 1px solid #bde0c4; border-radius: 20px; font-size: 12.5px; font-weight: bold; cursor: pointer; transition: all 0.2s; }
         .btn-img-load:hover { background-color: #effcf1; border-color: #6bb376; transform: translateY(-1px); }
         
-        /* 💡 가지/열매 전용 오리지널 핑크 테마 스타일 복원 */
+        /* 💾 가지/열매 전용 오리지널 핑크 테마 스타일 복원 */
         .pink-label { color: #ff758f !important; }
         .pink-char-count { font-size: 11px; color: #ff758f; font-weight: bold; background: #fff0f2; padding: 2px 8px; border-radius: 20px; border: 1px solid #ffd0d6; }
         .pink-textarea { border-color: #ffd0d6 !important; background-color: #fffbfb; }
@@ -428,16 +429,84 @@
         .pink-btn-memo-import { border-color: #ffccd3 !important; color: #ff758f !important; }
         .pink-btn-memo-import:hover { background-color: #fff0f2 !important; border-color: #ff758f !important; }
 
-        /* 이미지 보관함 및 핑크 테마 매니저 요소 */
-        .img-manager-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; }
-        .img-manager-card { background: #fff; border: 1px solid #ffccd3; border-radius: 8px; padding: 12px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 2px 6px rgba(255,182,193,0.1); transition: all 0.2s; }
-        .img-manager-card:hover { border-color: #ff758f; }
-        .img-manager-header { display: flex; justify-content: space-between; align-items: center; font-weight: bold; color: #2d3748; font-size: 13.5px; }
-        .btn-img-del { background: #ff758f; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 11px; padding: 4px 8px; font-weight: bold; transition: all 0.15s; }
+        /* 🎨 1. 열매 모으기 캐릭터 카드 컴팩트화 및 미니멀 디자인 고도화 */
+        .img-manager-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); 
+            gap: 8px; 
+        }
+        .img-manager-card { 
+            background: #ffffff; 
+            border: 1px solid #ffe3e8; 
+            border-radius: 10px; 
+            padding: 8px 10px; 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+            box-shadow: 0 1px 4px rgba(255,182,193,0.06); 
+            transition: all 0.2s; 
+            position: relative;
+        }
+        .img-manager-card:hover { 
+            border-color: #ff758f; 
+            background: #fffcfd; 
+            box-shadow: 0 3px 8px rgba(255,182,193,0.12); 
+            transform: translateY(-1px);
+        }
+        .img-manager-header { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 2px; 
+            flex: 1; 
+            min-width: 0; 
+        }
+        .img-manager-name {
+            font-weight: bold; 
+            color: #2d3748; 
+            font-size: 12px; 
+            white-space: nowrap; 
+            overflow: hidden; 
+            text-overflow: ellipsis;
+        }
+        .btn-img-del { 
+            background: #ff758f; 
+            color: white; 
+            border: none; 
+            border-radius: 4px; 
+            cursor: pointer; 
+            font-size: 10px; 
+            padding: 2px 6px; 
+            font-weight: bold; 
+            transition: all 0.15s; 
+            align-self: flex-start;
+        }
         .btn-img-del:hover { background: #e03a5b; }
-        .img-manager-content { display: flex; align-items: center; gap: 8px; }
-        .img-preview { width: 42px; height: 42px; border-radius: 6px; background-color: #f5f5f5; background-size: cover; background-position: center top; flex-shrink: 0; border: 1px solid #ffe3e8; }
-        .img-url-input { flex: 1; font-size: 11px; padding: 6px; border: 1px solid #ffe3e8; border-radius: 4px; color: #4a5568; background: #fffafb; }
+        .img-manager-content { 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+            width: 100%;
+        }
+        .img-preview { 
+            width: 34px; 
+            height: 34px; 
+            border-radius: 50%; 
+            background-color: #f5f5f5; 
+            background-size: cover; 
+            background-position: center top; 
+            flex-shrink: 0; 
+            border: 1px solid #ffe3e8; 
+        }
+        .img-url-input { 
+            width: 100%; 
+            font-size: 10px; 
+            padding: 3px 6px; 
+            border: 1px solid #ffe3e8; 
+            border-radius: 4px; 
+            color: #718096; 
+            background: #fffafb; 
+            box-sizing: border-box;
+        }
 
         /* 🍑 끼워넣기 탭 전용 테마 (세련된 연갈색 브라운 톤) */
         .coral-drop-zone { border: 2px dashed #e6dad0 !important; background-color: #faf6f0 !important; }
@@ -495,6 +564,33 @@
         .modal-content.pink-modal-theme .btn-select-match { background: #ff758f; }
         .modal-content.pink-modal-theme .btn-select-match:hover { background: #ff4d6d; }
 
+        /* 💾 슬롯 모달 리스트 디자인 - 덮어쓰기와 불러오기 색상 교체 */
+        .slot-list { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; max-height: 400px; overflow-y: auto; padding-right: 4px; }
+        .slot-item { display: flex; align-items: center; justify-content: space-between; padding: 12px; background: #fafdfb; border: 1.5px solid #d1ebd6; border-radius: 10px; transition: all 0.2s; gap: 8px; }
+        .slot-item:hover { border-color: #6bb376; background: #f4faf5; }
+        .slot-info { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; }
+        .slot-title-wrapper { display: flex; align-items: center; gap: 6px; }
+        .slot-name { font-weight: bold; font-size: 13px; color: #2d3748; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .slot-name-input { font-weight: bold; font-size: 13px; color: #2d3748; padding: 2px 6px; border: 1px solid #6bb376; border-radius: 4px; width: 140px; background: white; }
+        .slot-date { font-size: 10.5px; color: #a0aec0; }
+        .slot-actions { display: flex; gap: 4px; align-items: center; }
+        .btn-slot { font-size: 11px; font-weight: bold; padding: 5px 10px; border-radius: 6px; cursor: pointer; transition: all 0.15s; border: 1px solid transparent; }
+        
+        /* 덮어쓰기(저장) -> 덜 튀게 테두리 스타일로 변경 */
+        .btn-slot-save { background: white; border-color: #6bb376; color: #6bb376; }
+        .btn-slot-save:hover { background: #effcf1; }
+        
+        /* 불러오기 -> 더 잘 보이게 초록색 가득 채운 스타일로 변경 */
+        .btn-slot-load { background: #6bb376; color: white; border-color: #6bb376; }
+        .btn-slot-load:hover { background: #4a8a54; }
+        .btn-slot-load.disabled { opacity: 0.4; cursor: not-allowed; background: white; border-color: #d1ebd6; color: #a0aec0; }
+        .btn-slot-load.disabled:hover { background: none; }
+        
+        .btn-slot-del { background: none; border: none; color: #ff758f; padding: 4px; font-size: 14px; display: flex; align-items: center; justify-content: center; }
+        .btn-slot-del:hover { color: #e03a5b; }
+        .btn-slot-edit { background: none; border: none; color: #718096; padding: 4px; font-size: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+        .btn-slot-edit:hover { color: #2d3748; }
+
         @media (max-width: 900px) {
             .sidebar-memo { position: relative; top: 0; }
         }
@@ -508,7 +604,7 @@
         <div class="header-top">
             <h1>🌿 코코포리아 백업나무</h1>
         </div>
-        <div class="subtitle">불필요한 디자인 요소를 접어서 더 가볍고 깔끔하게!</div>
+        <div class="subtitle">기능이 쫌 많아졌지만 그래도 본질은 로그 가지치기~~</div>
         
         <div class="tabs" id="tabButtons"></div>
         <div id="tabContents"></div>
@@ -632,6 +728,23 @@
     </div>
 </div>
 
+<!-- 💾 오너먼트 설정 슬롯 관리 모달 -->
+<div id="ornamentSlotModal" class="modal-overlay" style="display:none; align-items:center; justify-content:center; z-index: 22000;" onclick="if(event.target === this) closeOrnamentSlotModal();">
+    <div class="modal-content green-theme" style="max-width: 480px; padding: 22px;">
+        <div class="modal-header" style="border-bottom: none; padding: 0 0 10px 0;">
+            <h3 style="color: #6bb376; font-size: 16px; margin: 0; font-weight: 800; display: flex; align-items: center; gap: 6px;">🥑 세팅 보관소</h3>
+            <button class="modal-close-btn" onclick="closeOrnamentSlotModal()">✕</button>
+        </div>
+        <div style="font-size: 12px; color: #718096; margin-bottom: 10px; line-height: 1.4;">
+            꾸며둔 정렬 형태, 테마 색상, 강조 단어를 각 슬롯에 백업해 두고 교체하며 불러올 수 있습니다.
+        </div>
+        <div class="slot-list" id="slotListContainer"></div>
+        <div style="display: flex; justify-content: flex-end; margin-top: 15px;">
+            <button class="btn-check-tool" style="padding: 6px 18px;" onclick="closeOrnamentSlotModal()">닫기</button>
+        </div>
+    </div>
+</div>
+
 <!-- 👥 캐릭터 색상 변경 팝업 레이어 -->
 <div id="charColorPopover" style="display: none; position: absolute; z-index: 25000; background: white; border: 1px solid #bde0c4; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.12); padding: 12px; width: 220px; box-sizing: border-box;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
@@ -717,27 +830,30 @@ const HL_PRESETS = {
     preset3: { name: '골드 차콜', blueCol: '#f59f00', blueBg: 'rgba(245, 159, 0, 0.12)', redCol: '#495057', redBg: 'rgba(73, 80, 87, 0.12)' },
     preset4: { name: '포레스트 코랄', blueCol: '#2b8a3e', blueBg: 'rgba(43, 138, 62, 0.12)', redCol: '#e8590c', redBg: 'rgba(232, 89, 12, 0.12)' },
     preset5: { name: '오션 로즈', blueCol: '#0c8599', blueBg: 'rgba(12, 133, 153, 0.12)', redCol: '#d6336c', redBg: 'rgba(214, 51, 108, 0.12)' },
-    preset6: { name: '골드 퍼플', blueCol: '#fcc419', blueBg: 'rgba(252, 196, 25, 0.12)', redCol: '#ae3ec9', redBg: 'rgba(174, 62, 201, 0.12)' }
+    preset6: { name: '골드 퍼플', blueCol: '#fcc419', blueBg: 'rgba(252, 196, 25, 0.12)', redCol: '#ae3ec9', redBg: 'rgba(174, 62, 201, 0.12)' },
+    preset7: { name: '레드 블랙', blueCol: '#fa5252', blueBg: 'rgba(250, 82, 82, 0.12)', redCol: '#212529', redBg: 'rgba(33, 37, 41, 0.12)' },
+    preset8: { name: '그린 블루', blueCol: '#40c057', blueBg: 'rgba(64, 192, 87, 0.12)', redCol: '#228be6', redBg: 'rgba(34, 139, 230, 0.12)' },
+    preset9: { name: '바이올렛 그레이', blueCol: '#7950f2', blueBg: 'rgba(121, 80, 242, 0.12)', redCol: '#868e96', redBg: 'rgba(134, 142, 150, 0.12)' }
 };
 let currentHlPreset = 'preset1';
 
 const BG_THEMES = {
     dark: { name: '다크모드', bodyBg: '#111214', containerBg: '#1e1f22', textColor: '#dbdee1', textMuted: '#949ba4', border: '#2a2b2e', isDark: true, showBorder: true },
-    light: { name: '라이트 그레이', bodyBg: '#f2f4f6', containerBg: '#ffffff', textColor: '#333d4b', textMuted: '#6b7684', border: '#e5e8eb', isDark: false, showBorder: true },
-    pink: { name: '딸기우유', bodyBg: '#FFFAFB', containerBg: '#ffffff', textColor: '#4f3338', textMuted: '#9a7a80', border: '#FFE5E9', isDark: false, showBorder: true },
-    orange: { name: '살구 샤베트', bodyBg: '#fff7ed', containerBg: '#ffffff', textColor: '#4a3728', textMuted: '#947e6b', border: '#ffe8cc', isDark: false, showBorder: true },
-    yellow: { name: '바나나 크림', bodyBg: '#fefce8', containerBg: '#ffffff', textColor: '#453c1c', textMuted: '#8c805c', border: '#fef3c7', isDark: false, showBorder: true },
-    green: { name: '애플민트', bodyBg: '#f0fdf4', containerBg: '#ffffff', textColor: '#223829', textMuted: '#68826f', border: '#dcfce7', isDark: false, showBorder: true },
-    blue: { name: '소다 스카이', bodyBg: '#f0f9ff', containerBg: '#ffffff', textColor: '#21334a', textMuted: '#647c94', border: '#e0f2fe', isDark: false, showBorder: true },
-    purple: { name: '라벤더', bodyBg: '#faf5ff', containerBg: '#ffffff', textColor: '#3b2b4d', textMuted: '#837199', border: '#f3e8ff', isDark: false, showBorder: true },
-    mint: { name: '페퍼민트', bodyBg: '#f0fdfa', containerBg: '#ffffff', textColor: '#1e3833', textMuted: '#5d827b', border: '#ccfbf1', isDark: false, showBorder: true },
-    peach: { name: '피치', bodyBg: '#fff5f5', containerBg: '#ffffff', textColor: '#4f2f2b', textMuted: '#967470', border: '#ffe4e6', isDark: false, showBorder: true },
-    lilac: { name: '라일락', bodyBg: '#fdf4ff', containerBg: '#ffffff', textColor: '#43264d', textMuted: '#8b6b94', border: '#fae8ff', isDark: false, showBorder: true },
-    sage: { name: '세이지', bodyBg: '#f4f6f0', containerBg: '#ffffff', textColor: '#2e3a24', textMuted: '#6b7a5e', border: '#e6ebd8', isDark: false, showBorder: true },
-    ocean: { name: '딥 오션', bodyBg: '#e0f2fe', containerBg: '#ffffff', textColor: '#0f2d4a', textMuted: '#507294', border: '#bae6fd', isDark: false, showBorder: true },
-    rose: { name: '장미 정원', bodyBg: '#ffe4e6', containerBg: '#ffffff', textColor: '#5c1d24', textMuted: '#9c5c64', border: '#fecdd3', isDark: false, showBorder: true },
-    grape: { name: '포도송이', bodyBg: '#f3e8ff', containerBg: '#ffffff', textColor: '#3b1d5c', textMuted: '#7c5c9c', border: '#e9d5ff', isDark: false, showBorder: true },
-    milktea: { name: '로얄 밀크티', bodyBg: '#f5ebe0', containerBg: '#ffffff', textColor: '#3d2b1f', textMuted: '#7a6251', border: '#eddcd2', isDark: false, showBorder: true }
+    light: { name: '라이트 그레이', bodyBg: '#f2f4f6', containerBg: '#fafafc', textColor: '#333d4b', textMuted: '#6b7684', border: '#e5e8eb', isDark: false, showBorder: true },
+    pink: { name: '딸기우유', bodyBg: '#FFE5E9', containerBg: '#fffafb', textColor: '#4f3338', textMuted: '#9a7a80', border: '#FFD1D7', isDark: false, showBorder: true },
+    orange: { name: '살구 샤베트', bodyBg: '#FFE8CC', containerBg: '#fffbf7', textColor: '#4a3728', textMuted: '#947e6b', border: '#FFD8A8', isDark: false, showBorder: true },
+    yellow: { name: '바나나 크림', bodyBg: '#FEF3C7', containerBg: '#fffdf5', textColor: '#453c1c', textMuted: '#8c805c', border: '#FDE68A', isDark: false, showBorder: true },
+    green: { name: '애플민트', bodyBg: '#DCFCE7', containerBg: '#f6fdf8', textColor: '#223829', textMuted: '#68826f', border: '#BBF7D0', isDark: false, showBorder: true },
+    blue: { name: '소다 스카이', bodyBg: '#E0F2FE', containerBg: '#f6fafc', textColor: '#21334a', textMuted: '#647c94', border: '#BAE6FD', isDark: false, showBorder: true },
+    purple: { name: '라벤더', bodyBg: '#F3E8FF', containerBg: '#faf8fc', textColor: '#3b2b4d', textMuted: '#837199', border: '#E9D5FF', isDark: false, showBorder: true },
+    mint: { name: '페퍼민트', bodyBg: '#CCFBF1', containerBg: '#f4fcf9', textColor: '#1e3833', textMuted: '#5d827b', border: '#99F6E4', isDark: false, showBorder: true },
+    peach: { name: '피치', bodyBg: '#FFE4E6', containerBg: '#fffafb', textColor: '#4f2f2b', textMuted: '#967470', border: '#FECDD3', isDark: false, showBorder: true },
+    lilac: { name: '라일락', bodyBg: '#FAE8FF', containerBg: '#fcf8fc', textColor: '#43264d', textMuted: '#8b6b94', border: '#F5D0FE', isDark: false, showBorder: true },
+    sage: { name: '세이지', bodyBg: '#E6EBD8', containerBg: '#f6f8f2', textColor: '#2e3a24', textMuted: '#6b7a5e', border: '#D1DBC2', isDark: false, showBorder: true },
+    ocean: { name: '딥 오션', bodyBg: '#BAE6FD', containerBg: '#f2f9fd', textColor: '#0f2d4a', textMuted: '#507294', border: '#7DD3FC', isDark: false, showBorder: true },
+    rose: { name: '장미 정원', bodyBg: '#FECDCD', containerBg: '#fffbfb', textColor: '#5c1d24', textMuted: '#9c5c64', border: '#FCA5A5', isDark: false, showBorder: true },
+    grape: { name: '포도송이', bodyBg: '#E9D5FF', containerBg: '#faf6fd', textColor: '#3b1d5c', textMuted: '#7c5c9c', border: '#D8B4FE', isDark: false, showBorder: true },
+    milktea: { name: '로얄 밀크티', bodyBg: '#EDDCD2', containerBg: '#faf8f5', textColor: '#3d2b1f', textMuted: '#7a6251', border: '#DDB8A6', isDark: false, showBorder: true }
 };
 let currentBgTheme = 'dark';
 
@@ -781,11 +897,33 @@ function customRedo() {
     if (historyIndex < memoHistory.length - 1) { historyIndex++; document.getElementById("freeMemo").value = memoHistory[historyIndex]; }
 }
 
+// 🛠️ 티스토리 업로드 시 불필요한 붓칠하기/초록 테두리 흔적 제거하는 전처리 정제 함수
+function stripInteractiveFeatures(html) {
+    if (!html) return "";
+    let clean = html;
+    // 인장 클릭 이벤트(onclick) 완전 박멸
+    clean = clean.replace(/\s*onclick="if\(window\.clickAvatar\) window\.clickAvatar\([^"]*"\)/gi, '');
+    // 인장 클릭 클래스 완전 박멸
+    clean = clean.replace(/\s*chat-avatar-clickable/g, '');
+    // 불필요하게 띄어쓰기가 남은 클래스 목록 공백 정제
+    clean = clean.replace(/class="\s*([^"]*?)\s*"/g, (match, p1) => {
+        return `class="${p1.trim().replace(/\s+/g, ' ')}"`;
+    });
+    // 호버/초록 테두리 그림자/붓 모양 커서 등 뷰어용 CSS 규칙 제거 (줄바꿈 포함 안전 제거)
+    clean = clean.replace(/\.chat-avatar-clickable\s*\{[\s\S]*?\}/gi, '');
+    clean = clean.replace(/\.chat-avatar-clickable:hover\s*\{[\s\S]*?\}/gi, '');
+    clean = clean.replace(/\.chat-avatar-space\.chat-avatar-clickable:hover\s*\{[\s\S]*?\}/gi, '');
+    return clean;
+}
+
 function copyMemoAll() {
     const memoArea = document.getElementById("freeMemo");
     if (!memoArea.value.trim()) { showToast("❌ 복사할 내용이 없습니다!"); return; }
-    memoArea.select();
-    navigator.clipboard.writeText(memoArea.value)
+    
+    // 최종 클립보드 복사 시 인터랙티브 붓칠 스타일과 기능 삭제 전처리
+    const cleanText = stripInteractiveFeatures(memoArea.value);
+    
+    navigator.clipboard.writeText(cleanText)
         .then(() => showToast("🥳 복사했어~"))
         .catch(() => showToast("❌ 복사에 실패했습니다."));
 }
@@ -825,7 +963,9 @@ function sendToViewer(id) {
     }
     showToast("🎉 결과물을 뷰어로 전송했습니다!");
 }
+</script>
 
+<script>
 // ==========================================
 // ⚡ 제로-렉 무중단 스크롤 보존 갱신 엔진 (Tistory 업로드용 클린 주입 기능 내장)
 // ==========================================
@@ -991,7 +1131,7 @@ function addNewCustomWordRow(word = "", textCol = "#4A8A54", bgColHex = "") {
     rowDiv.dataset.bgCol = bgColHex;
     
     rowDiv.innerHTML = `
-        <input type="text" placeholder="강조 단어" value="${word}" class="word-text-input" oninput="triggerLiveSync(100); saveProgramSettings();" style="flex: 1; padding: 6px 10px; font-size: 11px; border: 1px solid #bde0c4; border-radius: 6px;">
+        <input type="text" placeholder="강조 단어(쉼표 구분 가능)" value="${word}" class="word-text-input" oninput="triggerLiveSync(100); saveProgramSettings();" style="flex: 1; padding: 6px 10px; font-size: 11px; border: 1px solid #bde0c4; border-radius: 6px;">
         <div style="display: flex; align-items: center; gap: 4px;">
             <span style="font-size: 10px; color: #777;">글자:</span>
             <div class="char-color-picker-trigger" id="swatch_text_${rowId}" onclick="openColorPicker(event, 'wordText', '${rowId}')" style="width: 14px; height: 14px; border-radius: 50%; background-color: ${textCol}; border: 1px solid rgba(0,0,0,0.15); cursor: pointer;" title="글자 색상"></div>
@@ -1015,7 +1155,9 @@ function deleteCustomWordRow(rowId) {
         triggerLiveSync(10);
     }
 }
+</script>
 
+<script>
 // ==========================================
 // 💾 프로그램 전역 설정 저장 및 로드 기능
 // ==========================================
@@ -1182,7 +1324,7 @@ function resetOrnamentSettings() {
 
     saveProgramSettings();
     triggerLiveSync(50);
-    showToast("초기화 되었습니다!");
+    showToast("초기화 되었어~");
 }
 </script>
 
@@ -1217,6 +1359,22 @@ document.addEventListener("DOMContentLoaded", () => {
                             <span class="summary-arrow" style="font-size: 11px; color: #6bb376;">▼</span>
                         </summary>
                         <div style="padding: 16px; display: flex; flex-direction: column; gap: 14px;">
+                            
+                            <!-- 🪾 이미지 넣기 (모바일 화면 최적화 스타일) -->
+                            <div style="display: flex; flex-direction: column; gap: 8px; border-bottom: 1px dashed #e2ebd9; padding-bottom: 12px;">
+                                <div style="font-weight: bold; font-size: 13.5px; color: #333; display: flex; align-items: center; gap: 6px;">
+                                    <span>🪾 이미지 넣기</span>
+                                </div>
+                                <div style="font-size: 11px; color: #718096; line-height: 1.4;">스틸컷이나 인트로를 넣으면 이쁩니다.</div>
+                                <div style="display: flex; flex-direction: column; gap: 6px;">
+                                    <input type="text" id="insertImgUrl" placeholder="이미지 URL 주소" style="width: 100%; padding: 8px 12px; font-size: 12px; border: 1px solid #d1ebd6; border-radius: 8px; box-sizing: border-box;">
+                                    <div style="display: flex; gap: 6px;">
+                                        <input type="text" id="insertImgKeyword" placeholder="기준 대사 입력 (ex: 해피포인트 )" style="flex: 1; padding: 8px 12px; font-size: 12px; border: 1px solid #d1ebd6; border-radius: 8px; box-sizing: border-box;">
+                                        <button type="button" class="btn-memo-import" onclick="processImageInsertion()" style="padding: 6px 14px; font-size: 12px; border-radius: 20px; white-space: nowrap; flex-shrink: 0; background-color: #6bb376; color: white; border-color: #6bb376;">✨ 삽입</button>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div style="display: flex; flex-direction: column; gap: 8px;">
                                 <div style="display: flex; justify-content: space-between; align-items: center;">
                                     <span style="font-weight: bold; font-size: 13px; color: #333;">👥 시스템 및 서술자 정렬</span>
@@ -1237,8 +1395,9 @@ document.addEventListener("DOMContentLoaded", () => {
                             <div style="display: flex; flex-direction: column; gap: 8px; border-top: 1px dashed #e2ebd9; padding-top: 12px;">
                                 <div style="display: flex; justify-content: space-between; align-items: center;">
                                     <div style="font-weight: bold; font-size: 13px; color: #333;">🌸 파스텔 테마</div>
-                                    <div style="display: flex; gap: 6px;">
+                                    <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
                                         <button type="button" class="btn-memo-import" onclick="openCustomThemeModal()" style="font-size: 11.5px; padding: 4px 12px; margin: 0; border-radius: 20px;">🎨 커스텀</button>
+                                        <button type="button" class="btn-memo-import" onclick="openOrnamentSlotModal()" style="font-size: 11.5px; padding: 4px 12px; margin: 0; border-radius: 20px;">🥑 슬롯</button>
                                         <button type="button" class="btn-memo-import" onclick="resetOrnamentSettings()" style="color: #fa5252; border-color: #ffc9c9; background-color: #fff5f5; font-size: 11.5px; padding: 4px 12px; margin: 0; border-radius: 20px;">⚠️ 초기화</button>
                                     </div>
                                 </div>
@@ -1366,6 +1525,27 @@ document.addEventListener("DOMContentLoaded", () => {
                                                 <span class="preset-dot" style="background: #ae3ec9;"></span>
                                             </div>
                                         </div>
+                                        <div class="preset-card" id="presetCard_preset7" onclick="selectHlPreset('preset7')">
+                                            <div class="preset-title" title="레드 블랙">레드 블랙</div>
+                                            <div class="preset-preview-dots">
+                                                <span class="preset-dot" style="background: #fa5252;"></span>
+                                                <span class="preset-dot" style="background: #212529;"></span>
+                                            </div>
+                                        </div>
+                                        <div class="preset-card" id="presetCard_preset8" onclick="selectHlPreset('preset8')">
+                                            <div class="preset-title" title="그린 블루">그린 블루</div>
+                                            <div class="preset-preview-dots">
+                                                <span class="preset-dot" style="background: #40c057;"></span>
+                                                <span class="preset-dot" style="background: #228be6;"></span>
+                                            </div>
+                                        </div>
+                                        <div class="preset-card" id="presetCard_preset9" onclick="selectHlPreset('preset9')">
+                                            <div class="preset-title" title="바이올렛 그레이">바이올렛 그레이</div>
+                                            <div class="preset-preview-dots">
+                                                <span class="preset-dot" style="background: #7950f2;"></span>
+                                                <span class="preset-dot" style="background: #868e96;"></span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -1467,7 +1647,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 <div class="input-group">
                     <div class="label-wrapper"><label class="coral-label">🖤 3. 삽입 위치</label></div>
-                    <input type="text" id="keywordInput2" placeholder="뿌리 로그의 특정 대사 바로 다음에 삽입됩니다. ex) 토이💙">
+                    <input type="text" id="keywordInput2" placeholder="뿌리 로그의 특정 대사 바로 다음에 삽입됩니다. (ex: 토이💙)">
                 </div>
 
                 <button class="btn-cut coral-btn" onclick="processSplice(2)">🪴 나무 옮겨심기</button>
@@ -1511,7 +1691,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
                 <div class="input-group">
                     <div class="label-wrapper"><label class="pink-label">🔍 기준 문장</label></div>
-                    <input type="text" id="keywordInput${i}" class="pink-input" placeholder="일부 단어만 적어도 굴러갑니다. ex) 체스 or 체스 사랑해ㅠ">
+                    <input type="text" id="keywordInput${i}" class="pink-input" placeholder="일부 단어만 적어도 굴러갑니다. (ex: 체스 or 체스 사랑해ㅠ)">
                 </div>
                 
                 <div style="display: flex; align-items: center; justify-content: space-between; background: #fffafb; padding: 10px 15px; border-radius: 8px; border: 1px dashed #ffb3c1; margin-bottom: 18px;">
@@ -1550,13 +1730,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
     loadProgramSettings();
 
+    // 🚀 파일 로드 완료 후 실시간 즉시 뷰어로 자동 매핑 및 표시
     document.getElementById('editorFileInput').addEventListener('change', function(e) {
         const file = e.target.files[0];
         if (!file) return;
         currentFileName = file.name;
         document.getElementById('editorFileNameDisplay').innerText = `✅ ${file.name} 분석 완료!`;
         const reader = new FileReader();
-        reader.onload = function(e) { analyzeLog(e.target.result); };
+        reader.onload = function(e) { 
+            analyzeLog(e.target.result); 
+            generateView(true);
+        };
         reader.readAsText(file);
     });
 
@@ -1572,7 +1756,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 currentFileName = file.name;
                 document.getElementById('editorFileNameDisplay').innerText = `✅ ${file.name} 분석 완료`;
                 const reader = new FileReader();
-                reader.onload = function(e) { analyzeLog(e.target.result); };
+                reader.onload = function(e) { 
+                    analyzeLog(e.target.result); 
+                    generateView(true);
+                };
                 reader.readAsText(file);
             }
         });
@@ -1640,7 +1827,8 @@ function analyzeLog(rawHtml) {
         if (colorMatch) color = colorMatch[1].trim();
 
         let processedHtml = innerHtml.replace(/<br\s*\/?>/gi, '\n');
-        let rawText = processedHtml.replace(/<[^>]*>?/gm, '').replace(/&nbsp;/g, ' ').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&').trim();
+        let rawText = processedHtml.replace(/<[^>]*>?/gm, '').replace(/&nbsp;/g, ' ').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+        rawText = rawText.replace(/&amp;/g, '&').trim();
 
         if (/^\[.*?\]\s*[^:]*\s*:\s*$/.test(rawText)) {
             continue;
@@ -1886,7 +2074,9 @@ function importBackupData() {
         }
     }
 }
+</script>
 
+<script>
 // ==========================================
 // 🍇 캐릭터 인장/표정 로컬 보관소 저장
 // ==========================================
@@ -2014,6 +2204,7 @@ function loadSavedImages(silent = false) {
     } catch(e) { console.error(e); }
 }
 
+// 🎨 1. 열매 모으기 컴팩트 가로 레이아웃 바인딩 처리 (동그란 프로필 + 미니멀 1열 배치)
 function renderImageManager() {
     const container = document.getElementById('imageManagerContainer');
     if (!container) return;
@@ -2033,15 +2224,13 @@ function renderImageManager() {
             
             html += `
             <div class="img-manager-card">
-                <div class="img-manager-header">
-                    <span>${name}</span>
-                    <button class="btn-img-del" onclick="deleteSingleImage('${encodedName}')">삭제</button>
-                </div>
-                <div class="img-manager-content">
-                    <div class="img-preview" style="background-image: url('${baseVal}');"></div>
-                    <div style="flex:1; display:flex; flex-direction:column; gap:4px;">
-                        <input type="text" class="img-url-input" readonly value="${baseVal}" onclick="this.select();" title="기본 이미지">
+                <div class="img-preview" style="background-image: url('${baseVal}');" title="${name}"></div>
+                <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 4px;">
+                        <span class="img-manager-name" title="${name}">${name}</span>
+                        <button class="btn-img-del" onclick="deleteSingleImage('${encodedName}')">삭제</button>
                     </div>
+                    <input type="text" class="img-url-input" readonly value="${baseVal}" onclick="this.select();" title="${name}의 기본 이미지">
                 </div>
             </div>`;
         });
@@ -2122,14 +2311,17 @@ function generateView(silent = false) {
             const customRows = document.querySelectorAll('.custom-word-row');
             customRows.forEach(row => {
                 const wordInput = row.querySelector('.word-text-input');
-                const word = wordInput ? wordInput.value.trim() : "";
-                if (word) {
+                const wordVal = wordInput ? wordInput.value.trim() : "";
+                if (wordVal) {
                     const textCol = row.dataset.textCol || "#4A8A54";
                     const bgColHex = row.dataset.bgCol || "#6BB376";
                     
-                    const musicWord = escapeRegExp(word);
-                    const regex = new RegExp(`(${musicWord})`, 'g');
-                    processedText = processedText.replace(regex, `<span style="color: ${textCol}; font-weight: bold; background-color: ${bgColHex}; padding: 1px 4px; border-radius: 4px;">$1</span>`);
+                    // 쉼표로 구분하여 다중 단어가 개별 매칭되도록 적용
+                    const words = wordVal.split(',').map(w => w.trim()).filter(w => w);
+                    if (words.length > 0) {
+                        const regex = new RegExp(`(${words.map(escapeRegExp).join('|')})`, 'g');
+                        processedText = processedText.replace(regex, `<span style="color: ${textCol}; font-weight: bold; background-color: ${bgColHex}; padding: 1px 4px; border-radius: 4px;">$1</span>`);
+                    }
                 }
             });
         }
@@ -2152,7 +2344,6 @@ function generateView(silent = false) {
             const avatarStyle = actualAvatarUrl ? `background-image: url('${actualAvatarUrl}');` : '';
             const escapedCharName = log.name.replace(/'/g, "\\'");
 
-            // 💡 onclick 시 clickAvatar가 외부(Tistory 등)에 없어도 오류를 발생시키지 않도록 실행 안전 장치 장착
             const onClickHandler = `onclick="if(window.clickAvatar) window.clickAvatar(event, '${escapedCharName}', ${logIdx})"`;
 
             if (lastType === 'CHAR' && lastCharName === log.name) {
@@ -2167,7 +2358,6 @@ function generateView(silent = false) {
     
     if (currentTurnHTML.length > 0) resultHTML.push(`<div class="chat-turn">\n${currentTurnHTML.join('')}</div>\n`);
 
-    // 💡 Tistory 등 외부 백업 본문에 유해한 자바스크립트(<script>) 블록을 "일절 배제"한 깨끗한 백업 전용 순수 마크업 생성
     const cleanHTML = `<!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -2183,7 +2373,7 @@ ${resultHTML.join('')}    </div>
 </html>`;
     
     const freeMemo = document.getElementById('freeMemo');
-    freeMemo.value = cleanHTML; // 사용자가 복사, 다운로드하는 공간에는 오직 순수 클린 HTML만 탑재
+    freeMemo.value = cleanHTML; 
     saveHistory();
 
     const sidebarToggle = document.getElementById("sidebarModeToggle");
@@ -2191,7 +2381,6 @@ ${resultHTML.join('')}    </div>
         sidebarToggle.checked = true;
         toggleSidebarMode();
     } else {
-        // 내부 뷰어용 iframe에 전달할 때만 updateIframeContent 단에서 가상 실시간 갱신 수신기 스크립트 동적 인젝션
         updateIframeContent(cleanHTML);
     }
     
@@ -2202,7 +2391,6 @@ ${resultHTML.join('')}    </div>
     }
 }
 
-// 테마 주입용 CSS 문자열 빌더 분리
 function getThemeCSS(bgTheme, showBorderLine) {
     const borderStyleText = showBorderLine ? `border-bottom: 1px solid ${bgTheme.border};` : '';
     return `
@@ -2225,6 +2413,10 @@ function getThemeCSS(bgTheme, showBorderLine) {
         .chat-system.sys-center { text-align: center; margin: 10px 0; }
         .chat-system.sys-left-space { text-align: left; margin-left: 54px; margin-top: 4px; }
         .chat-system.sys-left-nospace { text-align: left; margin-left: 0px; margin-top: 4px; }
+
+        /* 🖼️ 모바일 화면에 알잘딱으로 비례 맞추는 연출 그림 스타일 */
+        .chat-inserted-image-wrapper { text-align: center; margin: 15px 0; width: 100%; display: flex; justify-content: center; }
+        .chat-inserted-image { max-width: 100%; height: auto; border-radius: 8px; border: 1px solid ${bgTheme.border}; box-shadow: 0 4px 12px rgba(0,0,0,0.08); display: block; }
     `;
 }
 
@@ -2296,7 +2488,10 @@ function downloadView() {
         downloadName = `잎_${baseName}.html`;
     }
 
-    const blob = new Blob([text], { type: 'text/html;charset=utf-8' });
+    // 파일로 소장용 저장 시 붓칠 인터랙티브 기능과 스타일을 깨끗하게 정리해서 내보냅니다.
+    const cleanText = stripInteractiveFeatures(text);
+
+    const blob = new Blob([cleanText], { type: 'text/html;charset=utf-8' });
     const anchor = document.createElement('a');
     anchor.download = downloadName;
     anchor.href = window.URL.createObjectURL(blob);
@@ -2471,6 +2666,112 @@ function processSplice(id) {
     else openCutModal(matches, keyword);
 }
 
+function processImageInsertion() {
+    const rawHTML = document.getElementById("freeMemo").value.trim();
+    const imgUrl = document.getElementById("insertImgUrl").value.trim();
+    const keyword = document.getElementById("insertImgKeyword").value.trim();
+
+    if (!rawHTML || !imgUrl || !keyword) { 
+        showToast("⚠️ 본문 코드, 이미지 URL, 기준 대사를 모두 입력해 주세요!"); 
+        return; 
+    }
+
+    const imageMarkup = `\n<div class="chat-inserted-image-wrapper"><img src="${imgUrl}" class="chat-inserted-image" alt="inserted-image"></div>\n`;
+
+    const isNewStyle = rawHTML.includes('<div class="chat-turn') || rawHTML.includes('class="viewer-bg"');
+    let headerDelimiter = isNewStyle ? '<div class="viewer-bg">' : '<p class="ccl_tabtitle">메인</p>';
+    let playerTag = isNewStyle ? '<div class="chat-turn' : '<div class="ccl_player';
+    let footerRegex = isNewStyle ? /(<\/div>\s*<\/body>\s*<\/html>\s*)$/i : /(<\/div>\s*<\/div>\s*<\/div>\s*<\/body>\s*<\/html>\s*)$/i;
+    let defaultFooter = isNewStyle ? "</div>\n</body>\n</html>" : "</div>\n</div>\n</div>\n</body>\n</html>";
+
+    let A_header = ""; let restPart = rawHTML;
+    if (rawHTML.includes(headerDelimiter)) {
+        const delimIdx = rawHTML.indexOf(headerDelimiter);
+        A_header = rawHTML.substring(0, delimIdx + headerDelimiter.length);
+        restPart = rawHTML.substring(delimIdx + headerDelimiter.length);
+    } else {
+        const firstPlayerIdx = rawHTML.indexOf(playerTag);
+        if (firstPlayerIdx !== -1) {
+            A_header = rawHTML.substring(0, firstPlayerIdx);
+            restPart = rawHTML.substring(firstPlayerIdx);
+        }
+    }
+
+    let B_body = restPart; let C_footer = defaultFooter;
+    const footerMatch = restPart.match(footerRegex);
+    if (footerMatch) {
+        C_footer = footerMatch[1];
+        B_body = restPart.substring(0, restPart.length - C_footer.length);
+    }
+
+    if (!B_body.includes(playerTag)) { 
+        showToast("⚠️ 우측 편집창의 로그 형태를 분석할 수 없습니다."); 
+        return; 
+    }
+
+    const dialogues = B_body.split(playerTag);
+    const remainingSpace = dialogues[0];
+    const dialoguesList = dialogues.slice(1);
+    let matches = [];
+    
+    for (let i = 0; i < dialoguesList.length; i++) {
+        if (dialoguesList[i].includes(keyword)) { matches.push(i); }
+    }
+
+    if (matches.length === 0) { 
+        showToast(`🔍 단어('${keyword}')를 찾지 못했습니다.`); 
+        return; 
+    }
+
+    pendingCutContext = { 
+        action: 'insertImage', 
+        id: 1, 
+        dialoguesList: dialoguesList, 
+        A_header: A_header, 
+        remainingSpace: remainingSpace, 
+        playerTag: playerTag, 
+        C_footer: C_footer, 
+        insertStr: imageMarkup 
+    };
+
+    if (matches.length === 1) {
+        executeImageInsertion(matches[0]);
+    } else {
+        openCutModal(matches, keyword);
+    }
+}
+
+function executeImageInsertion(targetIndex) {
+    const ctx = pendingCutContext;
+    if (!ctx) return;
+
+    const beforeDialogues = ctx.dialoguesList.slice(0, targetIndex + 1);
+    const afterDialogues = ctx.dialoguesList.slice(targetIndex + 1);
+
+    let beforeStr = ctx.remainingSpace + ctx.playerTag + beforeDialogues.join(ctx.playerTag);
+    let afterStr = afterDialogues.length > 0 ? (ctx.playerTag + afterDialogues.join(ctx.playerTag)) : "";
+    
+    let finalResult = ctx.A_header + beforeStr + ctx.insertStr + afterStr + ctx.C_footer;
+
+    const freeMemo = document.getElementById("freeMemo");
+    freeMemo.value = finalResult;
+    
+    saveHistory();
+    const sidebarToggle = document.getElementById("sidebarModeToggle");
+    if (!sidebarToggle.checked) {
+        sidebarToggle.checked = true;
+        toggleSidebarMode();
+    } else {
+        updateIframeContent(finalResult);
+    }
+
+    showToast("🍁 이미지 삽입 완료! 뷰어로 확인해 보세요.");
+    closeCutModal();
+    
+    document.getElementById("insertImgUrl").value = "";
+    document.getElementById("insertImgKeyword").value = "";
+}
+
 function openCutModal(matches, keyword) {
     const ctx = pendingCutContext;
     const modal = document.getElementById('cutModal');
@@ -2486,13 +2787,13 @@ function openCutModal(matches, keyword) {
     
     const isKeepBottom = document.getElementById(`cutModeToggle${ctx.id}`) ? document.getElementById(`cutModeToggle${ctx.id}`).checked : true;
     
-    if (ctx.action === 'splice') {
-        modalTitle.innerText = "🪴 위치 선택";
-        modalDesc.innerHTML = "선택한 대사를 <strong>포함해</strong> 잘려 나가게 됩니다. 앞뒤 문맥(⬆️ 직전 / ⬇️ 직후)을 보고 골라주세요.";
+    if (ctx.action === 'splice' || ctx.action === 'insertImage') {
+        modalTitle.innerText = ctx.action === 'insertImage' ? "🪾 위치 선택" : "🪴 위치 선택";
+        modalDesc.innerHTML = ctx.action === 'insertImage' ? "선택한 대사의 <strong>바로 아래에</strong> 이미지가 삽입됩니다. 앞뒤 문맥(⬆️ 직전 / ⬇️ 직후)을 보고 골라주세요." : "선택한 대사를 <strong>포함해</strong> 잘려 나가게 됩니다. 앞뒤 문맥(⬆️ 직전 / ⬇️ 직후)을 보고 골라주세요.";
     } else {
         modalTitle.innerText = "✂️ 위치 선택";
         if (isKeepBottom) {
-            modalDesc.innerHTML = "선택한 대사를 <strong>포함해</strong> 잘려 나가게 됩니다. 앞뒤 문맥(⬆️ 직전 / ⬇️ 직후)을 보고 골라주세요.";
+            modalDesc.innerHTML = "선택한 대사<strong>위로</strong>잘린 로그가 결과창에 담기게 됩니다. 앞뒤 문맥(⬆️ 직전 / ⬇️ 직후)을 보고 골라주세요.";
         } else {
             modalDesc.innerHTML = "선택한 대사<strong>까지</strong>의 로그가 결과창에 담기게 됩니다. 앞뒤 문맥(⬆️ 직전 / ⬇️ 직후)을 보고 골라주세요.";
         }
@@ -2517,10 +2818,20 @@ function openCutModal(matches, keyword) {
         let btnText;
         if (ctx.action === 'splice') {
             btnText = "🌳 여기에 심기";
+        } else if (ctx.action === 'insertImage') {
+            btnText = "✨ 여기에 삽입";
         } else {
             btnText = isKeepBottom ? "✂️ 여기부터 자르기" : "✂️ 여기까지 남기기";
         }
-        let btnAction = ctx.action === 'splice' ? `executeSplice(${dialogueIdx})` : `executeCut(${dialogueIdx})`;
+        
+        let btnAction;
+        if (ctx.action === 'splice') {
+            btnAction = `executeSplice(${dialogueIdx})`;
+        } else if (ctx.action === 'insertImage') {
+            btnAction = `executeImageInsertion(${dialogueIdx})`;
+        } else {
+            btnAction = `executeCut(${dialogueIdx})`;
+        }
         
         listHtml += `
             <div class="match-item">
@@ -2549,7 +2860,7 @@ function executeCut(targetIndex) {
     
     let editedDialogues;
     if (isKeepBottom) {
-        editedDialogues = ctx.dialoguesList.slice(targetIndex + 1);
+        editedDialogues = ctx.dialoguesList.slice(targetIndex);
     } else {
         editedDialogues = ctx.dialoguesList.slice(0, targetIndex + 1);
     }
@@ -2596,7 +2907,7 @@ function copyToClipboard(id) {
     const copyText = document.getElementById(`logOutput${id}`);
     copyText.select();
     navigator.clipboard.writeText(copyText.value)
-        .then(() => showToast("💦 클립보드 복사 완료!"))
+        .then(() => showToast("🔑 클립보드 복사 완료!"))
         .catch(() => showToast("❌ 복사 실패!"));
 }
 
@@ -2643,6 +2954,7 @@ function toggleSidebarMode() {
     } else {
         modeTitle.innerText = "📝 편집";
         modeTitle.style.color = "#4a5568";
+        freeMemo.value = stripInteractiveFeatures(freeMemo.value);
         freeMemo.style.display = "block";      
         htmlViewer.style.display = "none";     
         htmlPlaceholder.style.display = "none";
@@ -2810,7 +3122,20 @@ function onCustomBgChange(val) {
     document.getElementById('customTextMuted').value = recs.textMuted;
     document.getElementById('customTextMutedText').value = recs.textMuted;
     
-    let recommendedContainerBg = recs.isDark ? '#1e1f22' : '#ffffff';
+    // 외경 색상에 맞춰 묘하게 어울리는 극도로 연한 안쪽 박스 색상 추천
+    let recommendedContainerBg = '#ffffff';
+    if (recs.isDark) {
+        recommendedContainerBg = '#1e1f22';
+    } else {
+        try {
+            let hsl = hexToHsl(val);
+            let s = Math.min(10, Math.max(2, Math.round(hsl.s * 0.2)));
+            let l = 98.5;
+            recommendedContainerBg = hslToHex(hsl.h, s, l);
+        } catch(e) {
+            recommendedContainerBg = '#fcfdfd';
+        }
+    }
     document.getElementById('customContainerBg').value = recommendedContainerBg;
     document.getElementById('customContainerBgText').value = recommendedContainerBg;
 }
@@ -2870,7 +3195,9 @@ function applyCustomTheme() {
     closeCustomThemeModal();
     selectBgTheme('custom');
 }
+</script>
 
+<script>
 // ==========================================
 // 👥 캐릭터 및 강조 단어 색상 팝오버 컬러 피커 핵심 엔진
 // ==========================================
@@ -3202,6 +3529,255 @@ function injectFromClipboard() {
         console.error(err);
         showToast("🍅");
     });
+}
+</script>
+
+<script>
+// ==========================================
+// 💾 오너먼트 멀티 슬롯 보관 관리 엔진
+// ==========================================
+let editSlotIndex = null;
+
+function getOrnamentCurrentState() {
+    let customThemeObj = null;
+    if (BG_THEMES['custom']) {
+        customThemeObj = BG_THEMES['custom'];
+    }
+    
+    let selectedAlign = 'left-space';
+    const alignRadios = document.getElementsByName('sysAlignMode');
+    alignRadios.forEach(r => {
+        if (r.checked) selectedAlign = r.value;
+    });
+
+    const blueWords = document.getElementById('blueWordsInput') ? document.getElementById('blueWordsInput').value : '';
+    const redWords = document.getElementById('redWordsInput') ? document.getElementById('redWordsInput').value : '';
+    
+    const customRows = [];
+    document.querySelectorAll('.custom-word-row').forEach(row => {
+        const wordInput = row.querySelector('.word-text-input');
+        if (wordInput) {
+            customRows.push({
+                word: wordInput.value,
+                textCol: row.dataset.textCol,
+                bgCol: row.dataset.bgCol
+            });
+        }
+    });
+
+    return {
+        bgTheme: currentBgTheme,
+        hlPreset: currentHlPreset,
+        colorReplaceEnabled: isColorReplaceEnabled,
+        customTheme: customThemeObj,
+        sysAlignMode: selectedAlign,
+        blueWords: blueWords,
+        redWords: redWords,
+        customWordRows: customRows
+    };
+}
+
+function loadOrnamentState(state) {
+    if (!state) return;
+    
+    if (state.customTheme) {
+        BG_THEMES['custom'] = state.customTheme;
+        let customCard = document.getElementById('bgThemeCard_custom');
+        if (customCard) {
+            customCard.style.display = 'block';
+            let circle = document.getElementById('customThemeCircle');
+            if (circle) {
+                circle.style.backgroundColor = state.customTheme.bodyBg;
+                circle.style.borderColor = state.customTheme.border;
+            }
+        }
+    } else {
+        delete BG_THEMES['custom'];
+        let customCard = document.getElementById('bgThemeCard_custom');
+        if (customCard) customCard.style.display = 'none';
+    }
+
+    if (state.bgTheme && BG_THEMES[state.bgTheme]) {
+        currentBgTheme = state.bgTheme;
+    } else {
+        currentBgTheme = 'dark';
+    }
+
+    currentHlPreset = state.hlPreset || null;
+    isColorReplaceEnabled = state.colorReplaceEnabled !== false;
+
+    document.querySelectorAll('.bg-theme-card').forEach(card => card.classList.remove('active'));
+    const activeBgCard = document.getElementById(`bgThemeCard_${currentBgTheme}`);
+    if (activeBgCard) activeBgCard.classList.add('active');
+
+    document.querySelectorAll('.preset-card').forEach(card => card.classList.remove('active'));
+    if (isColorReplaceEnabled && currentHlPreset) {
+        const activePresetCard = document.getElementById(`presetCard_${currentHlPreset}`);
+        if (activePresetCard) activePresetCard.classList.add('active');
+    }
+
+    const blueInput = document.getElementById('blueWordsInput');
+    const redInput = document.getElementById('redWordsInput');
+    if (blueInput && state.blueWords !== undefined) blueInput.value = state.blueWords;
+    if (redInput && state.redWords !== undefined) redInput.value = state.redWords;
+
+    const alignRadios = document.getElementsByName('sysAlignMode');
+    alignRadios.forEach(r => {
+        if (r.value === state.sysAlignMode) r.checked = true;
+        else r.checked = false;
+    });
+
+    const container = document.getElementById('customWordContainer');
+    if (container) {
+        container.innerHTML = '';
+        if (state.customWordRows) {
+            state.customWordRows.forEach(r => {
+                addNewCustomWordRow(r.word, r.textCol, r.bgCol);
+            });
+        }
+    }
+
+    saveProgramSettings();
+    triggerLiveSync(50);
+}
+
+function openOrnamentSlotModal() {
+    document.getElementById('ornamentSlotModal').style.display = 'flex';
+    renderSlots();
+}
+
+function closeOrnamentSlotModal() {
+    document.getElementById('ornamentSlotModal').style.display = 'none';
+    editSlotIndex = null;
+}
+
+function getSavedSlots() {
+    let slots = [];
+    try {
+        const saved = localStorage.getItem('cocoforia_ornament_slots');
+        if (saved) {
+            slots = JSON.parse(saved);
+        }
+    } catch (e) {
+        console.error(e);
+    }
+    
+    while (slots.length < 10) {
+        slots.push({
+            name: `오너먼트 슬롯 ${slots.length + 1}`,
+            date: '',
+            data: null
+        });
+    }
+    return slots;
+}
+
+function saveSlots(slots) {
+    try {
+        localStorage.setItem('cocoforia_ornament_slots', JSON.stringify(slots));
+    } catch (e) {
+        console.error(e);
+    }
+}
+
+function renderSlots() {
+    const container = document.getElementById('slotListContainer');
+    if (!container) return;
+    
+    const slots = getSavedSlots();
+    let html = '';
+    
+    slots.forEach((slot, index) => {
+        const hasData = slot.data !== null;
+        const formattedDate = slot.date ? `수정됨: ${slot.date}` : '비어있음';
+        
+        let nameSection = '';
+        if (editSlotIndex === index) {
+            nameSection = `<input type="text" id="slotNameInput_${index}" class="slot-name-input" value="${slot.name}" onkeydown="if(event.key==='Enter') saveSlotName(${index})" autofocus maxlength="20">`;
+        } else {
+            nameSection = `
+                <span class="slot-name">${slot.name}</span>
+                <button class="btn-slot-edit" onclick="startEditSlotName(${index})" title="이름 수정">💿</button>
+            `;
+        }
+
+        html += `
+            <div class="slot-item">
+                <div class="slot-info">
+                    <div class="slot-title-wrapper">
+                        ${nameSection}
+                    </div>
+                    <span class="slot-date">${formattedDate}</span>
+                </div>
+                <div class="slot-actions">
+                    <button class="btn-slot btn-slot-save" onclick="saveToSlot(${index})">${hasData ? '덮어쓰기' : '저장'}</button>
+                    <button class="btn-slot btn-slot-load ${hasData ? '' : 'disabled'}" onclick="${hasData ? `loadFromSlot(${index})` : ''}">${hasData ? '불러오기' : '대기'}</button>
+                    ${hasData ? `<button class="btn-slot-del" onclick="deleteSlot(${index})" title="슬롯 비우기">✕</button>` : '<div style="width: 22px;"></div>'}
+                </div>
+            </div>
+        `;
+    });
+    
+    container.innerHTML = html;
+}
+
+function startEditSlotName(index) {
+    editSlotIndex = index;
+    renderSlots();
+    const input = document.getElementById(`slotNameInput_${index}`);
+    if (input) {
+        input.focus();
+        input.select();
+        input.addEventListener('blur', () => saveSlotName(index));
+    }
+}
+
+function saveSlotName(index) {
+    const input = document.getElementById(`slotNameInput_${index}`);
+    if (input) {
+        const nameText = input.value.trim() || `오너먼트 슬롯 ${index + 1}`;
+        const slots = getSavedSlots();
+        slots[index].name = nameText;
+        saveSlots(slots);
+    }
+    editSlotIndex = null;
+    renderSlots();
+}
+
+function saveToSlot(index) {
+    const slots = getSavedSlots();
+    const currentState = getOrnamentCurrentState();
+    
+    const now = new Date();
+    const formattedDate = `${now.getFullYear()}.${String(now.getMonth() + 1).padStart(2, '0')}.${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+    
+    slots[index].data = currentState;
+    slots[index].date = formattedDate;
+    
+    saveSlots(slots);
+    renderSlots();
+    showToast(`💾 [${slots[index].name}]에 설정을 안전하게 저장했습니다!`);
+}
+
+function loadFromSlot(index) {
+    const slots = getSavedSlots();
+    if (!slots[index].data) return;
+    
+    loadOrnamentState(slots[index].data);
+    showToast(`📂 [${slots[index].name}] 세팅을 정상적으로 불러왔습니다!`);
+    closeOrnamentSlotModal();
+}
+
+function deleteSlot(index) {
+    const slots = getSavedSlots();
+    const targetName = slots[index].name;
+    
+    slots[index].data = null;
+    slots[index].date = '';
+    
+    saveSlots(slots);
+    renderSlots();
+    showToast(`🗑️ [${targetName}] 슬롯을 비웠습니다.`);
 }
 </script>
 </body>
