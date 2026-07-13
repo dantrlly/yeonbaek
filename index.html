@@ -5,7 +5,6 @@
     <title>연백나무</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- PWA 설정을 위한 메타 태그 및 매니페스트 연동 -->
     <link class="pwa-icon" rel="apple-touch-icon" href="icon-192.png">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#6bb376">
@@ -14,7 +13,6 @@
     <meta name="apple-mobile-web-app-title" content="백업나무">
 
     <style>
-        /* 🎨 기본 바탕 및 전체 테마를 싱그럽고 눈이 편안한 연녹색 톤으로 적용 */
         body { 
             font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, 'Malgun Gothic', sans-serif; 
             margin: 0; 
@@ -24,7 +22,6 @@
             -webkit-font-smoothing: antialiased;
         }
         
-        /* 🛠️ 반응형 레이아웃 지원 flex-wrap 적용 */
         .main-wrapper { 
             display: flex; 
             max-width: 1400px; 
@@ -34,7 +31,6 @@
             flex-wrap: wrap; 
         }
         
-        /* 왼쪽 작업창 영역 */
         .container { 
             flex: 1; 
             min-width: 320px; 
@@ -46,7 +42,6 @@
             box-sizing: border-box;
         }
         
-        /* 📝 오른쪽 고정 편집/뷰어 영역 */
         .sidebar-memo { 
             flex: 1; 
             min-width: 320px; 
@@ -64,7 +59,6 @@
         h1 { text-align: center; color: #1a1a1a; margin: 0; font-size: 24px; font-weight: 800; letter-spacing: -0.5px; }
         .subtitle { text-align: center; color: #718096; font-size: 13px; margin-bottom: 25px; margin-top: 5px; font-weight: 500; }
         
-        /* 탭 스타일 */
         .tabs { display: flex; justify-content: center; margin-bottom: 20px; border-bottom: 2px solid #e2ebd9; flex-wrap: wrap; gap: 4px; }
         .tab-button { 
             padding: 10px 18px; 
@@ -84,14 +78,12 @@
         .tab-button.active.blue-tab-active { color: #6bb376; border-bottom: 3px solid #6bb376; }
         .tab-button.active.coral-tab-active { color: #8c6f56; border-bottom: 3px solid #8c6f56; }
         
-        /* 작업창 스타일 */
         .tab-content { display: none; }
         .tab-content.active { display: block; animation: fadeIn 0.35s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
         
         .input-group { display: flex; flex-direction: column; margin-bottom: 18px; }
         
-        /* 라벨 디자인 */
         .label-wrapper { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
         label { font-weight: bold; color: #2d3748; font-size: 14px; }
         .char-count { font-size: 11px; color: #6bb376; font-weight: bold; background: #f0fdf4; padding: 2px 8px; border-radius: 20px; border: 1px solid #bde0c4; }
@@ -127,7 +119,6 @@
             transition: all 0.2s;
         }
         
-        /* 기본 파일 업로드 존 (그린화) */
         .file-drop-zone { 
             border: 2px dashed #bde0c4; 
             background-color: #fafdfb; 
@@ -143,7 +134,6 @@
         .file-drop-zone span { font-size: 11px; color: #8bc295; display: inline-block; margin-top: 4px; }
         .file-input { display: none; }
 
-        /* 메모장 코드 가져오기 버튼 */
         .btn-memo-import { 
             background-color: #ffffff; 
             border: 1px solid #bde0c4; 
@@ -160,7 +150,6 @@
         }
         .btn-memo-import:hover { background-color: #effcf1; border-color: #6bb376; }
 
-        /* 기본 옵션 스타일 */
         .mode-wrapper { 
             display: flex; 
             align-items: center; 
@@ -174,7 +163,6 @@
         .mode-info { display: flex; flex-direction: column; gap: 4px; }
         .mode-title { font-weight: bold; font-size: 13.5px; color: #2d3748; }
         
-        /* 🎚️ 스위치 UI 디자인 */
         .switch-label { position: relative; display: inline-block; width: 110px; height: 34px; }
         .switch-label input { opacity: 0; width: 0; height: 0; }
         
@@ -190,7 +178,6 @@
         .pink-switch input:checked + .slider .text-basic { color: white; }
         .pink-switch input:checked + .slider .text-mid { color: #6bb376; }
 
-        /* 버튼 스타일 (기본 그린 계열 통합) */
         .btn-cut { 
             width: 100%; 
             padding: 12px; 
@@ -237,7 +224,6 @@
         
         .result-section { margin-top: 25px; border-top: 2px dashed #bde0c4; padding-top: 20px; display: none; }
 
-        /* 편집 툴바 */
         .edit-toolbar { display: flex; gap: 4px; margin-left: 10px; margin-right: auto; align-items: center; flex-wrap: wrap; }
         .btn-undo-tool { 
             padding: 4px 10px; 
@@ -300,7 +286,6 @@
         .html-viewer { width: 100%; height: 500px; border: 1px solid #bde0c4; border-radius: 8px; box-sizing: border-box; background: #fff; display: none; }
         .html-viewer-placeholder { display: none; width: 100%; height: 500px; border: 1px solid #bde0c4; border-radius: 8px; background: #222; color: #a0aec0; font-size: 13px; align-items: center; justify-content: center; font-family: sans-serif; text-align: center; }
 
-        /* 💾 1번 탭 전용 테마 */
         .blue-drop-zone { border: 2px dashed #bde0c4 !important; background-color: #fafdfb !important; }
         .blue-drop-zone:hover, .blue-drop-zone.dragover { background-color: #effcf1 !important; border-color: #6bb376 !important; }
         .blue-drop-zone p { color: #4a8a54 !important; }
@@ -314,13 +299,11 @@
         .blue-switch input:checked + .slider .text-mid { color: #6bb376; }
         .blue-mode-wrapper { border-color: #bde0c4 !important; background: #fafdfb !important; flex-direction: column; align-items: flex-start; gap: 12px; }
 
-        /* 3지선다 라디오 버튼 스타일 */
         .align-radio-group { display: flex; gap: 4px; background: #ffffff; padding: 4px; border-radius: 8px; border: 1px solid #d1ebd6; font-size: 11.5px; font-weight: bold; color: #4a8a54; }
         .align-radio-label { display: flex; align-items: center; gap: 4px; cursor: pointer; padding: 4px 10px; border-radius: 6px; transition: background 0.15s; }
         .align-radio-label:hover { background: #f2f9f3; }
         .align-radio-label input[type="radio"] { accent-color: #6bb376; cursor: pointer; }
 
-        /* 강조 컬러 테마 프리셋 카드 */
         .preset-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 6px; }
         .preset-card { border: 1.5px solid #e2ebd9; border-radius: 8px; padding: 6px; cursor: pointer; transition: all 0.2s; text-align: center; background: white; }
         .preset-card:hover { border-color: #a5cfad; background: #fafdfb; }
@@ -329,7 +312,6 @@
         .preset-preview-dots { display: flex; justify-content: center; gap: 4px; }
         .preset-dot { width: 11px; height: 11px; border-radius: 50%; display: inline-block; border: 1px solid rgba(0,0,0,0.05); }
 
-        /* 티스토리 백업 대응 배경 테마 카드 */
         .bg-theme-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 6px; }
         .bg-theme-card { border: 1.5px solid #e2ebd9; border-radius: 8px; padding: 6px; cursor: pointer; transition: all 0.2s; text-align: center; position: relative; background: #ffffff; }
         .bg-theme-card:hover { transform: translateY(-1px); border-color: #a5cfad; }
@@ -338,7 +320,6 @@
         .bg-theme-card.active .bg-theme-circle { border-color: #6bb376; }
         .bg-theme-title { font-size: 10px; font-weight: bold; color: #4a5568; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-        /* 👥 캐릭터 설정 카드 컴포넌트 미니멀 디자인 고도화 */
         .char-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; margin-top: 10px; }
         .char-item-blue { 
             background-color: #fff; 
@@ -383,7 +364,6 @@
         .narr-checkbox-label { font-size: 11px; color: #4a5568; cursor: pointer; display: flex; align-items: center; gap: 3px; font-weight: bold; white-space: nowrap; flex-shrink: 0; }
         .narr-checkbox-label input[type="checkbox"] { accent-color: #6bb376; cursor: pointer; }
 
-        /* 표정 추가 버튼 및 리스트 스타일 (기본 접힘 형태 지원) */
         .expr-accordion-area {
             display: none; 
             flex-direction: column;
@@ -406,7 +386,6 @@
         .btn-img-load { padding: 6px 14px; background-color: #ffffff; color: #6bb376; border: 1px solid #bde0c4; border-radius: 20px; font-size: 12.5px; font-weight: bold; cursor: pointer; transition: all 0.2s; }
         .btn-img-load:hover { background-color: #effcf1; border-color: #6bb376; transform: translateY(-1px); }
         
-        /* 💾 가지/열매 전용 오리지널 핑크 테마 스타일 복원 */
         .pink-label { color: #ff758f !important; }
         .pink-char-count { font-size: 11px; color: #ff758f; font-weight: bold; background: #fff0f2; padding: 2px 8px; border-radius: 20px; border: 1px solid #ffd0d6; }
         .pink-textarea { border-color: #ffd0d6 !important; background-color: #fffbfb; }
@@ -429,7 +408,6 @@
         .pink-btn-memo-import { border-color: #ffccd3 !important; color: #ff758f !important; }
         .pink-btn-memo-import:hover { background-color: #fff0f2 !important; border-color: #ff758f !important; }
 
-        /* 🎨 1. 열매 모으기 캐릭터 카드 컴팩트화 및 미니멀 디자인 고도화 */
         .img-manager-grid { 
             display: grid; 
             grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); 
@@ -508,7 +486,6 @@
             box-sizing: border-box;
         }
 
-        /* 🍑 끼워넣기 탭 전용 테마 (세련된 연갈색 브라운 톤) */
         .coral-drop-zone { border: 2px dashed #e6dad0 !important; background-color: #faf6f0 !important; }
         .coral-drop-zone:hover, .coral-drop-zone.dragover { background-color: #f2eae2 !important; border-color: #bfa38a !important; }
         .coral-drop-zone p { color: #8c6f56 !important; }
@@ -518,11 +495,9 @@
         .coral-btn { background-color: #bfa38a !important; color: white !important; box-shadow: 0 2px 6px rgba(191, 163, 138, 0.15); }
         .coral-btn:hover { background-color: #8c6f56 !important; transform: translateY(-1px); }
 
-        /* 🍞 토스트 알림 디자인 스타일 */
         .toast { position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%) translateY(20px); background-color: rgba(45, 55, 72, 0.95); color: #ffffff; padding: 10px 24px; border-radius: 30px; font-size: 13px; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.15); z-index: 10000; opacity: 0; visibility: hidden; transition: opacity 0.25s, transform 0.25s, visibility 0.25s; pointer-events: none; }
         .toast.show { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
 
-        /* 🔍 중복 단어 선택용 미니 팝업창(모달) 레이아웃 */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.45); z-index: 20000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(2px); }
         .modal-content { background: white; border-radius: 12px; width: 90%; max-width: 650px; max-height: 80vh; display: flex; flex-direction: column; box-shadow: 0 15px 35px rgba(0,0,0,0.2); animation: fadeInModal 0.25s cubic-bezier(0.16, 1, 0.3, 1); }
         @keyframes fadeInModal { from { opacity: 0; transform: scale(0.96) translateY(5px); } to { opacity: 1; transform: scale(1) translateY(0); } }
@@ -564,7 +539,6 @@
         .modal-content.pink-modal-theme .btn-select-match { background: #ff758f; }
         .modal-content.pink-modal-theme .btn-select-match:hover { background: #ff4d6d; }
 
-        /* 💾 슬롯 모달 리스트 디자인 - 덮어쓰기와 불러오기 색상 교체 */
         .slot-list { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; max-height: 400px; overflow-y: auto; padding-right: 4px; }
         .slot-item { display: flex; align-items: center; justify-content: space-between; padding: 12px; background: #fafdfb; border: 1.5px solid #d1ebd6; border-radius: 10px; transition: all 0.2s; gap: 8px; }
         .slot-item:hover { border-color: #6bb376; background: #f4faf5; }
@@ -576,11 +550,9 @@
         .slot-actions { display: flex; gap: 4px; align-items: center; }
         .btn-slot { font-size: 11px; font-weight: bold; padding: 5px 10px; border-radius: 6px; cursor: pointer; transition: all 0.15s; border: 1px solid transparent; }
         
-        /* 덮어쓰기(저장) -> 덜 튀게 테두리 스타일로 변경 */
         .btn-slot-save { background: white; border-color: #6bb376; color: #6bb376; }
         .btn-slot-save:hover { background: #effcf1; }
         
-        /* 불러오기 -> 더 잘 보이게 초록색 가득 채운 스타일로 변경 */
         .btn-slot-load { background: #6bb376; color: white; border-color: #6bb376; }
         .btn-slot-load:hover { background: #4a8a54; }
         .btn-slot-load.disabled { opacity: 0.4; cursor: not-allowed; background: white; border-color: #d1ebd6; color: #a0aec0; }
@@ -599,7 +571,6 @@
 <body>
 
 <div class="main-wrapper">
-    <!-- 왼쪽 조작 패널 영역 -->
     <div class="container">
         <div class="header-top">
             <h1>🌿 코코포리아 백업나무</h1>
@@ -610,7 +581,6 @@
         <div id="tabContents"></div>
     </div>
 
-    <!-- 오른쪽 실시간 메모 및 뷰어 윈도우 -->
     <div class="sidebar-memo">
         <div class="mode-wrapper pink-switch" style="margin-bottom: 15px; padding: 10px 15px; display: flex; align-items: center; flex-wrap: wrap; gap: 10px;">
             <div class="mode-info" style="flex: 0 0 auto;">
@@ -643,7 +613,6 @@
     </div>
 </div>
 
-<!-- 중복 구문 분기 선택용 모달 윈도우 -->
 <div id="cutModal" class="modal-overlay" onclick="if(event.target === this) closeCutModal();">
     <div class="modal-content">
         <div class="modal-header">
@@ -651,13 +620,12 @@
             <button class="modal-close-btn" onclick="closeCutModal()">✕</button>
         </div>
         <div id="modalDesc" style="padding: 10px 20px 0 20px; font-size:12px; color:#666; line-height: 1.4;">
-            선택한 대사의 <strong>바로 다음 대사부터</strong> 잘려 나가 바구니나 결과창에 담기게 됩니다. 앞뒤 문맥(⬆️ 직전 / ⬇️ 직후)을 보고 골라주세요.
+            선택한 대사의 바로 다음 대사부터 잘려 나가 바구니나 결과창에 담기게 됩니다. 앞뒤 문맥을 보고 골라주세요.
         </div>
         <div class="modal-body" id="modalMatchList"></div>
     </div>
 </div>
 
-<!-- 🚨 UI 끊김 없는 모던 커스텀 확인/경고 팝업 모달 -->
 <div id="customDialogModal" class="modal-overlay" style="display:none; align-items:center; justify-content:center; z-index: 30000;" onclick="if(event.target === this) closeCustomDialog(false);">
     <div class="modal-content" style="max-width: 420px; padding: 22px;">
         <div class="modal-header" style="border-bottom: none; padding: 0 0 10px 0;">
@@ -671,7 +639,6 @@
     </div>
 </div>
 
-<!-- 🎨 사용자 지정 테마 설정 모달 -->
 <div id="customThemeModal" class="modal-overlay" style="display:none; align-items:center; justify-content:center; z-index: 21000;" onclick="if(event.target === this) closeCustomThemeModal();">
     <div class="modal-content green-theme" style="max-width: 420px; padding: 22px;">
         <div class="modal-header" style="border-bottom: none; padding: 0 0 10px 0;">
@@ -718,7 +685,7 @@
             </div>
             
             <div style="font-size: 11px; color: #888; line-height: 1.4; background: #fafdfb; padding: 10px; border-radius: 8px; border: 1px dashed #bde0c4;">
-                💡 배경색을 변경하면 테두리색과 시스템 글자색이 그에 어울리게 <strong>자동 추천</strong>됩니다! 추천된 색상을 직접 수정할 수도 있습니다.
+                💡 배경색을 변경하면 테두리색과 시스템 글자색이 자동 추천됩니다!
             </div>
         </div>
         <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 15px;">
@@ -728,7 +695,6 @@
     </div>
 </div>
 
-<!-- 💾 오너먼트 설정 슬롯 관리 모달 -->
 <div id="ornamentSlotModal" class="modal-overlay" style="display:none; align-items:center; justify-content:center; z-index: 22000;" onclick="if(event.target === this) closeOrnamentSlotModal();">
     <div class="modal-content green-theme" style="max-width: 480px; padding: 22px;">
         <div class="modal-header" style="border-bottom: none; padding: 0 0 10px 0;">
@@ -746,7 +712,6 @@
     </div>
 </div>
 
-<!-- 👥 캐릭터 색상 변경 팝업 레이어 -->
 <div id="charColorPopover" style="display: none; position: absolute; z-index: 25000; background: white; border: 1px solid #bde0c4; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.12); padding: 12px; width: 220px; box-sizing: border-box;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
         <span style="font-size: 11.5px; font-weight: bold; color: #4a5568;">🎨 캐릭터 색상 변경</span>
@@ -766,13 +731,9 @@
     </div>
 </div>
 
-<!-- 미니멀 토스트 알림 컴포넌트 -->
 <div id="toast" class="toast"></div>
 
 <script>
-// ==========================================
-// 🚀 스마트 자동 실시간 토스트 알림 시스템
-// ==========================================
 let toastTimeout;
 function showToast(message) {
     const toast = document.getElementById('toast');
@@ -786,9 +747,6 @@ function showToast(message) {
     }, 1800);
 }
 
-// ==========================================
-// 🚨 브라우저의 alert/confirm을 대체하는 파스텔 대화상자
-// ==========================================
 let dialogCallback = null;
 function showCustomAlert(title, message) {
     document.getElementById('dialogTitle').innerText = title;
@@ -814,14 +772,14 @@ function closeCustomDialog(result) {
     dialogCallback = null;
 }
 
-// ==========================================
-// 🚀 히스토리 관리 및 초기화 세팅
-// ==========================================
 const TAB_NAMES = ["", "잎", "나무", "가지", "가지", "열매"]; 
 let memoHistory = [""];
 let historyIndex = 0;
 const MAX_HISTORY = 10;
 let pendingCutContext = null;
+
+// 가상 버퍼 시스템 기동 (렉 방지 핵심)
+let globalMemoContent = "";
 
 let isLiveSyncActive = false;
 
@@ -862,7 +820,7 @@ let isColorReplaceEnabled = true;
 let customRowIdCounter = 0;
 
 function saveHistory() {
-    const currentVal = document.getElementById("freeMemo").value;
+    const currentVal = globalMemoContent;
     if (memoHistory[historyIndex] !== currentVal) {
         memoHistory = memoHistory.slice(0, historyIndex + 1);
         memoHistory.push(currentVal);
@@ -874,7 +832,6 @@ function saveHistory() {
     }
 }
 
-// 🎭 표정 라디오 버튼 클릭 시 토글식 해제/선택 기능 제어 함수
 function toggleExprRadio(radioElement, charId) {
     if (radioElement.dataset.checked === "true") {
         radioElement.checked = false;
@@ -892,25 +849,41 @@ function toggleExprRadio(radioElement, charId) {
 }
 
 function customUndo() {
-    if (historyIndex > 0) { historyIndex--; document.getElementById("freeMemo").value = memoHistory[historyIndex]; }
+    if (historyIndex > 0) { 
+        historyIndex--; 
+        globalMemoContent = memoHistory[historyIndex];
+        const freeMemo = document.getElementById("freeMemo");
+        if (freeMemo.style.display !== "none") {
+            freeMemo.value = globalMemoContent;
+        }
+        triggerLiveSync(50);
+    }
 }
 function customRedo() {
-    if (historyIndex < memoHistory.length - 1) { historyIndex++; document.getElementById("freeMemo").value = memoHistory[historyIndex]; }
+    if (historyIndex < memoHistory.length - 1) { 
+        historyIndex++; 
+        globalMemoContent = memoHistory[historyIndex];
+        const freeMemo = document.getElementById("freeMemo");
+        if (freeMemo.style.display !== "none") {
+            freeMemo.value = globalMemoContent;
+        }
+        triggerLiveSync(50);
+    }
 }
 
-// 🛠️ 티스토리 업로드 시 불필요한 붓칠하기/초록 테두리 흔적 제거하는 전처리 정제 함수
+// 🛠️ 외부 배포용 HTML에서 인터랙티브 흔적 제거
 function stripInteractiveFeatures(html) {
     if (!html) return "";
     let clean = html;
-    // 인장 클릭 이벤트(onclick) 완전 박멸
-    clean = clean.replace(/\s*onclick="if\(window\.clickAvatar\) window\.clickAvatar\([^"]*"\)/gi, '');
-    // 인장 클릭 클래스 완전 박멸
+    
+    clean = clean.replace(/<script>[\s\S]*?<\/script>/gi, '');
+    clean = clean.replace(/\s*onclick="[^"]*window\.clickAvatar[^"]*"/gi, '');
     clean = clean.replace(/\s*chat-avatar-clickable/g, '');
-    // 불필요하게 띄어쓰기가 남은 클래스 목록 공백 정제
+    
     clean = clean.replace(/class="\s*([^"]*?)\s*"/g, (match, p1) => {
         return `class="${p1.trim().replace(/\s+/g, ' ')}"`;
     });
-    // 호버/초록 테두리 그림자/붓 모양 커서 등 뷰어용 CSS 규칙 제거 (줄바꿈 포함 안전 제거)
+    
     clean = clean.replace(/\.chat-avatar-clickable\s*\{[\s\S]*?\}/gi, '');
     clean = clean.replace(/\.chat-avatar-clickable:hover\s*\{[\s\S]*?\}/gi, '');
     clean = clean.replace(/\.chat-avatar-space\.chat-avatar-clickable:hover\s*\{[\s\S]*?\}/gi, '');
@@ -918,11 +891,10 @@ function stripInteractiveFeatures(html) {
 }
 
 function copyMemoAll() {
-    const memoArea = document.getElementById("freeMemo");
-    if (!memoArea.value.trim()) { showToast("❌ 복사할 내용이 없습니다!"); return; }
+    const activeText = globalMemoContent;
+    if (!activeText.trim()) { showToast("❌ 복사할 내용이 없습니다!"); return; }
     
-    // 최종 클립보드 복사 시 인터랙티브 붓칠 스타일과 기능 삭제 전처리
-    const cleanText = stripInteractiveFeatures(memoArea.value);
+    const cleanText = stripInteractiveFeatures(activeText);
     
     navigator.clipboard.writeText(cleanText)
         .then(() => showToast("🥳 복사했어~"))
@@ -930,7 +902,7 @@ function copyMemoAll() {
 }
 
 function importFromMemo(id) {
-    const memoContent = document.getElementById("freeMemo").value.trim();
+    const memoContent = globalMemoContent.trim();
     if (!memoContent) { showToast("⚠️ 우측 편집창이 비어있습니다!"); return; }
     document.getElementById(`logInput${id}`).value = memoContent;
     updateCharCount(id);
@@ -938,7 +910,7 @@ function importFromMemo(id) {
 }
 
 function importToTarget(targetId) {
-    const memoContent = document.getElementById("freeMemo").value.trim();
+    const memoContent = globalMemoContent.trim();
     if (!memoContent) { showToast("⚠️ 우측 편집창이 완전히 비어있습니다!"); return; }
     document.getElementById(targetId).value = memoContent;
     showToast(`🧺 메모장 코드를 해당 영역으로 가져왔습니다!`);
@@ -951,8 +923,11 @@ function sendToViewer(id) {
         return;
     }
     
+    globalMemoContent = resultText;
     const freeMemo = document.getElementById('freeMemo');
-    freeMemo.value = resultText;
+    if (freeMemo.style.display !== "none") {
+        freeMemo.value = resultText;
+    }
     saveHistory();
 
     const sidebarToggle = document.getElementById("sidebarModeToggle");
@@ -968,17 +943,35 @@ function sendToViewer(id) {
 
 <script>
 // ==========================================
-// ⚡ 제로-렉 무중단 스크롤 보존 갱신 엔진 (Tistory 업로드용 클린 주입 기능 내장)
+// ⚡ 제로-렉 무중단 스크롤 보존 갱신 엔진
 // ==========================================
 function updateIframeContent(html) {
     const htmlViewer = document.getElementById("htmlViewer");
     if (!htmlViewer) return;
 
-    // 💡 미리보기용 실시간 갱신 수신기 및 아바타 클릭 제어 스크립트 동적 인젝션
     let previewHtml = html;
     if (html && !html.includes('window.parent.postMessage') && html.includes('</head>')) {
         const previewScript = `
     <script>
+        document.addEventListener('click', (e) => {
+            const clickable = e.target.closest('.chat-avatar-clickable');
+            if (!clickable) return;
+            
+            const chatRow = clickable.closest('.chat-row');
+            if (!chatRow) return;
+            
+            const name = chatRow.dataset.char;
+            const idx = chatRow.dataset.idx;
+            if (name && idx !== undefined) {
+                window.parent.postMessage({
+                    type: 'viewClickImage',
+                    charName: name,
+                    targetIdx: parseInt(idx),
+                    isShift: e.shiftKey
+                }, '*');
+            }
+        });
+
         window.addEventListener('message', (event) => {
             if (event.data.type === 'updateHtml') {
                 const contentDiv = document.getElementById('viewer-content');
@@ -991,33 +984,23 @@ function updateIframeContent(html) {
                 document.body.style.color = event.data.textColor;
             }
         });
-        function clickAvatar(e, name, idx) {
-            window.parent.postMessage({
-                type: 'viewClickImage',
-                charName: name,
-                targetIdx: idx,
-                isShift: e.shiftKey
-            }, '*');
-        }
     <\/script>`;
         previewHtml = html.replace('</head>', `${previewScript}\n</head>`);
     }
 
     const isStandardLog = previewHtml.includes('id="viewer-content"') || previewHtml.includes('class="viewer-bg"');
     
-    // iframe이 안정적으로 기동 중인 경우 postMessage로 본문/테마 내용만 무중단 교체 (깜빡임, 렉 완전 차단)
     if (isStandardLog && htmlViewer.dataset.loaded === "true") {
         try {
             const bgTheme = BG_THEMES[currentBgTheme] || BG_THEMES['dark'];
             const showBorderLine = bgTheme.showBorder !== false;
             
             const startTag = '<div class="viewer-bg" id="viewer-content">';
-            const endTag = '</div>\n</body>';
             let startIdx = previewHtml.indexOf(startTag);
             if (startIdx === -1) {
                 startIdx = previewHtml.indexOf('<div class="viewer-bg">');
             }
-            const endIdx = previewHtml.lastIndexOf(endTag);
+            const endIdx = previewHtml.lastIndexOf('</div>\n</body>');
             
             if (startIdx !== -1 && endIdx !== -1) {
                 const tagToUse = previewHtml.includes(startTag) ? startTag : '<div class="viewer-bg">';
@@ -1035,15 +1018,14 @@ function updateIframeContent(html) {
                     textColor: bgTheme.textColor
                 }, '*');
                 
-                htmlViewer.dataset.lastCode = html; // 클린 HTML을 최종 전송 코드로 보존
+                htmlViewer.dataset.lastCode = html;
                 return;
             }
         } catch(e) {
-            console.warn("실시간 최적화 주입 실패, 안전 폴백 엔진을 기동합니다.", e);
+            console.warn("실시간 최적화 실패, 안전 리로딩 폴백을 기동합니다.", e);
         }
     }
     
-    // 최초 구동 또는 특수 환경 대응용 스크롤 메모리 기반 리로딩 폴백
     let scrollY = 0;
     try {
         if (htmlViewer.contentWindow) {
@@ -1072,7 +1054,7 @@ function hexToRgba(hex, alpha) {
 }
 
 let liveSyncTimeout;
-function triggerLiveSync(delay = 100) {
+function triggerLiveSync(delay = 150) {
     if (isLiveSyncActive) {
         clearTimeout(liveSyncTimeout);
         liveSyncTimeout = setTimeout(() => {
@@ -1097,7 +1079,7 @@ function selectHlPreset(presetKey) {
         showToast(`🎨 '${HL_PRESETS[presetKey].name}'(으)로 변경되었습니다!`);
     }
     saveProgramSettings();
-    triggerLiveSync(50);
+    triggerLiveSync(100);
 }
 
 function selectBgTheme(themeKey) {
@@ -1109,7 +1091,7 @@ function selectBgTheme(themeKey) {
     if (activeCard) activeCard.classList.add('active');
     showToast(`🌸 테마가 '${BG_THEMES[themeKey].name}'(으)로 변경되었습니다!`);
     saveProgramSettings();
-    triggerLiveSync(50);
+    triggerLiveSync(100);
 }
 
 function addNewCustomWordRow(word = "", textCol = "#4A8A54", bgColHex = "") {
@@ -1132,7 +1114,7 @@ function addNewCustomWordRow(word = "", textCol = "#4A8A54", bgColHex = "") {
     rowDiv.dataset.bgCol = bgColHex;
     
     rowDiv.innerHTML = `
-        <input type="text" placeholder="강조 단어(쉼표 구분 가능)" value="${word}" class="word-text-input" oninput="triggerLiveSync(100); saveProgramSettings();" style="flex: 1; padding: 6px 10px; font-size: 11px; border: 1px solid #bde0c4; border-radius: 6px;">
+        <input type="text" placeholder="강조 단어(쉼표 구분 가능)" value="${word}" class="word-text-input" oninput="triggerLiveSync(250); saveProgramSettings();" style="flex: 1; padding: 6px 10px; font-size: 11px; border: 1px solid #bde0c4; border-radius: 6px;">
         <div style="display: flex; align-items: center; gap: 4px;">
             <span style="font-size: 10px; color: #777;">글자:</span>
             <div class="char-color-picker-trigger" id="swatch_text_${rowId}" onclick="openColorPicker(event, 'wordText', '${rowId}')" style="width: 14px; height: 14px; border-radius: 50%; background-color: ${textCol}; border: 1px solid rgba(0,0,0,0.15); cursor: pointer;" title="글자 색상"></div>
@@ -1145,7 +1127,7 @@ function addNewCustomWordRow(word = "", textCol = "#4A8A54", bgColHex = "") {
     `;
     container.appendChild(rowDiv);
     saveProgramSettings();
-    triggerLiveSync(10);
+    triggerLiveSync(50);
 }
 
 function deleteCustomWordRow(rowId) {
@@ -1153,15 +1135,12 @@ function deleteCustomWordRow(rowId) {
     if (row) {
         row.remove();
         saveProgramSettings();
-        triggerLiveSync(10);
+        triggerLiveSync(50);
     }
 }
 </script>
 
 <script>
-// ==========================================
-// 💾 프로그램 전역 설정 저장 및 로드 기능
-// ==========================================
 function saveProgramSettings() {
     try {
         if (BG_THEMES['custom']) {
@@ -1280,9 +1259,6 @@ function loadProgramSettings() {
     }
 }
 
-// ==========================================
-// 🔄 오너먼트 설정 일괄 초기화 기능 구현
-// ==========================================
 function resetOrnamentSettings() {
     localStorage.removeItem('cocoforia_custom_theme');
     localStorage.removeItem('cocoforia_bg_theme');
@@ -1324,15 +1300,12 @@ function resetOrnamentSettings() {
     if (activePresetCard) activePresetCard.classList.add('active');
 
     saveProgramSettings();
-    triggerLiveSync(50);
+    triggerLiveSync(100);
     showToast("초기화 되었어~");
 }
 </script>
 
 <script>
-// ==========================================
-// 🚀 탭 레이아웃 동적 렌더링 및 UI 바인딩
-// ==========================================
 document.addEventListener("DOMContentLoaded", () => {
     const tabBtns = document.getElementById('tabButtons');
     const tabConts = document.getElementById('tabContents');
@@ -1361,7 +1334,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         </summary>
                         <div style="padding: 16px; display: flex; flex-direction: column; gap: 14px;">
                             
-                            <!-- 🪾 이미지 넣기 (모바일 화면 최적화 스타일) -->
                             <div style="display: flex; flex-direction: column; gap: 8px; border-bottom: 1px dashed #e2ebd9; padding-bottom: 12px;">
                                 <div style="font-weight: bold; font-size: 13.5px; color: #333; display: flex; align-items: center; gap: 6px;">
                                     <span>🪾 이미지 넣기</span>
@@ -1727,11 +1699,12 @@ document.addEventListener("DOMContentLoaded", () => {
     
     tabBtns.innerHTML = buttonsHTML;
     tabConts.innerHTML = contentsHTML;
-    memoHistory[0] = document.getElementById("freeMemo").value;
+    
+    globalMemoContent = document.getElementById("freeMemo").value;
+    memoHistory[0] = globalMemoContent;
 
     loadProgramSettings();
 
-    // 🚀 파일 로드 완료 후 실시간 즉시 뷰어로 자동 매핑 및 표시
     document.getElementById('editorFileInput').addEventListener('change', function(e) {
         const file = e.target.files[0];
         if (!file) return;
@@ -1807,21 +1780,35 @@ document.addEventListener("DOMContentLoaded", () => {
 let parsedLogs = [];
 let characters = {};
 let charIdCounter = 0;
-
 let shiftSelectionStart = {}; 
 
+// ⚡ 대용량 로그 초고속 파서 엔진 (렉 제거 핵심)
 function analyzeLog(rawHtml) {
     parsedLogs = []; 
     characters = {}; 
     charIdCounter = 0;
     shiftSelectionStart = {};
 
-    const pRegex = /<p([^>]*)>([\s\S]*?)<\/p>/gi;
-    let match;
+    // 렉을 유발하는 lazy match 정규식 대신, 초고속 split 기반 파서로 대체
+    const rawData = localStorage.getItem('cocoforia_char_images');
+    let savedImgData = {};
+    if (rawData) {
+        try { savedImgData = JSON.parse(rawData); } catch(e) {}
+    }
 
-    while ((match = pRegex.exec(rawHtml)) !== null) {
-        let pAttrs = match[1];
-        let innerHtml = match[2];
+    const pBlocks = rawHtml.split(/<\/p>/i);
+    const len = pBlocks.length;
+
+    for (let i = 0; i < len; i++) {
+        const block = pBlocks[i];
+        const pStartIdx = block.indexOf('<p');
+        if (pStartIdx === -1) continue;
+
+        const tagEndIdx = block.indexOf('>', pStartIdx);
+        if (tagEndIdx === -1) continue;
+
+        const pAttrs = block.substring(pStartIdx + 2, tagEndIdx);
+        const innerHtml = block.substring(tagEndIdx + 1);
 
         let color = '#ffffff';
         let colorMatch = pAttrs.match(/color:\s*([^;>"]+)/i) || innerHtml.match(/color:\s*([^;>"]+)/i);
@@ -1844,24 +1831,19 @@ function analyzeLog(rawHtml) {
             } else {
                 parsedLogs.push({ isSystem: false, name: name, text: text, color: color });
                 if (!characters[name]) {
-                    const rawData = localStorage.getItem('cocoforia_char_images');
                     let savedColor = color;
                     let savedNarr = name.toLowerCase() === 'system';
                     let savedExprs = [];
                     let savedActiveExpr = 0;
                     let savedBase = "";
-                    if (rawData) {
-                        try {
-                            const imgData = JSON.parse(rawData);
-                            if (imgData[name]) {
-                                const data = imgData[name];
-                                savedColor = typeof data === 'object' && data.color ? data.color : color;
-                                savedNarr = typeof data === 'object' && data.hasOwnProperty('narr') ? data.narr : savedNarr;
-                                savedExprs = typeof data === 'object' && data.exprs ? data.exprs : [];
-                                savedActiveExpr = typeof data === 'object' && data.hasOwnProperty('activeExpr') ? data.activeExpr : 0;
-                                savedBase = typeof data === 'object' ? data.base : data;
-                            }
-                        } catch(e) {}
+                    
+                    if (savedImgData[name]) {
+                        const data = savedImgData[name];
+                        savedColor = typeof data === 'object' && data.color ? data.color : color;
+                        savedNarr = typeof data === 'object' && data.hasOwnProperty('narr') ? data.narr : savedNarr;
+                        savedExprs = typeof data === 'object' && data.exprs ? data.exprs : [];
+                        savedActiveExpr = typeof data === 'object' && data.hasOwnProperty('activeExpr') ? data.activeExpr : 0;
+                        savedBase = typeof data === 'object' ? data.base : data;
                     }
                     characters[name] = { 
                         id: 'char_' + charIdCounter++, 
@@ -1918,7 +1900,7 @@ function handleDrop(event, targetName) {
             
             showToast(`🥑 [${draggedCharName}]의 이미지 설정이 [${targetName}]와 똑같이 설정되었습니다!`);
             saveImagesToStorage(true);
-            triggerLiveSync(50);
+            triggerLiveSync(100);
         }
     }
     draggedCharName = null;
@@ -1936,11 +1918,7 @@ function updateExprCountBadge(charId) {
 function toggleExprArea(charId) {
     const area = document.getElementById(`accordion_${charId}`);
     if (!area) return;
-    if (area.style.display === "flex") {
-        area.style.display = "none";
-    } else {
-        area.style.display = "flex";
-    }
+    area.style.display = (area.style.display === "flex") ? "none" : "flex";
 }
 
 let allExprsOpen = false;
@@ -1971,8 +1949,8 @@ function addExpressionField(charId, value = "") {
     exprRow.innerHTML = `
         <input type="radio" name="active_expr_${charId}" class="expr-radio" value="${count + 1}" onclick="toggleExprRadio(this, '${charId}')">
         <span style="font-size: 11px; color: #718096; min-width: 14px; font-weight: bold;">#${count + 1}</span>
-        <input type="text" class="char-input-blue" value="${value}" placeholder="추가 URL" oninput="triggerLiveSync(250); saveImagesToStorage(true)">
-        <button class="expr-del-btn" onclick="this.parentElement.remove(); updateExprCountBadge('${charId}'); saveImagesToStorage(true); triggerLiveSync(10);" title="제거">✕</button>
+        <input type="text" class="char-input-blue" value="${value}" placeholder="추가 URL" oninput="triggerLiveSync(400); saveImagesToStorage(true)">
+        <button class="expr-del-btn" onclick="this.parentElement.remove(); updateExprCountBadge('${charId}'); saveImagesToStorage(true); triggerLiveSync(100);" title="제거">✕</button>
     `;
     container.appendChild(exprRow);
     updateExprCountBadge(charId);
@@ -2004,8 +1982,8 @@ function renderSettings() {
                 </div>
                 <div class="char-controls-blue">
                     <div class="char-input-group">
-                        <input type="text" class="char-input-blue" id="img_${char.id}" data-name="${name}" placeholder="기본 이미지 URL 링크" value="${char.base || ''}" oninput="triggerLiveSync()">
-                        <label class="narr-checkbox-label"><input type="checkbox" id="narr_${char.id}" ${narrChecked ? 'checked' : ''} onchange="triggerLiveSync(); saveImagesToStorage(true);"> 서술</label>
+                        <input type="text" class="char-input-blue" id="img_${char.id}" data-name="${name}" placeholder="기본 이미지 URL 링크" value="${char.base || ''}" oninput="triggerLiveSync(400)">
+                        <label class="narr-checkbox-label"><input type="checkbox" id="narr_${char.id}" ${narrChecked ? 'checked' : ''} onchange="triggerLiveSync(200); saveImagesToStorage(true);"> 서술</label>
                     </div>
                     
                     <div class="expr-accordion-area" id="accordion_${char.id}" style="display: ${displayStyle};">
@@ -2078,9 +2056,6 @@ function importBackupData() {
 </script>
 
 <script>
-// ==========================================
-// 🍇 캐릭터 인장/표정 로컬 보관소 저장
-// ==========================================
 function saveImagesToStorage(isSilent = false) {
     const inputs = document.querySelectorAll('.char-input-blue[id^="img_"]');
     const rawData = localStorage.getItem('cocoforia_char_images');
@@ -2130,8 +2105,7 @@ function saveImagesToStorage(isSilent = false) {
         }
     } catch (e) {
         if (e.name === 'QuotaExceededError' || e.name === 'NS_ERROR_DOM_QUOTA_REACHED') {
-            showCustomAlert("🚨 저장 공간이 부족합니다!", "이미지 URL 주소 대신 이미지 자체(Base64)를 변환해 넣었거나 용량을 초과했습니다.\n데이터를 정리해주세요.");
-            showToast("❌ 용량 초과로 저장에 실패했습니다.");
+            showCustomAlert("🚨 저장 공간이 부족합니다!", "용량을 초과했습니다. 데이터를 정리해주세요.");
         } else {
             showToast("❌ 이미지 저장 중 오류가 발생했습니다.");
         }
@@ -2205,7 +2179,6 @@ function loadSavedImages(silent = false) {
     } catch(e) { console.error(e); }
 }
 
-// 🎨 1. 열매 모으기 컴팩트 가로 레이아웃 바인딩 처리 (동그란 프로필 + 미니멀 1열 배치)
 function renderImageManager() {
     const container = document.getElementById('imageManagerContainer');
     if (!container) return;
@@ -2259,7 +2232,7 @@ function deleteSingleImage(encodedName) {
 }
 
 function clearAllImages() {
-    showCustomConfirm("🚨 전체 초기화 경고", "저장된 모든 캐릭터를 삭제하시겠습니까?\n이 작업은 되돌릴 수 없으며 복구할 수 없습니다.", () => {
+    showCustomConfirm("🚨 전체 초기화 경고", "저장된 모든 캐릭터를 삭제하시겠습니까?\n이 작업은 되돌릴 수 없습니다.", () => {
         localStorage.removeItem('cocoforia_char_images');
         renderImageManager();
         showToast("🗑️ 전체 인장 데이터가 초기화 되었습니다.");
@@ -2272,7 +2245,7 @@ let currentFileName = "연백나무.txt";
 
 <script>
 // ==========================================
-// 🚀 뷰어 출력 치환 엔진 (Tistory 업로드 호환: 쓸데없는 자바스크립트 코드 100% 제거)
+// 🚀 뷰어 출력 치환 엔진
 // ==========================================
 function generateView(silent = false) {
     let resultHTML = [];
@@ -2287,18 +2260,34 @@ function generateView(silent = false) {
     const bgTheme = BG_THEMES[currentBgTheme] || BG_THEMES['dark'];
     
     const escapeRegExp = (str) => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-
     const showBorderLine = bgTheme.showBorder !== false;
 
-    parsedLogs.forEach((log, logIdx) => {
+    const blueWords = document.getElementById('blueWordsInput').value.split(',').map(w => w.trim()).filter(w => w);
+    const redWords = document.getElementById('redWordsInput').value.split(',').map(w => w.trim()).filter(w => w);
+
+    const customRowsData = [];
+    document.querySelectorAll('.custom-word-row').forEach(row => {
+        const wordInput = row.querySelector('.word-text-input');
+        const wordVal = wordInput ? wordInput.value.trim() : "";
+        if (wordVal) {
+            const textCol = row.dataset.textCol || "#4A8A54";
+            const bgColHex = row.dataset.bgCol || "#6BB376";
+            const words = wordVal.split(',').map(w => w.trim()).filter(w => w);
+            if (words.length > 0) {
+                customRowsData.push({ words, textCol, bgColHex });
+            }
+        }
+    });
+
+    const parsedLogsLen = parsedLogs.length;
+
+    for (let logIdx = 0; logIdx < parsedLogsLen; logIdx++) {
+        const log = parsedLogs[logIdx];
         const char = log.isSystem ? null : characters[log.name];
         const isNarrator = log.isSystem || (char && document.getElementById(`narr_${char.id}`).checked);
 
         let processedText = log.text;
         if (enableColorReplace) {
-            const blueWords = document.getElementById('blueWordsInput').value.split(',').map(w => w.trim()).filter(w => w);
-            const redWords = document.getElementById('redWordsInput').value.split(',').map(w => w.trim()).filter(w => w);
-
             if (blueWords.length > 0) {
                 const blueRegex = new RegExp(`(${blueWords.map(escapeRegExp).join('|')})`, 'g');
                 processedText = processedText.replace(blueRegex, `<span style="color: ${hl.blueCol}; font-weight: bold; background-color: ${hl.blueBg}; padding: 1px 4px; border-radius: 4px;">$1</span>`);
@@ -2309,22 +2298,12 @@ function generateView(silent = false) {
                 processedText = processedText.replace(redRegex, `<span style="color: ${hl.redCol}; font-weight: bold; background-color: ${hl.redBg}; padding: 1px 4px; border-radius: 4px;">$1</span>`);
             }
 
-            const customRows = document.querySelectorAll('.custom-word-row');
-            customRows.forEach(row => {
-                const wordInput = row.querySelector('.word-text-input');
-                const wordVal = wordInput ? wordInput.value.trim() : "";
-                if (wordVal) {
-                    const textCol = row.dataset.textCol || "#4A8A54";
-                    const bgColHex = row.dataset.bgCol || "#6BB376";
-                    
-                    // 쉼표로 구분하여 다중 단어가 개별 매칭되도록 적용
-                    const words = wordVal.split(',').map(w => w.trim()).filter(w => w);
-                    if (words.length > 0) {
-                        const regex = new RegExp(`(${words.map(escapeRegExp).join('|')})`, 'g');
-                        processedText = processedText.replace(regex, `<span style="color: ${textCol}; font-weight: bold; background-color: ${bgColHex}; padding: 1px 4px; border-radius: 4px;">$1</span>`);
-                    }
-                }
-            });
+            const customRowsLen = customRowsData.length;
+            for (let r = 0; r < customRowsLen; r++) {
+                const item = customRowsData[r];
+                const regex = new RegExp(`(${item.words.map(escapeRegExp).join('|')})`, 'g');
+                processedText = processedText.replace(regex, `<span style="color: ${item.textCol}; font-weight: bold; background-color: ${item.bgColHex}; padding: 1px 4px; border-radius: 4px;">$1</span>`);
+            }
         }
 
         if (isNarrator) {
@@ -2345,17 +2324,15 @@ function generateView(silent = false) {
             const avatarStyle = actualAvatarUrl ? `background-image: url('${actualAvatarUrl}');` : '';
             const escapedCharName = log.name.replace(/'/g, "\\'");
 
-            const onClickHandler = `onclick="if(window.clickAvatar) window.clickAvatar(event, '${escapedCharName}', ${logIdx})"`;
-
             if (lastType === 'CHAR' && lastCharName === log.name) {
-                currentTurnHTML.push(`    <div class="chat-row consecutive" data-idx="${logIdx}" data-char="${escapedCharName}">\n        <div class="chat-avatar-space chat-avatar-clickable" ${onClickHandler}></div>\n        <div class="chat-content">\n            <div class="chat-text">${processedText}</div>\n        </div>\n    </div>\n`);
+                currentTurnHTML.push(`    <div class="chat-row consecutive" data-idx="${logIdx}" data-char="${escapedCharName}">\n        <div class="chat-avatar-space chat-avatar-clickable"></div>\n        <div class="chat-content">\n            <div class="chat-text">${processedText}</div>\n        </div>\n    </div>\n`);
             } else {
                 if (currentTurnHTML.length > 0) resultHTML.push(`<div class="chat-turn">\n${currentTurnHTML.join('')}</div>\n`);
-                currentTurnHTML = [`    <div class="chat-row" data-idx="${logIdx}" data-char="${escapedCharName}">\n        <div class="chat-avatar chat-avatar-clickable" style="${avatarStyle}" ${onClickHandler}></div>\n        <div class="chat-content">\n            <div class="chat-header-info">\n                <span class="chat-name-display" style="color: ${char.color};">${log.name}</span>\n            </div>\n            <div class="chat-text">${processedText}</div>\n        </div>\n    </div>\n`];
+                currentTurnHTML = [`    <div class="chat-row" data-idx="${logIdx}" data-char="${escapedCharName}">\n        <div class="chat-avatar chat-avatar-clickable" style="${avatarStyle}"></div>\n        <div class="chat-content">\n            <div class="chat-header-info">\n                <span class="chat-name-display" style="color: ${char.color};">${log.name}</span>\n            </div>\n            <div class="chat-text">${processedText}</div>\n        </div>\n    </div>\n`];
                 lastType = 'CHAR'; lastCharName = log.name;
             }
         }
-    });
+    }
     
     if (currentTurnHTML.length > 0) resultHTML.push(`<div class="chat-turn">\n${currentTurnHTML.join('')}</div>\n`);
 
@@ -2373,8 +2350,13 @@ ${resultHTML.join('')}    </div>
 </body>
 </html>`;
     
+    // ⚡ 가상 버퍼 시스템에 기록
+    globalMemoContent = cleanHTML;
+    
     const freeMemo = document.getElementById('freeMemo');
-    freeMemo.value = cleanHTML; 
+    if (freeMemo.style.display !== "none") {
+        freeMemo.value = cleanHTML; 
+    }
     saveHistory();
 
     const sidebarToggle = document.getElementById("sidebarModeToggle");
@@ -2414,8 +2396,6 @@ function getThemeCSS(bgTheme, showBorderLine) {
         .chat-system.sys-center { text-align: center; margin: 10px 0; }
         .chat-system.sys-left-space { text-align: left; margin-left: 54px; margin-top: 4px; }
         .chat-system.sys-left-nospace { text-align: left; margin-left: 0px; margin-top: 4px; }
-
-        /* 🖼️ 모바일 화면에 알잘딱으로 비례 맞추는 연출 그림 스타일 */
         .chat-inserted-image-wrapper { text-align: center; margin: 15px 0; width: 100%; display: flex; justify-content: center; }
         .chat-inserted-image { max-width: 100%; height: auto; border-radius: 8px; border: 1px solid ${bgTheme.border}; box-shadow: 0 4px 12px rgba(0,0,0,0.08); display: block; }
     `;
@@ -2438,16 +2418,13 @@ function getSelectedExpressionUrl(char) {
     return document.getElementById(`img_${char.id}`).value;
 }
 
-// ==========================================
-// 🎬 뷰어 내 이미지 "딸깍" (혹은 Shift) 클릭 핸들러
-// ==========================================
 function handleViewerImageClick(charName, targetIdx, isShift) {
     const char = characters[charName];
     if(!char) return;
     
     const paintUrl = getSelectedExpressionUrl(char);
     if(!paintUrl) {
-        showToast(`⚠️ [${charName}]의 붓에 칠할 이미지 주소가 없습니다!`);
+        showToast(`⚠️ [${charName}]의 이미지 주소가 없습니다!`);
         return;
     }
     
@@ -2455,7 +2432,7 @@ function handleViewerImageClick(charName, targetIdx, isShift) {
         if (shiftSelectionStart[charName] === undefined) {
             shiftSelectionStart[charName] = targetIdx;
             parsedLogs[targetIdx].colorImg = paintUrl;
-            showToast(`🎨 시작 지점 설정! 끝나는 지점을 Shift+클릭해 주면 한 번에 칠해집니다.`);
+            showToast(`🎨 시작 지점 설정! 끝 지점을 Shift+클릭해 일괄 칠하세요.`);
         } else {
             const start = Math.min(shiftSelectionStart[charName], targetIdx);
             const end = Math.max(shiftSelectionStart[charName], targetIdx);
@@ -2468,7 +2445,7 @@ function handleViewerImageClick(charName, targetIdx, isShift) {
                 }
             }
             delete shiftSelectionStart[charName];
-            showToast(`🎨 ${paintedCount}개의 [${charName}] 인장을 일괄 칠했습니다!`);
+            showToast(`🎨 ${paintedCount}개의 인장을 일괄 변경했습니다!`);
         }
     } else {
         parsedLogs[targetIdx].colorImg = paintUrl;
@@ -2479,7 +2456,7 @@ function handleViewerImageClick(charName, targetIdx, isShift) {
 }
 
 function downloadView() {
-    const text = document.getElementById('freeMemo').value;
+    const text = globalMemoContent;
     if (!text || !text.includes('<!DOCTYPE html>')) { showToast("⚠️ 먼저 '물 주기'를 실행하여 결과물을 생성해 주세요!"); return; }
     
     let downloadName = "잎_코코포리아_변환로그.html";
@@ -2489,7 +2466,6 @@ function downloadView() {
         downloadName = `잎_${baseName}.html`;
     }
 
-    // 파일로 소장용 저장 시 붓칠 인터랙티브 기능과 스타일을 깨끗하게 정리해서 내보냅니다.
     const cleanText = stripInteractiveFeatures(text);
 
     const blob = new Blob([cleanText], { type: 'text/html;charset=utf-8' });
@@ -2502,9 +2478,6 @@ function downloadView() {
 </script>
 
 <script>
-// ==========================================
-// 🚀 파일 입출력 및 유틸리티 함수
-// ==========================================
 const typingTimers = {};
 function debouncedCount(id) {
     clearTimeout(typingTimers[id]);
@@ -2598,7 +2571,8 @@ function processLog(id) {
     const dialoguesList = dialogues.slice(1);
     let matches = [];
     
-    for (let i = 0; i < dialoguesList.length; i++) {
+    const dLen = dialoguesList.length;
+    for (let i = 0; i < dLen; i++) {
         if (dialoguesList[i].includes(keyword)) { matches.push(i); }
     }
 
@@ -2656,7 +2630,8 @@ function processSplice(id) {
     const dialoguesListMain = dialoguesMain.slice(1);
 
     let matches = [];
-    for (let i = 0; i < dialoguesListMain.length; i++) {
+    const mainLen = dialoguesListMain.length;
+    for (let i = 0; i < mainLen; i++) {
         if (dialoguesListMain[i].includes(keyword)) { matches.push(i); }
     }
 
@@ -2668,7 +2643,7 @@ function processSplice(id) {
 }
 
 function processImageInsertion() {
-    const rawHTML = document.getElementById("freeMemo").value.trim();
+    const rawHTML = globalMemoContent.trim();
     const imgUrl = document.getElementById("insertImgUrl").value.trim();
     const keyword = document.getElementById("insertImgKeyword").value.trim();
 
@@ -2715,7 +2690,8 @@ function processImageInsertion() {
     const dialoguesList = dialogues.slice(1);
     let matches = [];
     
-    for (let i = 0; i < dialoguesList.length; i++) {
+    const dLen = dialogues.length - 1;
+    for (let i = 0; i < dLen; i++) {
         if (dialoguesList[i].includes(keyword)) { matches.push(i); }
     }
 
@@ -2754,8 +2730,11 @@ function executeImageInsertion(targetIndex) {
     
     let finalResult = ctx.A_header + beforeStr + ctx.insertStr + afterStr + ctx.C_footer;
 
+    globalMemoContent = finalResult;
     const freeMemo = document.getElementById("freeMemo");
-    freeMemo.value = finalResult;
+    if (freeMemo.style.display !== "none") {
+        freeMemo.value = finalResult;
+    }
     
     saveHistory();
     const sidebarToggle = document.getElementById("sidebarModeToggle");
@@ -2790,13 +2769,13 @@ function openCutModal(matches, keyword) {
     
     if (ctx.action === 'splice' || ctx.action === 'insertImage') {
         modalTitle.innerText = ctx.action === 'insertImage' ? "🪾 위치 선택" : "🪴 위치 선택";
-        modalDesc.innerHTML = ctx.action === 'insertImage' ? "선택한 대사의 <strong>바로 아래에</strong> 이미지가 삽입됩니다. 앞뒤 문맥(⬆️ 직전 / ⬇️ 직후)을 보고 골라주세요." : "선택한 대사를 <strong>포함해</strong> 잘려 나가게 됩니다. 앞뒤 문맥(⬆️ 직전 / ⬇️ 직후)을 보고 골라주세요.";
+        modalDesc.innerHTML = ctx.action === 'insertImage' ? "선택한 대사의 바로 아래에 이미지가 삽입됩니다. 앞뒤 문맥을 보고 골라주세요." : "선택한 대사를 포함해 잘려 나가게 됩니다. 앞뒤 문맥을 보고 골라주세요.";
     } else {
         modalTitle.innerText = "✂️ 위치 선택";
         if (isKeepBottom) {
-            modalDesc.innerHTML = "선택한 대사<strong>위로</strong>잘린 로그가 결과창에 담기게 됩니다. 앞뒤 문맥(⬆️ 직전 / ⬇️ 직후)을 보고 골라주세요.";
+            modalDesc.innerHTML = "선택한 대사 위로 잘린 로그가 결과창에 담기게 됩니다. 앞뒤 문맥을 보고 골라주세요.";
         } else {
-            modalDesc.innerHTML = "선택한 대사<strong>까지</strong>의 로그가 결과창에 담기게 됩니다. 앞뒤 문맥(⬆️ 직전 / ⬇️ 직후)을 보고 골라주세요.";
+            modalDesc.innerHTML = "선택한 대사까지의 로그가 결과창에 담기게 됩니다. 앞뒤 문맥을 보고 골라주세요.";
         }
     }
     
@@ -2809,7 +2788,6 @@ function openCutModal(matches, keyword) {
         if(prevTxt.length > 55) prevTxt = "..." + prevTxt.slice(-55);
         if(nextTxt.length > 55) nextTxt = nextTxt.slice(0, 55) + "...";
     
-        let poolKeyword = keyword; 
         let srcKeyword = keyword.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
         let highlightedCurr = currTxt.replace(new RegExp(srcKeyword, 'g'), `<span class="current-line">${keyword}</span>`);
         
@@ -2838,11 +2816,11 @@ function openCutModal(matches, keyword) {
             <div class="match-item">
                 <div style="font-size:12px; font-weight:bold; color:#718096;"> 중복 위치 #${matchOrder + 1}</div>
                 <div class="match-context">
-                    ${prevTxt ? `<div class="prev-line">⬆️ <sub>[이전]</sub> ${prevTxt}</div>` : ''}
+                    ${prevTxt ? `<div class="prev-line">⬆️ ${prevTxt}</div>` : ''}
                     <div style="margin: 6px 0; padding-left: 8px; border-left: 3px solid ${borderColor}; background: rgba(0,0,0,0.02); padding-top:4px; padding-bottom:4px;">
                         💬 ${highlightedCurr}
                     </div>
-                    ${nextTxt ? `<div class="next-line">⬇️ <sub>[다음]</sub> ${nextTxt}</div>` : ''}
+                    ${nextTxt ? `<div class="next-line">⬇️ ${nextTxt}</div>` : ''}
                 </div>
                 <button class="btn-select-match" onclick="${btnAction}">${btnText}</button>
             </div>`;
@@ -2940,8 +2918,12 @@ function toggleSidebarMode() {
     if (isHtmlMode) {
         modeTitle.innerText = "✨ 로그 확인!";
         modeTitle.style.color = "#4a8a54";
+        
+        // ⚡ 가상 버퍼 시스템으로 무거운 텍스트 노드 돔 해제 (렉 방지 핵심)
         freeMemo.style.display = "none";       
-        const currentCode = freeMemo.value.trim();
+        const currentCode = globalMemoContent.trim();
+        freeMemo.value = ""; // textarea 돔 트리 비우기
+        
         if (currentCode) {
             htmlViewer.style.display = "block";
             htmlPlaceholder.style.display = "none";
@@ -2955,8 +2937,11 @@ function toggleSidebarMode() {
     } else {
         modeTitle.innerText = "📝 편집";
         modeTitle.style.color = "#4a5568";
-        freeMemo.value = stripInteractiveFeatures(freeMemo.value);
+        
+        // ⚡ 편집 모드 진입 시에만 무거운 가상 버퍼 내용을 돔에 대입
         freeMemo.style.display = "block";      
+        freeMemo.value = globalMemoContent;
+        
         htmlViewer.style.display = "none";     
         htmlPlaceholder.style.display = "none";
     }
@@ -2976,7 +2961,9 @@ function highlightFirstKoreanLine() {
     const plainText = memoArea.value;
     const lines = plainText.split('\n');
     let targetText = "";
-    for (let i = 0; i < lines.length; i++) {
+    
+    const lLen = lines.length;
+    for (let i = 0; i < lLen; i++) {
         let trimmed = lines[i].trim();
         if (trimmed && !trimmed.includes("메인") && /[ㄱ-ㅎㅏ-ㅣ가-힣]/.test(trimmed)) {
             targetText = (i + 1 < lines.length && lines[i + 1].trim()) ? lines[i] + "\n" + lines[i + 1] : lines[i];
@@ -2996,6 +2983,8 @@ function highlightFirstKoreanLine() {
 
 let memoInputTimer;
 document.getElementById("freeMemo").addEventListener("input", function() {
+    // 실시간 동기화
+    globalMemoContent = this.value;
     clearTimeout(memoInputTimer);
     memoInputTimer = setTimeout(() => { saveHistory(); }, 1500);
 });
@@ -3003,7 +2992,7 @@ document.getElementById("freeMemo").addEventListener("input", function() {
 
 <script>
 // ==========================================
-// 🎨 커스텀 테마 핵심 로직 & 수치 계산 엔진
+// 🎨 커스텀 테마 연산 로직
 // ==========================================
 function hexToRgb(hex) {
     hex = hex.replace(/^#/, '');
@@ -3110,6 +3099,7 @@ function openCustomThemeModal() {
     }
 }
 
+// CustomThemeModal close listener
 function closeCustomThemeModal() {
     document.getElementById('customThemeModal').style.display = 'none';
 }
@@ -3123,7 +3113,6 @@ function onCustomBgChange(val) {
     document.getElementById('customTextMuted').value = recs.textMuted;
     document.getElementById('customTextMutedText').value = recs.textMuted;
     
-    // 외경 색상에 맞춰 묘하게 어울리는 극도로 연한 안쪽 박스 색상 추천
     let recommendedContainerBg = '#ffffff';
     if (recs.isDark) {
         recommendedContainerBg = '#1e1f22';
@@ -3200,7 +3189,7 @@ function applyCustomTheme() {
 
 <script>
 // ==========================================
-// 👥 캐릭터 및 강조 단어 색상 팝오버 컬러 피커 핵심 엔진
+// 👥 캐릭터 색상 팝오버 핵심 처리
 // ==========================================
 let pickerMode = null;      
 let activeTargetId = null;  
@@ -3299,7 +3288,6 @@ function generatePopoverPresets(hex) {
             
             let analogousLeftHex = hslToHex((hsl.h - 30 + 360) % 360, hsl.s, hsl.l);
             let analogousRightHex = hslToHex((hsl.h + 30) % 360, hsl.s, hsl.l);
-            
             let complementaryHex = hslToHex((hsl.h + 180) % 360, Math.max(hsl.s - 10, 20), Math.min(hsl.l + 8, 80));
             
             const calculatedColors = [softHex, deepHex, analogousLeftHex, analogousRightHex, complementaryHex];
@@ -3417,7 +3405,7 @@ function applyColorToActiveTarget(color) {
         if (label) label.style.color = color;
         
         saveImagesToStorage(true); 
-        triggerLiveSync(200);
+        triggerLiveSync(250);
     } 
     else if (pickerMode === 'wordText') {
         const row = document.getElementById(activeTargetId);
@@ -3433,7 +3421,7 @@ function applyColorToActiveTarget(color) {
         if (bgSwatch) bgSwatch.style.backgroundColor = recBgColor;
         
         saveProgramSettings();
-        triggerLiveSync(200);
+        triggerLiveSync(250);
     } 
     else if (pickerMode === 'wordBg') {
         const row = document.getElementById(activeTargetId);
@@ -3444,7 +3432,7 @@ function applyColorToActiveTarget(color) {
         if (bgSwatch) bgSwatch.style.backgroundColor = color;
         
         saveProgramSettings();
-        triggerLiveSync(200);
+        triggerLiveSync(250);
     }
 }
 
@@ -3521,7 +3509,7 @@ function injectFromClipboard() {
 
         if (matched > 0) {
             saveImagesToStorage(true); 
-            triggerLiveSync(100);
+            triggerLiveSync(200);
             showToast(`🍅 ${matched}명 쏙 심기 완료!`);
         } else {
             showToast("🍅");
@@ -3639,7 +3627,7 @@ function loadOrnamentState(state) {
     }
 
     saveProgramSettings();
-    triggerLiveSync(50);
+    triggerLiveSync(100);
 }
 
 function openOrnamentSlotModal() {
@@ -3760,7 +3748,6 @@ function saveToSlot(index) {
     
     if (isFirstSave) {
         showToast(`💾 첫 저장이 완료되었습니다! 이름을 변경해보세요.`);
-        // 최초 저장 시 즉시 슬롯 이름 수정란 활성화
         startEditSlotName(index);
     } else {
         renderSlots();
