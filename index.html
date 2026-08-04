@@ -58,7 +58,7 @@
         .header-top { display: flex; justify-content: center; align-items: center; position: relative; margin-bottom: 5px; }
         h1 { text-align: center; color: #1a1a1a; margin: 0; font-size: 24px; font-weight: 800; letter-spacing: -0.5px; }
         .subtitle { text-align: center; color: #718096; font-size: 13px; margin-bottom: 25px; margin-top: 5px; font-weight: 500; }
-        
+
         .tabs { display: flex; justify-content: center; margin-bottom: 20px; border-bottom: 2px solid #e2ebd9; flex-wrap: wrap; gap: 4px; }
         .tab-button { 
             padding: 10px 18px; 
@@ -85,7 +85,7 @@
         .input-group { display: flex; flex-direction: column; margin-bottom: 18px; }
         .label-wrapper { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
         label { font-weight: bold; color: #2d3748; font-size: 14px; }
-        
+
         textarea { 
             width: 100%; 
             height: 180px; 
@@ -166,7 +166,7 @@
         .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; transition: .3s; border-radius: 34px; display: flex; align-items: center; justify-content: space-between; }
         .slider:before { position: absolute; content: ""; height: 26px; width: 51px; left: 4px; bottom: 4px; background-color: white; transition: .3s; border-radius: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); z-index: 2; }
         .slider .text-basic, .slider .text-mid { width: 50%; text-align: center; font-size: 12.5px; font-weight: bold; z-index: 3; transition: .3s; user-select: none; }
-        
+
         .pink-switch input:not(:checked) + .slider { background-color: #cbd5e0; }
         .pink-switch input:not(:checked) + .slider .text-basic { color: #718096; }
         .pink-switch input:not(:checked) + .slider .text-mid { color: white; }
@@ -267,96 +267,39 @@
         .bg-theme-card.active .bg-theme-circle { border-color: #6bb376; }
         .bg-theme-title { font-size: 10px; font-weight: bold; color: #4a5568; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-        .channel-chip-grid { 
-            display: flex; 
-            flex-wrap: wrap; 
-            gap: 8px; 
-            margin-top: 8px; 
-        }
+        .channel-chip-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
         .channel-chip {
-            display: inline-flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 6px;
-            padding: 4px 10px;
-            background: #ffffff;
-            border: 1.5px solid #d1ebd6;
-            border-radius: 8px;
-            font-size: 12px;
-            font-weight: bold;
-            color: #2d3748;
-            transition: all 0.2s;
-            user-select: none;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.03);
-            box-sizing: border-box;
-            width: fit-content;
-            min-height: 32px;
+            display: inline-flex; align-items: center; justify-content: space-between; gap: 6px;
+            padding: 4px 10px; background: #ffffff; border: 1.5px solid #d1ebd6; border-radius: 8px;
+            font-size: 12px; font-weight: bold; color: #2d3748; transition: all 0.2s; user-select: none;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.03); box-sizing: border-box; width: fit-content; min-height: 32px;
         }
-        .channel-chip:hover {
-            box-shadow: 0 2px 6px rgba(107,179,118,0.15);
-            transform: translateY(-1px);
-        }
+        .channel-chip:hover { box-shadow: 0 2px 6px rgba(107,179,118,0.15); transform: translateY(-1px); }
         .channel-chip.active-chip { background: #fafdfb; }
         .channel-chip.disabled-chip { opacity: 0.55; background: #f7faf8; border-color: #cbd5e0 !important; text-decoration: line-through; }
         .channel-chip input[type="checkbox"] { accent-color: #6bb376; cursor: pointer; width: 14px; height: 14px; flex-shrink: 0; }
         
-        .channel-chip-left {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            min-width: 0;
-            flex: 1;
-        }
-        
+        .channel-chip-left { display: flex; align-items: center; gap: 6px; min-width: 0; flex: 1; }
+
         .channel-badge-tag { 
-            font-size: 11.5px; 
-            padding: 3px 9px; 
-            border-radius: 14px;
-            font-weight: 800; 
-            cursor: pointer; 
-            display: inline-flex; 
-            align-items: center; 
-            gap: 4px; 
-            transition: all 0.15s; 
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 100%;
+            font-size: 11.5px; padding: 3px 9px; border-radius: 14px; font-weight: 800; cursor: pointer; 
+            display: inline-flex; align-items: center; gap: 4px; transition: all 0.15s; white-space: nowrap;
+            overflow: hidden; text-overflow: ellipsis; max-width: 100%;
         }
         .channel-badge-tag:hover { opacity: 0.85; transform: scale(1.02); }
 
         .channel-inline-input {
-            font-size: 11.5px;
-            font-weight: bold;
-            padding: 3px 7px;
-            border: 1px solid #6bb376;
-            border-radius: 8px;
-            width: 120px;
-            box-sizing: border-box;
-            background: #ffffff;
-            outline: none;
-            box-shadow: 0 0 0 2px rgba(107, 179, 118, 0.2);
+            font-size: 11.5px; font-weight: bold; padding: 3px 7px; border: 1px solid #6bb376;
+            border-radius: 8px; width: 120px; box-sizing: border-box; background: #ffffff;
+            outline: none; box-shadow: 0 0 0 2px rgba(107, 179, 118, 0.2);
         }
 
-        .channel-count-badge {
-            font-size: 11px;
-            color: #718096;
-            font-weight: bold;
-            flex-shrink: 0;
-            background: #effcf1;
-            padding: 2px 7px;
-            border-radius: 10px;
-        }
+        .channel-count-badge { font-size: 11px; color: #718096; font-weight: bold; flex-shrink: 0; background: #effcf1; padding: 2px 7px; border-radius: 10px; }
 
         .char-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; margin-top: 10px; }
         .char-item-blue { 
-            background-color: #fff; 
-            border: 1px solid #d5edd9; 
-            padding: 10px 12px; 
-            border-radius: 8px; 
-            box-shadow: 0 2px 6px rgba(107, 179, 118, 0.05); 
-            transition: all 0.2s; 
-            cursor: grab; 
+            background-color: #fff; border: 1px solid #d5edd9; padding: 10px 12px; border-radius: 8px; 
+            box-shadow: 0 2px 6px rgba(107, 179, 118, 0.05); transition: all 0.2s; cursor: grab; 
         }
         .char-item-blue:hover { transform: translateY(-1px); border-color: #6bb376; box-shadow: 0 4px 10px rgba(107, 179, 118, 0.08); }
         .char-item-blue:active { cursor: grabbing; opacity: 0.8; }
@@ -375,13 +318,8 @@
         .narr-checkbox-label input[type="checkbox"] { accent-color: #6bb376; cursor: pointer; }
 
         .expr-accordion-area {
-            display: none; 
-            flex-direction: column;
-            gap: 4px;
-            margin-top: 4px;
-            border-top: 1px dashed #d5edd9;
-            padding-top: 6px;
-            animation: fadeIn 0.2s ease;
+            display: none; flex-direction: column; gap: 4px; margin-top: 4px;
+            border-top: 1px dashed #d5edd9; padding-top: 6px; animation: fadeIn 0.2s ease;
         }
         .expr-list { display: flex; flex-direction: column; gap: 4px; width: 100%; }
         .expr-row { display: flex; align-items: center; gap: 6px; width: 100%; }
@@ -400,104 +338,27 @@
         .pink-btn-cut { background-color: #a5cfad !important; color: white !important; }
         .pink-btn-cut:hover { background-color: #6bb376 !important; transform: translateY(-1px); }
         
-        .pink-btn-memo-import { 
-            background-color: #ffffff !important; 
-            border: 1px solid #bde0c4 !important; 
-            color: #58a063 !important; 
-        }
+        .pink-btn-memo-import { background-color: #ffffff !important; border: 1px solid #bde0c4 !important; color: #58a063 !important; }
         .pink-btn-memo-import:hover { background-color: #effcf1 !important; border-color: #6bb376 !important; }
 
-        .btn-pink-action {
-            background-color: #58a063 !important;
-            color: #ffffff !important;
-            border: 1px solid #58a063 !important;
-            font-weight: bold !important;
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 12px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .btn-pink-action:hover {
-            background-color: #4a8a54 !important;
-            border-color: #4a8a54 !important;
-        }
-
         .ornament-pink-card {
-            background: #ffffff;
-            border: 1px solid #d1ebd6;
-            border-radius: 12px;
-            padding: 16px;
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
+            background: #ffffff; border: 1px solid #d1ebd6; border-radius: 12px;
+            padding: 16px; display: flex; flex-direction: column; gap: 14px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
         }
 
-        .img-manager-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); 
-            gap: 8px; 
-        }
+        .img-manager-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 8px; }
         .img-manager-card { 
-            background: #ffffff; 
-            border: 1px solid #d1ebd6; 
-            border-radius: 10px; 
-            padding: 8px 10px; 
-            display: flex; 
-            align-items: center; 
-            gap: 8px; 
-            box-shadow: 0 1px 4px rgba(107,179,118,0.06); 
-            transition: all 0.2s; 
-            position: relative;
+            background: #ffffff; border: 1px solid #d1ebd6; border-radius: 10px; padding: 8px 10px; 
+            display: flex; align-items: center; gap: 8px; box-shadow: 0 1px 4px rgba(107,179,118,0.06); 
+            transition: all 0.2s; position: relative;
         }
-        .img-manager-card:hover { 
-            border-color: #6bb376; 
-            background: #fafdfb; 
-            box-shadow: 0 3px 8px rgba(107,179,118,0.12); 
-            transform: translateY(-1px);
-        }
-        .img-manager-name {
-            font-weight: bold; 
-            color: #2d3748; 
-            font-size: 12px; 
-            white-space: nowrap; 
-            overflow: hidden; 
-            text-overflow: ellipsis;
-        }
-        .btn-img-del { 
-            background: #e03a5b; 
-            color: white; 
-            border: none; 
-            border-radius: 4px; 
-            cursor: pointer; 
-            font-size: 10px; 
-            padding: 2px 6px; 
-            font-weight: bold; 
-            transition: all 0.15s; 
-            align-self: flex-start;
-        }
+        .img-manager-card:hover { border-color: #6bb376; background: #fafdfb; box-shadow: 0 3px 8px rgba(107,179,118,0.12); transform: translateY(-1px); }
+        .img-manager-name { font-weight: bold; color: #2d3748; font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .btn-img-del { background: #e03a5b; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 10px; padding: 2px 6px; font-weight: bold; transition: all 0.15s; align-self: flex-start; }
         .btn-img-del:hover { background: #c82346; }
-        .img-preview { 
-            width: 34px; 
-            height: 34px; 
-            border-radius: 50%; 
-            background-color: #f5f5f5; 
-            background-size: cover; 
-            background-position: center top; 
-            flex-shrink: 0; 
-            border: 1px solid #d1ebd6; 
-        }
-        .img-url-input { 
-            width: 100%; 
-            font-size: 10px; 
-            padding: 3px 6px; 
-            border: 1px solid #d1ebd6; 
-            border-radius: 4px; 
-            color: #718096; 
-            background: #fafdfb; 
-            box-sizing: border-box;
-        }
+        .img-preview { width: 34px; height: 34px; border-radius: 50%; background-color: #f5f5f5; background-size: cover; background-position: center top; flex-shrink: 0; border: 1px solid #d1ebd6; }
+        .img-url-input { width: 100%; font-size: 10px; padding: 3px 6px; border: 1px solid #d1ebd6; border-radius: 4px; color: #718096; background: #fafdfb; box-sizing: border-box; }
 
         .toast { position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%) translateY(20px); background-color: rgba(45, 55, 72, 0.95); color: #ffffff; padding: 10px 24px; border-radius: 30px; font-size: 13px; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.15); z-index: 10000; opacity: 0; visibility: hidden; transition: opacity 0.25s, transform 0.25s, visibility 0.25s; pointer-events: none; }
         .toast.show { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
@@ -513,44 +374,14 @@
         
         .modal-content.brown-theme .modal-header h3 { color: #8d6e63; }
         .modal-content.brown-theme .modal-header { border-bottom-color: #d7ccc8; }
-        .modal-content.brown-theme .match-item { border-color: #e0d7d5; background: #ffffff; }
-        .modal-content.brown-theme .match-context .current-line { color: #5d4037; background: #d7ccc8; }
 
-        .prune-btn-row {
-            display: flex;
-            gap: 10px;
-            width: 100%;
-        }
+        .prune-btn-row { display: flex; gap: 10px; width: 100%; }
         .btn-prune-action {
-            flex: 1;
-            padding: 10px 14px;
-            font-size: 13px;
-            font-weight: 700;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            border: none;
-            background: #8d6e63;
-            color: #ffffff;
-            box-shadow: 0 2px 5px rgba(109, 76, 65, 0.12);
+            flex: 1; padding: 10px 14px; font-size: 13px; font-weight: 700; border-radius: 8px; cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); display: flex; align-items: center; justify-content: center;
+            gap: 6px; border: none; background: #8d6e63; color: #ffffff; box-shadow: 0 2px 5px rgba(109, 76, 65, 0.12);
         }
-        .btn-prune-action:hover {
-            background: #6d4c41;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 10px rgba(109, 76, 65, 0.22);
-        }
-        .btn-prune-top {
-            background: #8d6e63;
-            color: #ffffff;
-        }
-        .btn-prune-bottom {
-            background: #8d6e63;
-            color: #ffffff;
-        }
+        .btn-prune-action:hover { background: #6d4c41; transform: translateY(-1px); box-shadow: 0 4px 10px rgba(109, 76, 65, 0.22); }
 
         .slot-list { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; max-height: 400px; overflow-y: auto; padding-right: 4px; }
         .slot-item { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; background: #ffffff; border: 1.5px solid #d1ebd6; border-radius: 10px; transition: all 0.2s; gap: 8px; }
@@ -569,12 +400,10 @@
         .btn-slot-load { background: #58a063; color: white; border-color: #58a063; }
         .btn-slot-load:hover { background: #4a8a54; }
         .btn-slot-load.disabled { opacity: 0.45; cursor: not-allowed; background: #f8faf8; border-color: #e2e8f0; color: #a0aec0; }
-        .btn-slot-load.disabled:hover { background: #f8faf8; }
         
         .btn-slot-del { background: none; border: none; color: #ff758f; padding: 4px; font-size: 15px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: color 0.15s; }
         .btn-slot-del:hover { color: #e03a5b; }
         .btn-slot-edit { background: none; border: none; color: #718096; padding: 4px; font-size: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
-        .btn-slot-edit:hover { color: #2d3748; }
 
         @media (max-width: 900px) {
             .sidebar-memo { position: relative; top: 0; }
@@ -625,11 +454,11 @@
     </div>
 </div>
 
-<!-- 가지치기 위치 선택 및 보관 설정 모달 (연한 갈색 톤 적용) -->
+<!-- 가지치기 위치 선택 및 보관 설정 모달 -->
 <div id="cutModal" class="modal-overlay" onclick="if(event.target === this) closeCutModal();">
     <div class="modal-content brown-theme">
         <div class="modal-header">
-            <h3 id="modalTitle">✂️ 위치 선택</h3>
+            <h3 id="modalTitle">✂️ 가지치기</h3>
             <button class="modal-close-btn" onclick="closeCutModal()">✕</button>
         </div>
         <div id="modalDesc" style="padding: 10px 20px 0 20px; font-size:12px; color:#666; line-height: 1.4;">
@@ -639,15 +468,32 @@
     </div>
 </div>
 
-<!-- 보관함 (불러오기) 모달 (연한 갈색 톤 적용) -->
+<!-- 빠른 이미지 삽입 모달 -->
+<div id="quickImageModal" class="modal-overlay" style="display:none; align-items:center; justify-content:center; z-index: 25000;" onclick="if(event.target === this) closeQuickImageModal();">
+    <div class="modal-content green-theme" style="max-width: 440px; padding: 22px;">
+        <div class="modal-header" style="border-bottom: none; padding: 0 0 10px 0;">
+            <h3 style="color: #58a063; font-size: 16px; margin: 0; font-weight: 800; display: flex; align-items: center; gap: 6px;">🪄 이미지 삽입</h3>
+            <button class="modal-close-btn" onclick="closeQuickImageModal()">✕</button>
+        </div>
+        <div style="font-size: 12px; color: #718096; margin-bottom: 12px; line-height: 1.4;">
+            선택하신 대사 바로 아래에 들어갈 이미지 주소(URL)를 입력해 주세요.
+        </div>
+        <input type="text" id="quickImgUrlInput" placeholder="https://example.com/image.png" style="width: 100%; padding: 10px 12px; font-size: 12.5px; border: 1px solid #bde0c4; border-radius: 8px; box-sizing: border-box; margin-bottom: 15px;">
+        <div style="display: flex; justify-content: flex-end; gap: 8px;">
+            <button class="btn-undo-tool" style="padding: 6px 14px;" onclick="closeQuickImageModal()">취소</button>
+            <button class="btn-check-tool" style="padding: 6px 18px;" onclick="confirmQuickImageInsert()">삽입</button>
+        </div>
+    </div>
+</div>
+
+<!-- 보관함 모달 -->
 <div id="prunedStorageModal" class="modal-overlay" style="display:none; align-items:center; justify-content:center; z-index: 22500;" onclick="if(event.target === this) closePrunedStorageModal();">
     <div class="modal-content brown-theme" style="max-width: 550px; padding: 22px;">
         <div class="modal-header" style="border-bottom: none; padding: 0 0 10px 0;">
             <h3 style="color: #8d6e63; font-size: 16px; margin: 0; font-weight: 800; display: flex; align-items: center; gap: 6px;">🪾 가지 보관함</h3>
             <button class="modal-close-btn" onclick="closePrunedStorageModal()">✕</button>
         </div>
-        <div style="font-size: 12px; color: #718096; margin-bottom: 12px; line-height: 1.5;">현재 작업 중인 로그 뒤에 즉시 이어 붙이거나 완전히 복원할 수 있습니다.
-        </div>
+        <div style="font-size: 12px; color: #718096; margin-bottom: 12px; line-height: 1.5;">현재 작업 중인 로그 뒤에 즉시 이어 붙이거나 완전히 복원할 수 있습니다.</div>
         <div class="slot-list" id="prunedStorageListContainer" style="max-height: 380px;"></div>
         <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
             <button class="btn-undo-tool" style="color: #e03a5b; border-color: #ffd0d6;" onclick="clearPrunedStorage()">⚠️ 초기화</button>
@@ -805,14 +651,13 @@ function closeCustomDialog(result) {
 let memoHistory = [""];
 let historyIndex = 0;
 const MAX_HISTORY = 10;
-let pendingCutContext = null;
+let quickInsertTargetIdx = null;
 
 let globalMemoContent = "";
 let isLiveSyncActive = false;
 
 let channelSettings = {}; 
 
-// 잘라낸 로그 보관함 데이터
 let prunedLogStorage = [];
 try {
     const savedPruned = localStorage.getItem('cocoforia_pruned_logs');
@@ -895,31 +740,11 @@ function toggleExprRadio(radioElement, charId) {
     }
 }
 
-function stripInteractiveFeatures(html) {
-    if (!html) return "";
-    let clean = html;
-    
-    clean = clean.replace(/<script>[\s\S]*?<\/script>/gi, '');
-    clean = clean.replace(/\s*onclick="[^"]*window\.clickAvatar[^"]*"/gi, '');
-    clean = clean.replace(/\s*chat-avatar-clickable/g, '');
-    
-    clean = clean.replace(/class="\s*([^"]*?)\s*"/g, (match, p1) => {
-        return `class="${p1.trim().replace(/\s+/g, ' ')}"`;
-    });
-    
-    clean = clean.replace(/\.chat-avatar-clickable\s*\{[\s\S]*?\}/gi, '');
-    clean = clean.replace(/\.chat-avatar-clickable:hover\s*\{[\s\S]*?\}/gi, '');
-    clean = clean.replace(/\.chat-avatar-space\.chat-avatar-clickable:hover\s*\{[\s\S]*?\}/gi, '');
-    return clean;
-}
-
 function copyMemoAll() {
     const activeText = globalMemoContent;
     if (!activeText.trim()) { showToast("❌ 복사할 내용이 없습니다!"); return; }
     
-    const cleanText = stripInteractiveFeatures(activeText);
-    
-    navigator.clipboard.writeText(cleanText)
+    navigator.clipboard.writeText(activeText)
         .then(() => showToast("🥳 복사했어~"))
         .catch(() => showToast("❌ 복사에 실패했습니다."));
 }
@@ -931,8 +756,56 @@ function updateIframeContent(html, scrollPosition = null) {
     let previewHtml = html;
     if (html && !html.includes('window.parent.postMessage') && html.includes('</head>')) {
         const previewScript = `
+    <style id="interactive-editor-styles">
+        .chat-row, .chat-system { position: relative; }
+        .chat-row:hover { background: rgba(107, 179, 118, 0.08) !important; border-radius: 4px; }
+        .chat-system:hover { background: rgba(107, 179, 118, 0.08) !important; border-radius: 4px; }
+        .chat-avatar-clickable { cursor: cell !important; transition: transform 0.15s, box-shadow 0.15s; }
+        .chat-avatar-clickable:hover { transform: scale(1.08); box-shadow: 0 0 0 3px #6bb376; border-radius: 5px; }
+        .chat-avatar-space.chat-avatar-clickable:hover { background-color: rgba(107, 179, 118, 0.2); border-radius: 3px; height: 18px; }
+        
+        .hover-img-btn {
+            position: absolute; right: 8px; top: 6px; display: none;
+            background: #ffffff; color: #58a063; border: 1px solid #bde0c4;
+            border-radius: 12px; padding: 3px 9px; font-size: 11px; font-weight: bold;
+            cursor: pointer; z-index: 100; box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            transition: all 0.15s ease;
+        }
+        .hover-img-btn:hover { background: #58a063; color: #ffffff; border-color: #58a063; }
+        .chat-row:hover .hover-img-btn, .chat-system:hover .hover-img-btn { display: inline-flex; align-items: center; gap: 3px; }
+    </style>
     <script>
+        function attachHoverButtons() {
+            const rows = document.querySelectorAll('.chat-row, .chat-system');
+            rows.forEach(el => {
+                if (!el.querySelector('.hover-img-btn')) {
+                    const btn = document.createElement('button');
+                    btn.className = 'hover-img-btn';
+                    btn.title = '이 대사 아래에 이미지 넣기';
+                    btn.innerHTML = '+ 이미지';
+                    el.appendChild(btn);
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', attachHoverButtons);
+
         document.addEventListener('click', (e) => {
+            const imgBtn = e.target.closest('.hover-img-btn');
+            if (imgBtn) {
+                e.stopPropagation();
+                e.preventDefault();
+                const targetRow = imgBtn.closest('.chat-row') || imgBtn.closest('.chat-system');
+                if (targetRow) {
+                    const idx = targetRow.dataset.idx;
+                    window.parent.postMessage({
+                        type: 'viewClickInsertImgBtn',
+                        targetIdx: parseInt(idx)
+                    }, '*');
+                }
+                return;
+            }
+
             const clickable = e.target.closest('.chat-avatar-clickable');
             const chatRow = e.target.closest('.chat-row');
             const sysRow = e.target.closest('.chat-system');
@@ -954,7 +827,8 @@ function updateIframeContent(html, scrollPosition = null) {
             const targetRow = chatRow || sysRow;
             if (targetRow) {
                 const idx = targetRow.dataset.idx;
-                const rowText = targetRow.innerText.trim();
+                let rowText = targetRow.innerText || '';
+                rowText = rowText.replace('+ 이미지', '').trim();
                 if (idx !== undefined) {
                     window.parent.postMessage({
                         type: 'viewClickRow',
@@ -969,13 +843,32 @@ function updateIframeContent(html, scrollPosition = null) {
         window.addEventListener('message', (event) => {
             if (event.data.type === 'updateHtml') {
                 const contentDiv = document.getElementById('viewer-content');
-                if (contentDiv) contentDiv.innerHTML = event.data.html;
+                if (contentDiv) {
+                    contentDiv.innerHTML = event.data.html;
+                    attachHoverButtons();
+                }
             }
             if (event.data.type === 'updateTheme') {
                 const styleTag = document.getElementById('theme-styles');
                 if (styleTag) styleTag.innerHTML = event.data.css;
                 document.body.style.backgroundColor = event.data.bodyBg;
                 document.body.style.color = event.data.textColor;
+            }
+            if (event.data.type === 'insertImageNodeLocally') {
+                const { targetIdx, imgUrl } = event.data;
+                const targetElem = document.querySelector(\`[data-idx="\${targetIdx}"]\`);
+                if (targetElem) {
+                    const imgDiv = document.createElement('div');
+                    imgDiv.className = 'chat-inserted-image-wrapper';
+                    imgDiv.innerHTML = \`<img src="\${imgUrl}" class="chat-inserted-image" alt="inserted-image">\`;
+                    
+                    const parentTurn = targetElem.closest('.chat-turn') || targetElem.parentNode;
+                    if (parentTurn) {
+                        parentTurn.insertAdjacentElement('afterend', imgDiv);
+                    } else {
+                        targetElem.insertAdjacentElement('afterend', imgDiv);
+                    }
+                }
             }
             if (event.data.type === 'scrollToPos') {
                 if (event.data.pos === 'top') {
@@ -1072,7 +965,7 @@ function hexToRgba(hex, alpha) {
 }
 
 let liveSyncTimeout;
-function triggerLiveSync(delay = 400) {
+function triggerLiveSync(delay = 500) {
     if (isLiveSyncActive) {
         clearTimeout(liveSyncTimeout);
         liveSyncTimeout = setTimeout(() => {
@@ -1157,8 +1050,7 @@ function deleteCustomWordRow(rowId) {
     }
 }
 
-function saveProgramSettings() {
-}
+function saveProgramSettings() {}
 
 function loadProgramSettings() {
     currentBgTheme = 'dark';
@@ -1230,13 +1122,13 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
 
     let contentsHTML = `
-    <!-- 나무 탭 (로그 파일 분석 및 캐릭터 인장 설정) -->
+    <!-- 나무 탭 -->
     <div id="tabNamu" class="tab-content active">
         <div class="input-group">
             <div class="label-wrapper"><label style="color: #6bb376;">📂 파일 불러오기</label></div>
             <div class="file-drop-zone blue-drop-zone" id="editorDropZone" onclick="document.getElementById('editorFileInput').click()">
                 <p>✨ HTML 로그 파일을 떨어뜨리거나 클릭해서 업로드!</p>
-                <span>(잎 탭에서 이미지 링크와 오너먼트도 설정할 수 있어~)</span>
+                <span>(로그 가지치기 후 꾸미면 렉이 덜 걸려요~~)</span>
             </div>
             <input type="file" id="editorFileInput" accept=".html, .txt" style="display: none;">
             <div id="editorFileNameDisplay" style="margin-top: 5px; font-size: 13px; color: #6bb376; font-weight:bold; text-align: right;"></div>
@@ -1268,11 +1160,11 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
     </div>
 
-    <!-- 잎 탭 (사진 느낌 세이지/라이트 그린 스타일 오너먼트) -->
+    <!-- 잎 탭 -->
     <div id="tabIp" class="tab-content">
         <div class="input-group">
             <div class="label-wrapper" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
-                <label class="pink-label" style="font-size: 15px; font-weight: 800;">🍃 잎사귀</label>
+                <label class="pink-label" style="font-size: 15px; font-weight: 800;">🪴 잎 꾸미기</label>
                 <div style="display: flex; gap: 6px; align-items: center;">
                     <button type="button" class="btn-memo-import pink-btn-memo-import" onclick="openCustomThemeModal()" style="font-size: 11.5px; padding: 4px 12px; margin: 0; border-radius: 20px;">🎨 커스텀</button>
                     <button type="button" class="btn-memo-import pink-btn-memo-import" onclick="openOrnamentSlotModal()" style="font-size: 11.5px; padding: 4px 12px; margin: 0; border-radius: 20px;">💿 슬롯</button>
@@ -1280,29 +1172,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
             </div>
             <div style="font-size: 12px; color: #718096; margin-bottom: 12px; line-height: 1.4;">
-                이미지 삽입, 탭 구분, 파스텔 테마 및 지정 단어 강조!
+                탭 구분, 파스텔 테마 및 지정 단어 강조!
             </div>
 
             <div class="ornament-pink-card">
-                <!-- 이미지 넣기 -->
-                <div style="display: flex; flex-direction: column; gap: 8px; border-bottom: 1px dashed #bde0c4; padding-bottom: 12px;">
-                    <div style="font-weight: bold; font-size: 13.5px; color: #58a063; display: flex; align-items: center; gap: 6px;">
-                        <span>🪄 이미지 넣기</span>
-                    </div>
-                    <div style="font-size: 11px; color: #718096; line-height: 1.4;">스틸컷이나 인트로를 넣으면 이쁩니다.</div>
-                    <div style="display: flex; flex-direction: column; gap: 6px;">
-                        <input type="text" id="insertImgUrl" placeholder="이미지 URL 주소" style="width: 100%; padding: 8px 12px; font-size: 12px; border: 1px solid #bde0c4; border-radius: 8px; box-sizing: border-box;">
-                        <div style="display: flex; gap: 6px;">
-                            <input type="text" id="insertImgKeyword" placeholder="기준 대사 입력 (ex: 해피포인트 )" style="flex: 1; padding: 8px 12px; font-size: 12px; border: 1px solid #bde0c4; border-radius: 8px; box-sizing: border-box;">
-                            <button type="button" class="btn-pink-action" onclick="processImageInsertion()">✨ 삽입</button>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- 채널 필터링 & 스타일 -->
                 <div style="display: flex; flex-direction: column; gap: 8px; border-bottom: 1px dashed #bde0c4; padding-bottom: 12px;">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <span style="font-weight: bold; font-size: 13.5px; color: #58a063; display: flex; align-items: center; gap: 6px;">🪴 필터링 & 스타일</span>
+                        <span style="font-weight: bold; font-size: 13.5px; color: #58a063; display: flex; align-items: center; gap: 6px;">📑 필터링 & 스타일</span>
                     </div>
                     <div style="font-size: 11px; color: #718096; line-height: 1.4;">탭 태그를 클릭하면 색상 변경, <strong>더블클릭 시 이모티콘과 이름을 수정</strong>할 수 있습니다.</div>
                     <div id="channelDashboardContainer" class="channel-chip-grid">
@@ -1504,7 +1381,7 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
     </div>
 
-    <!-- 열매 탭 (이미지 관리) -->
+    <!-- 열매 탭 -->
     <div id="tabYeolmae" class="tab-content">
         <div class="input-group">
             <div class="label-wrapper">
@@ -1572,6 +1449,9 @@ document.addEventListener("DOMContentLoaded", () => {
         } else if (event.data.type === "viewClickRow") {
             const { targetIdx, rowText } = event.data;
             handleViewerRowClick(targetIdx, rowText);
+        } else if (event.data.type === "viewClickInsertImgBtn") {
+            const { targetIdx } = event.data;
+            openQuickImageModal(targetIdx);
         }
     });
 });
@@ -1602,7 +1482,7 @@ let shiftSelectionStart = {};
 function handleViewerRowClick(targetIdx, rowText) {
     if (targetIdx < 0 || targetIdx >= parsedLogs.length) return;
     const logItem = parsedLogs[targetIdx];
-    const snippetText = logItem ? logItem.text : rowText;
+    const snippetText = logItem ? (logItem.text || "선택한 항목") : rowText;
     let shortText = snippetText.length > 35 ? snippetText.slice(0, 35) + '...' : snippetText;
 
     openPruningChoiceModal(targetIdx, shortText);
@@ -1619,8 +1499,8 @@ function openPruningChoiceModal(targetIndex, shortText) {
     modalContent.classList.add('brown-theme');
     
     modalTitle.innerText = "✂️ 가지치기";
-    modalDesc.innerHTML = `기준 대사: <strong style="color:#8d6e63;">"${shortText}"</strong><br>잘라낼 방향을 선택해 주세요. 잘라낸 부분은 보관할 수 있습니다!.`;
-    
+    modalDesc.innerHTML = `기준 대사: <strong style="color:#8d6e63;">"${shortText}"</strong><br>잘라낼 방향을 선택해 주세요.`;
+
     listContainer.innerHTML = `
         <div class="match-item" style="padding: 16px; display: flex; flex-direction: column; gap: 14px; align-items: stretch; border: 1px solid #e0d7d5; border-radius: 12px; background: #ffffff;">
             <div style="display: flex; align-items: center; justify-content: space-between; background: #faf8f5; padding: 10px 14px; border-radius: 8px; border: 1px dashed #d7ccc8;">
@@ -1639,12 +1519,62 @@ function openPruningChoiceModal(targetIndex, shortText) {
                     ✂️ 아래쪽 자르기
                 </button>
             </div>
-            <div style="font-size: 11px; color: #a0aec0; text-align: center; margin-top: -4px;">
+
+            <div style="font-size: 11px; color: #a0aec0; text-align: center; margin-top: -2px;">
                 💡 '위쪽 자르기'는 이 대사 위를, '아래쪽 자르기'는 이 대사 아래를 제거합니다.
             </div>
         </div>
     `;
     modal.style.display = 'flex';
+}
+
+function openQuickImageModal(targetIndex) {
+    quickInsertTargetIdx = targetIndex;
+    document.getElementById('quickImgUrlInput').value = '';
+    document.getElementById('quickImageModal').style.display = 'flex';
+    document.getElementById('quickImgUrlInput').focus();
+}
+
+function closeQuickImageModal() {
+    document.getElementById('quickImageModal').style.display = 'none';
+    quickInsertTargetIdx = null;
+}
+
+function confirmQuickImageInsert() {
+    const url = document.getElementById('quickImgUrlInput').value.trim();
+    if (!url) {
+        showToast("⚠️ 이미지 주소를 입력해주세요!");
+        return;
+    }
+    if (quickInsertTargetIdx !== null) {
+        executeInsertImageAtIdx(quickInsertTargetIdx, url);
+    }
+    closeQuickImageModal();
+}
+
+function executeInsertImageAtIdx(targetIndex, imgUrl) {
+    if (!imgUrl) return;
+
+    const targetLog = parsedLogs[targetIndex];
+    const channel = targetLog ? (targetLog.channel || 'main') : 'main';
+
+    parsedLogs.splice(targetIndex + 1, 0, {
+        isInsertedImage: true,
+        imgUrl: imgUrl,
+        channel: channel
+    });
+
+    const htmlViewer = document.getElementById("htmlViewer");
+    if (htmlViewer && htmlViewer.contentWindow) {
+        htmlViewer.contentWindow.postMessage({
+            type: 'insertImageNodeLocally',
+            targetIdx: targetIndex,
+            imgUrl: imgUrl
+        }, '*');
+    }
+
+    showToast("🪄 이미지가 삽입되었습니다!");
+    triggerLiveSync(600);
 }
 
 function executePruneIndex(targetIndex, direction) {
@@ -2532,20 +2462,19 @@ function renderImageManager() {
 
 function deleteSingleImage(encodedName) {
     const name = decodeURIComponent(encodedName);
-    showCustomConfirm("이미지 삭제", `'${name}'의 데이터를 삭제하시겠습니까?`, () => {
-        const rawData = localStorage.getItem('cocoforia_char_images');
-        if(rawData) {
-            let imgData = JSON.parse(rawData); delete imgData[name];
-            try {
-                localStorage.setItem('cocoforia_char_images', JSON.stringify(imgData));
-                renderImageManager();
-                showToast("🗑️ 삭제 완료!");
-                triggerLiveSync(600);
-            } catch(e) {
-                showToast("❌ 삭제 후 저장 중 오류가 발생했습니다.");
-            }
+    const rawData = localStorage.getItem('cocoforia_char_images');
+    if(rawData) {
+        let imgData = JSON.parse(rawData); 
+        delete imgData[name];
+        try {
+            localStorage.setItem('cocoforia_char_images', JSON.stringify(imgData));
+            renderImageManager();
+            showToast("삭제 완료!");
+            triggerLiveSync(600);
+        } catch(e) {
+            showToast("❌ 삭제 후 저장 중 오류가 발생했습니다.");
         }
-    });
+    }
 }
 
 function clearAllImages() {
@@ -2574,26 +2503,30 @@ function generateView(silent = false, scrollPos = null) {
     
     const hl = HL_PRESETS[currentHlPreset] || HL_PRESETS['preset1'];
     const bgTheme = BG_THEMES[currentBgTheme] || BG_THEMES['dark'];
+    const showBorderLine = bgTheme.showBorder !== false;
     
     const escapeRegExp = (str) => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    const showBorderLine = bgTheme.showBorder !== false;
 
-    let blueRegex = null;
-    const blueWordsInput = document.getElementById('blueWordsInput');
-    const blueWords = blueWordsInput ? blueWordsInput.value.split(',').map(w => w.trim()).filter(w => w) : [];
-    if (enableColorReplace && blueWords.length > 0) {
-        blueRegex = new RegExp(`(${blueWords.map(escapeRegExp).join('|')})`, 'g');
-    }
-
-    let redRegex = null;
-    const redWordsInput = document.getElementById('redWordsInput');
-    const redWords = redWordsInput ? redWordsInput.value.split(',').map(w => w.trim()).filter(w => w) : [];
-    if (enableColorReplace && redWords.length > 0) {
-        redRegex = new RegExp(`(${redWords.map(escapeRegExp).join('|')})`, 'g');
-    }
-
-    const customRowsData = [];
+    const highlightRules = [];
     if (enableColorReplace) {
+        const blueWordsInput = document.getElementById('blueWordsInput');
+        const blueWords = blueWordsInput ? blueWordsInput.value.split(',').map(w => w.trim()).filter(w => w) : [];
+        if (blueWords.length > 0) {
+            highlightRules.push({
+                regex: new RegExp(`(${blueWords.map(escapeRegExp).join('|')})`, 'g'),
+                replacement: `<span style="color: ${hl.blueCol}; font-weight: bold; background-color: ${hl.blueBg}; padding: 1px 4px; border-radius: 4px;">$1</span>`
+            });
+        }
+
+        const redWordsInput = document.getElementById('redWordsInput');
+        const redWords = redWordsInput ? redWordsInput.value.split(',').map(w => w.trim()).filter(w => w) : [];
+        if (redWords.length > 0) {
+            highlightRules.push({
+                regex: new RegExp(`(${redWords.map(escapeRegExp).join('|')})`, 'g'),
+                replacement: `<span style="color: ${hl.redCol}; font-weight: bold; background-color: ${hl.redBg}; padding: 1px 4px; border-radius: 4px;">$1</span>`
+            });
+        }
+
         document.querySelectorAll('.custom-word-row').forEach(row => {
             const wordInput = row.querySelector('.word-text-input');
             const wordVal = wordInput ? wordInput.value.trim() : "";
@@ -2602,18 +2535,15 @@ function generateView(silent = false, scrollPos = null) {
                 const bgColHex = row.dataset.bgCol || "#6BB376";
                 const words = wordVal.split(',').map(w => w.trim()).filter(w => w);
                 if (words.length > 0) {
-                    customRowsData.push({ 
-                        regex: new RegExp(`(${words.map(escapeRegExp).join('|')})`, 'g'), 
-                        textCol, 
-                        bgColHex 
+                    highlightRules.push({
+                        regex: new RegExp(`(${words.map(escapeRegExp).join('|')})`, 'g'),
+                        replacement: `<span style="color: ${textCol}; font-weight: bold; background-color: ${bgColHex}; padding: 1px 4px; border-radius: 4px;">$1</span>`
                     });
                 }
             }
         });
     }
-
-    const hasHighlightRules = enableColorReplace && (blueRegex !== null || redRegex !== null || customRowsData.length > 0);
-    const customRowsLen = customRowsData.length;
+    const numHighlightRules = highlightRules.length;
 
     const charNarrCache = {};
     const charBaseAvatarCache = {};
@@ -2624,7 +2554,6 @@ function generateView(silent = false, scrollPos = null) {
         if (!char) return;
 
         charEscapedNameCache[cName] = cName.replace(/'/g, "\\'");
-
         const narrElem = document.getElementById(`narr_${char.id}`);
         charNarrCache[cName] = narrElem ? narrElem.checked : (char.narr || false);
 
@@ -2636,82 +2565,18 @@ function generateView(silent = false, scrollPos = null) {
         charBaseAvatarCache[cName] = baseAvatarUrl;
     });
 
-    const parsedLogsLen = parsedLogs.length;
-
-    for (let logIdx = 0; logIdx < parsedLogsLen; logIdx++) {
-        const log = parsedLogs[logIdx];
-
-        const chName = log.channel || 'main';
+    const chCache = {};
+    Object.keys(channelSettings).forEach(chName => {
         const chSetting = channelSettings[chName];
-        if (chSetting && chSetting.active === false) {
-            continue;
-        }
-
-        const displayChannelName = (chSetting && chSetting.customName) ? chSetting.customName : chName;
-        const category = log.category || getChannelCategory(chName);
-
-        const char = log.isSystem ? null : characters[log.name];
-        
-        const isNarrator = log.isSystem || (category === 'main' && char && charNarrCache[log.name]);
-
-        let processedText = log.text;
-        if (hasHighlightRules) {
-            if (blueRegex) {
-                blueRegex.lastIndex = 0;
-                if (blueRegex.test(processedText)) {
-                    blueRegex.lastIndex = 0;
-                    processedText = processedText.replace(blueRegex, `<span style="color: ${hl.blueCol}; font-weight: bold; background-color: ${hl.blueBg}; padding: 1px 4px; border-radius: 4px;">$1</span>`);
-                }
-            }
-
-            if (redRegex) {
-                redRegex.lastIndex = 0;
-                if (redRegex.test(processedText)) {
-                    redRegex.lastIndex = 0;
-                    processedText = processedText.replace(redRegex, `<span style="color: ${hl.redCol}; font-weight: bold; background-color: ${hl.redBg}; padding: 1px 4px; border-radius: 4px;">$1</span>`);
-                }
-            }
-
-            for (let r = 0; r < customRowsLen; r++) {
-                const item = customRowsData[r];
-                item.regex.lastIndex = 0;
-                if (item.regex.test(processedText)) {
-                    item.regex.lastIndex = 0;
-                    processedText = processedText.replace(item.regex, `<span style="color: ${item.textCol}; font-weight: bold; background-color: ${item.bgColHex}; padding: 1px 4px; border-radius: 4px;">$1</span>`);
-                }
-            }
-        }
-
-        const badgeColor = (chSetting && chSetting.color) ? chSetting.color : (category === 'whisper' ? '#eebefa' : (category === 'other' ? '#718096' : '#6bb376'));
+        if (!chSetting) return;
+        const category = chSetting.category || getChannelCategory(chName);
+        const badgeColor = chSetting.color || (category === 'whisper' ? '#eebefa' : (category === 'other' ? '#718096' : '#6bb376'));
         const badgeBgColor = hexToRgba(badgeColor, 0.18);
         const badgeBorderColor = hexToRgba(badgeColor, 0.4);
-
-        let currentTurnClass = "chat-turn";
-        let currentTurnStyle = "";
-
-        if (chSetting && chSetting.useCustomBox) {
-            const customBoxBg = (chSetting.bgCol) ? chSetting.bgCol : hexToRgba(badgeColor, 0.05);
-            const customBoxBorder = (chSetting.borderCol) ? chSetting.borderCol : hexToRgba(badgeColor, 0.3);
-            currentTurnClass = "chat-turn chat-turn-custom";
-            currentTurnStyle = `style="background-color: ${customBoxBg}; border: 1px solid ${customBoxBorder}; border-left: 4px solid ${badgeColor};"`;
-        } else if (category === 'other') {
-            const otherBg = hexToRgba(badgeColor, 0.05);
-            const otherBorder = hexToRgba(badgeColor, 0.35);
-            currentTurnClass = "chat-turn chat-turn-other";
-            currentTurnStyle = `style="background-color: ${otherBg}; border: 1px dashed ${otherBorder}; border-left: 3px solid ${badgeColor};"`;
-        } else if (category === 'whisper') {
-            const whisperBg = (chSetting && chSetting.bgCol && chSetting.bgCol !== "rgba(238, 190, 250, 0.15)") ? chSetting.bgCol : hexToRgba(badgeColor, 0.05);
-            const whisperBorder = (chSetting && chSetting.borderCol) ? chSetting.borderCol : hexToRgba(badgeColor, 0.35);
-            currentTurnClass = "chat-turn chat-turn-whisper";
-            currentTurnStyle = `style="background-color: ${whisperBg}; border: 1px solid ${whisperBorder}; border-left: 3px solid ${badgeColor};"`;
-        } else if (category === 'custom') {
-            const customBg = hexToRgba(badgeColor, 0.05);
-            currentTurnClass = "chat-turn chat-turn-custom";
-            currentTurnStyle = `style="background-color: ${customBg}; border: 1px solid ${hexToRgba(badgeColor, 0.25)}; border-left: 3px solid ${badgeColor};"`;
-        }
+        const displayChannelName = chSetting.customName || chName;
 
         let channelBadgeHTML = "";
-        if (chSetting && chSetting.customName) {
+        if (chSetting.customName) {
             channelBadgeHTML = `<span class="channel-badge" style="background: ${badgeBgColor}; color: ${badgeColor}; border: 1px solid ${badgeBorderColor};">${displayChannelName}</span> `;
         } else if (category === 'other') {
             channelBadgeHTML = `<span class="channel-badge" style="background: ${badgeBgColor}; color: ${badgeColor}; border: 1px solid ${badgeBorderColor};">💬 ${displayChannelName}</span> `;
@@ -2722,6 +2587,80 @@ function generateView(silent = false, scrollPos = null) {
         } else if (chName !== 'main') {
             channelBadgeHTML = `<span class="channel-badge" style="background: ${badgeBgColor}; color: ${badgeColor}; border: 1px solid ${badgeBorderColor};">📖 ${displayChannelName}</span> `;
         }
+
+        let turnClass = "chat-turn";
+        let turnStyle = "";
+
+        if (chSetting.useCustomBox) {
+            const customBoxBg = chSetting.bgCol || hexToRgba(badgeColor, 0.05);
+            const customBoxBorder = chSetting.borderCol || hexToRgba(badgeColor, 0.3);
+            turnClass = "chat-turn chat-turn-custom";
+            turnStyle = `style="background-color: ${customBoxBg}; border: 1px solid ${customBoxBorder}; border-left: 4px solid ${badgeColor};"`;
+        } else if (category === 'other') {
+            const otherBg = hexToRgba(badgeColor, 0.05);
+            const otherBorder = hexToRgba(badgeColor, 0.35);
+            turnClass = "chat-turn chat-turn-other";
+            turnStyle = `style="background-color: ${otherBg}; border: 1px dashed ${otherBorder}; border-left: 3px solid ${badgeColor};"`;
+        } else if (category === 'whisper') {
+            const whisperBg = (chSetting.bgCol && chSetting.bgCol !== "rgba(238, 190, 250, 0.15)") ? chSetting.bgCol : hexToRgba(badgeColor, 0.05);
+            const whisperBorder = chSetting.borderCol || hexToRgba(badgeColor, 0.35);
+            turnClass = "chat-turn chat-turn-whisper";
+            turnStyle = `style="background-color: ${whisperBg}; border: 1px solid ${whisperBorder}; border-left: 3px solid ${badgeColor};"`;
+        } else if (category === 'custom') {
+            const customBg = hexToRgba(badgeColor, 0.05);
+            turnClass = "chat-turn chat-turn-custom";
+            turnStyle = `style="background-color: ${customBg}; border: 1px solid ${hexToRgba(badgeColor, 0.25)}; border-left: 3px solid ${badgeColor};"`;
+        }
+
+        chCache[chName] = {
+            active: chSetting.active !== false,
+            category,
+            badgeHTML: channelBadgeHTML,
+            turnClass,
+            turnStyle
+        };
+    });
+
+    const parsedLogsLen = parsedLogs.length;
+
+    for (let logIdx = 0; logIdx < parsedLogsLen; logIdx++) {
+        const log = parsedLogs[logIdx];
+
+        if (log.isInsertedImage) {
+            const imgHTML = `<div class="chat-inserted-image-wrapper"><img src="${log.imgUrl}" class="chat-inserted-image" alt="inserted-image"></div>\n`;
+            currentTurnHTML.push(imgHTML);
+            continue;
+        }
+
+        const chName = log.channel || 'main';
+        const chInfo = chCache[chName] || {
+            active: true, category: log.category || getChannelCategory(chName),
+            badgeHTML: '', turnClass: 'chat-turn', turnStyle: ''
+        };
+
+        if (chInfo.active === false) {
+            continue;
+        }
+
+        const category = chInfo.category;
+        const char = log.isSystem ? null : characters[log.name];
+        const isNarrator = log.isSystem || (category === 'main' && char && charNarrCache[log.name]);
+
+        let processedText = log.text;
+        if (numHighlightRules > 0 && processedText) {
+            for (let h = 0; h < numHighlightRules; h++) {
+                const rule = highlightRules[h];
+                rule.regex.lastIndex = 0;
+                if (rule.regex.test(processedText)) {
+                    rule.regex.lastIndex = 0;
+                    processedText = processedText.replace(rule.regex, rule.replacement);
+                }
+            }
+        }
+
+        const channelBadgeHTML = chInfo.badgeHTML;
+        const currentTurnClass = chInfo.turnClass;
+        const currentTurnStyle = chInfo.turnStyle;
 
         const isSameChannel = (lastChannel === chName);
         const isSameChar = (lastCharName === log.name);
@@ -2749,7 +2688,7 @@ function generateView(silent = false, scrollPos = null) {
             const baseAvatarUrl = charBaseAvatarCache[log.name] || "";
             const actualAvatarUrl = (log.colorImg !== undefined) ? log.colorImg : baseAvatarUrl;
             const avatarStyle = actualAvatarUrl ? `background-image: url('${actualAvatarUrl}');` : '';
-            const escapedCharName = charEscapedNameCache[log.name] || log.name.replace(/'/g, "\\'");
+            const escapedCharName = charEscapedNameCache[log.name] || (log.name ? log.name.replace(/'/g, "\\'") : '');
 
             const rowClassCategory = category === 'other' ? ' chat-row-other' : (category === 'whisper' ? ' chat-row-whisper' : '');
 
@@ -2792,7 +2731,7 @@ ${resultHTML.join('')}    </div>
     globalMemoContent = cleanHTML;
     
     const freeMemo = document.getElementById('freeMemo');
-    if (freeMemo.style.display !== "none") {
+    if (freeMemo && freeMemo.style.display !== "none") {
         freeMemo.value = cleanHTML; 
     }
     saveHistory();
@@ -2819,223 +2758,34 @@ function getThemeCSS(bgTheme, showBorderLine) {
         .viewer-bg { background-color: ${bgTheme.containerBg}; padding: 20px 24px; border-radius: 8px; max-width: 850px; margin: 0 auto; border: 1.5px solid ${bgTheme.border}; }
         .chat-turn { ${borderStyleText} padding-top: 10px; padding-bottom: 12px; }
         .chat-turn:last-child { border-bottom: none; }
-        .chat-row { display: flex; align-items: flex-start; cursor: pointer; transition: background 0.15s; }
-        .chat-row:hover { background: rgba(107, 179, 118, 0.06); border-radius: 4px; }
+        .chat-row { display: flex; align-items: flex-start; }
         .chat-row.consecutive { margin-top: 5px; }
-        
-        .chat-turn-other {
-            border-radius: 8px;
-            padding: 10px 14px;
-            margin: 8px 0;
-            font-size: 0.92em;
-        }
-        .chat-turn-other .chat-text {
-            color: ${bgTheme.textMuted};
-            font-size: 13.5px;
-        }
-        .chat-turn-other .chat-avatar {
-            width: 36px;
-            height: 36px;
-            opacity: 0.85;
-        }
-        .chat-turn-other .chat-avatar-space {
-            width: 36px;
-        }
-        
-        .chat-turn-whisper {
-            border-radius: 8px;
-            padding: 10px 14px;
-            margin: 8px 0;
-        }
 
-        .chat-turn-custom {
-            border-radius: 8px;
-            padding: 10px 14px;
-            margin: 8px 0;
+        .chat-turn-other {
+            border-radius: 8px; padding: 10px 14px; margin: 8px 0; font-size: 0.92em;
         }
+        .chat-turn-other .chat-text { color: ${bgTheme.textMuted}; font-size: 13.5px; }
+        .chat-turn-other .chat-avatar { width: 36px; height: 36px; opacity: 0.85; }
+        .chat-turn-other .chat-avatar-space { width: 36px; }
+        
+        .chat-turn-whisper { border-radius: 8px; padding: 10px 14px; margin: 8px 0; }
+        .chat-turn-custom { border-radius: 8px; padding: 10px 14px; margin: 8px 0; }
 
         .channel-badge { display: inline-flex; align-items: center; gap: 3px; font-size: 11px; font-weight: bold; padding: 2px 7px; border-radius: 12px; margin-right: 4px; line-height: 1; vertical-align: middle; }
 
         .chat-avatar { width: 42px; height: 42px; background-color: ${bgTheme.isDark ? '#2b2d31' : '#f2f4f6'}; border-radius: 5px; margin-right: 12px; background-size: cover; background-position: center top; flex-shrink: 0; border: 1px solid ${bgTheme.border}; }
         .chat-avatar-space { width: 42px; margin-right: 12px; flex-shrink: 0; height: 18px; }
-        .chat-avatar-clickable { cursor: cell !important; transition: transform 0.15s, box-shadow 0.15s; }
-        .chat-avatar-clickable:hover { transform: scale(1.08); box-shadow: 0 0 0 3px #6bb376; border-radius: 5px; }
-        .chat-avatar-space.chat-avatar-clickable:hover { background-color: rgba(107, 179, 118, 0.2); border-radius: 3px; height: 18px; }
         .chat-content { flex-grow: 1; display: flex; flex-direction: column; }
         .chat-header-info { margin: 0; padding: 0; margin-bottom: 4px; line-height: 1.2; }
         .chat-name-display { font-weight: 800; font-size: 15px; letter-spacing: -0.4px; }
         .chat-text { margin: 0; padding: 0; font-size: 14px; line-height: 1.45; color: ${bgTheme.textColor}; word-break: break-all; white-space: pre-wrap; }
-        .chat-system { color: ${bgTheme.textMuted}; font-size: 14px; line-height: 1.45; white-space: pre-wrap; cursor: pointer; transition: background 0.15s; }
-        .chat-system:hover { background: rgba(107, 179, 118, 0.08); border-radius: 4px; }
+        .chat-system { color: ${bgTheme.textMuted}; font-size: 14px; line-height: 1.45; white-space: pre-wrap; }
         .chat-system.sys-center { text-align: center; margin: 10px 0; }
         .chat-system.sys-left-space { text-align: left; margin-left: 54px; margin-top: 4px; }
         .chat-system.sys-left-nospace { text-align: left; margin-left: 0px; margin-top: 4px; }
         .chat-inserted-image-wrapper { text-align: center; margin: 15px 0; width: 100%; display: flex; justify-content: center; }
         .chat-inserted-image { max-width: 100%; height: auto; border-radius: 8px; border: 1px solid ${bgTheme.border}; box-shadow: 0 4px 12px rgba(0,0,0,0.08); display: block; }
     `;
-}
-
-function cleanText(snippet, playerTag) {
-    let txt = snippet.replace(/<[^>]*>?/gm, ' ');
-    txt = txt.replace(/&nbsp;/g, ' ').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
-    return txt.trim().replace(/\s+/g, ' ');
-}
-
-function processImageInsertion() {
-    const rawHTML = globalMemoContent.trim();
-    const imgUrl = document.getElementById("insertImgUrl").value.trim();
-    const keyword = document.getElementById("insertImgKeyword").value.trim();
-
-    if (!rawHTML || !imgUrl || !keyword) { 
-        showToast("⚠️ 본문 코드, 이미지 URL, 기준 대사를 모두 입력해 주세요!"); 
-        return; 
-    }
-
-    const imageMarkup = `\n<div class="chat-inserted-image-wrapper"><img src="${imgUrl}" class="chat-inserted-image" alt="inserted-image"></div>\n`;
-
-    const isNewStyle = rawHTML.includes('<div class="chat-turn') || rawHTML.includes('class="viewer-bg"');
-    let headerDelimiter = isNewStyle ? '<div class="viewer-bg">' : '<p class="ccl_tabtitle">메인</p>';
-    let playerTag = isNewStyle ? '<div class="chat-turn' : '<div class="ccl_player';
-    let footerRegex = isNewStyle ? /(<\/div>\s*<\/body>\s*<\/html>\s*)$/i : /(<\/div>\s*<\/div>\s*<\/div>\s*<\/body>\s*<\/html>\s*)$/i;
-    let defaultFooter = isNewStyle ? "</div>\n</body>\n</html>" : "</div>\n</div>\n</div>\n</body>\n</html>";
-
-    let A_header = ""; let restPart = rawHTML;
-    if (rawHTML.includes(headerDelimiter)) {
-        const delimIdx = rawHTML.indexOf(headerDelimiter);
-        A_header = rawHTML.substring(0, delimIdx + headerDelimiter.length);
-        restPart = rawHTML.substring(delimIdx + headerDelimiter.length);
-    } else {
-        const firstPlayerIdx = rawHTML.indexOf(playerTag);
-        if (firstPlayerIdx !== -1) {
-            A_header = rawHTML.substring(0, firstPlayerIdx);
-            restPart = rawHTML.substring(firstPlayerIdx);
-        }
-    }
-
-    let B_body = restPart; let C_footer = defaultFooter;
-    const footerMatch = restPart.match(footerRegex);
-    if (footerMatch) {
-        C_footer = footerMatch[1];
-        B_body = restPart.substring(0, restPart.length - C_footer.length);
-    }
-
-    if (!B_body.includes(playerTag)) { 
-        showToast("⚠️ 우측 편집창의 로그 형태를 분석할 수 없습니다."); 
-        return; 
-    }
-
-    const dialogues = B_body.split(playerTag);
-    const remainingSpace = dialogues[0];
-    const dialoguesList = dialogues.slice(1);
-    let matches = [];
-    
-    const dLen = dialogues.length - 1;
-    for (let i = 0; i < dLen; i++) {
-        if (dialoguesList[i].includes(keyword)) { matches.push(i); }
-    }
-
-    if (matches.length === 0) { 
-        showToast(`🔍 단어('${keyword}')를 찾지 못했습니다.`); 
-        return; 
-    }
-
-    pendingCutContext = { 
-        action: 'insertImage', 
-        id: 1, 
-        dialoguesList: dialoguesList, 
-        A_header: A_header, 
-        remainingSpace: remainingSpace, 
-        playerTag: playerTag, 
-        C_footer: C_footer, 
-        insertStr: imageMarkup 
-    };
-
-    if (matches.length === 1) {
-        executeImageInsertion(matches[0]);
-    } else {
-        openCutModal(matches, keyword);
-    }
-}
-
-function executeImageInsertion(targetIndex) {
-    const ctx = pendingCutContext;
-    if (!ctx) return;
-
-    const beforeDialogues = ctx.dialoguesList.slice(0, targetIndex + 1);
-    const afterDialogues = ctx.dialoguesList.slice(targetIndex + 1);
-
-    let beforeStr = ctx.remainingSpace + ctx.playerTag + beforeDialogues.join(ctx.playerTag);
-    let afterStr = afterDialogues.length > 0 ? (ctx.playerTag + afterDialogues.join(ctx.playerTag)) : "";
-    
-    let finalResult = ctx.A_header + beforeStr + ctx.insertStr + afterStr + ctx.C_footer;
-
-    globalMemoContent = finalResult;
-    const freeMemo = document.getElementById("freeMemo");
-    if (freeMemo.style.display !== "none") {
-        freeMemo.value = finalResult;
-    }
-    
-    saveHistory();
-    const sidebarToggle = document.getElementById("sidebarModeToggle");
-    if (!sidebarToggle.checked) {
-        sidebarToggle.checked = true;
-        toggleSidebarMode();
-    } else {
-        updateIframeContent(finalResult);
-    }
-
-    showToast("🍁 이미지 삽입 완료! 뷰어로 확인해 보세요.");
-    closeCutModal();
-    
-    document.getElementById("insertImgUrl").value = "";
-    document.getElementById("insertImgKeyword").value = "";
-}
-
-function openCutModal(matches, keyword) {
-    const ctx = pendingCutContext;
-    const modal = document.getElementById('cutModal');
-    const modalContent = modal.querySelector('.modal-content');
-    const listContainer = document.getElementById('modalMatchList');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalDesc = document.getElementById('modalDesc');
-    
-    modalContent.classList.remove('green-theme', 'coral-theme', 'pink-modal-theme');
-    modalContent.classList.add('green-theme');
-    
-    modalTitle.innerText = "🪾 위치 선택";
-    modalDesc.innerHTML = "선택한 대사의 바로 아래에 이미지가 삽입됩니다. 앞뒤 문맥을 보고 골라주세요.";
-    
-    let listHtml = '';
-    matches.forEach((dialogueIdx, matchOrder) => {
-        let prevTxt = dialogueIdx > 0 ? cleanText(ctx.dialoguesList[dialogueIdx - 1], ctx.playerTag) : "";
-        let currTxt = cleanText(ctx.dialoguesList[dialogueIdx], ctx.playerTag);
-        let nextTxt = dialogueIdx < ctx.dialoguesList.length - 1 ? cleanText(ctx.dialoguesList[dialogueIdx + 1], ctx.playerTag) : "";
-        
-        if(prevTxt.length > 55) prevTxt = "..." + prevTxt.slice(-55);
-        if(nextTxt.length > 55) nextTxt = nextTxt.slice(0, 55) + "...";
-    
-        let srcKeyword = keyword.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-        let highlightedCurr = currTxt.replace(new RegExp(srcKeyword, 'g'), `<span class="current-line">${keyword}</span>`);
-        
-        let borderColor = '#6bb376';
-        let btnText = "✨ 여기에 삽입";
-        let btnAction = `executeImageInsertion(${dialogueIdx})`;
-        
-        listHtml += `
-            <div class="match-item">
-                <div style="font-size:12px; font-weight:bold; color:#718096;"> 중복 위치 #${matchOrder + 1}</div>
-                <div class="match-context">
-                    ${prevTxt ? `<div class="prev-line">⬆️ ${prevTxt}</div>` : ''}
-                    <div style="margin: 6px 0; padding-left: 8px; border-left: 3px solid ${borderColor}; background: rgba(0,0,0,0.02); padding-top:4px; padding-bottom:4px;">
-                        💬 ${highlightedCurr}
-                    </div>
-                    ${nextTxt ? `<div class="next-line">⬇️ ${nextTxt}</div>` : ''}
-                </div>
-                <button class="btn-select-match" onclick="${btnAction}">${btnText}</button>
-            </div>`;
-    });
-    listContainer.innerHTML = listHtml;
-    modal.style.display = 'flex';
 }
 
 function closeCutModal() { document.getElementById('cutModal').style.display = 'none'; }
@@ -3076,14 +2826,11 @@ function toggleSidebarMode() {
         
         freeMemo.style.display = "none";       
         const currentCode = globalMemoContent.trim();
-        freeMemo.value = ""; 
         
         if (currentCode) {
             htmlViewer.style.display = "block";
             htmlPlaceholder.style.display = "none";
-            if (htmlViewer.dataset.lastCode !== currentCode) {
-                updateIframeContent(currentCode);
-            }
+            updateIframeContent(currentCode);
         } else {
             htmlViewer.style.display = "none";
             htmlPlaceholder.style.display = "flex";
@@ -3092,8 +2839,8 @@ function toggleSidebarMode() {
         modeTitle.innerText = "📝 편집";
         modeTitle.style.color = "#4a5568";
         
-        freeMemo.style.display = "block";      
         freeMemo.value = globalMemoContent;
+        freeMemo.style.display = "block";      
         
         htmlViewer.style.display = "none";     
         htmlPlaceholder.style.display = "none";
